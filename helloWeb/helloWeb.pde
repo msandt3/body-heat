@@ -153,6 +153,7 @@ class Pt {
   		}
 
 	void show() {
+    ellipseMode(CENTER);
   		ellipse(x, y, 6, 6);
 	}
 }
@@ -171,27 +172,39 @@ class Pt {
 class MuscleMan{
 	Chest _chest;
   Torso _torso;
+  Quads _quads;
   Pt location;
-  float head_radius,torso_width,torso_height;
+  float head_radius;
 	MuscleMan(Pt loc){
     location = loc;
     head_radius = 50;
 	  _chest = new Chest(new Pt(location.x,location.y+head_radius/2));
     _torso = new Torso(new Pt(location.x-_chest.width/2,_chest.location.y+_chest.height/2))
-
+    _quads = new Quads(new Pt(_torso.location.x+7,_torso.location.y+_torso.height+7),new Pt(_torso.location.x+_torso.width-7,_torso.location.y+_torso.height+7),20);
 	} 
 
 
 	void show(){
+    ellipseMode(CENTER);
     ellipse(location.x,location.y,head_radius,head_radius);
+
+    _quads.left_location.show();
+    _quads.right_location.show();
 		_chest.show();
+    //draw the quads
+    _quads.show();
+
      //draw the torso
     _torso.show();
     //draw the right arm
     line(_chest.location.x+_chest.width-7,_chest.location.y,_chest.location.x+_chest.width+55,_chest.location.y+55);
     //draw the left arm
     line(_chest.location.x-_chest.width+7,_chest.location.y,_chest.location.x-_chest.width-55,_chest.location.y+55);
-   
+    //draw the left leg
+    line(_torso.location.x+7,_torso.location.y+_torso.height,_torso.location.x-15,_torso.location.y+_torso.height+70);   
+    //draw the right leg
+    line(_torso.location.x-7+_torso.width,_torso.location.y+_torso.height,_torso.location.x+15+_torso.width,_torso.location.y+_torso.height+70);
+
 	}
 }
 
@@ -231,6 +244,25 @@ class Chest{
     width *= scale_factor;
     height *= scale_factor;
   }
+}
+
+class Quads{
+
+  float width;
+  Pt left_location,right_location;
+  Quads(Pt l_loc,Pt r_loc,float w){
+    left_location = l_loc;
+    right_location = r_loc;
+    width = w;
+  }
+
+  void show(){
+    ellipseMode(CORNERS);
+    ellipse(left_location.x,left_location.y,left_location.x+width,left_location.y+50);
+    ellipse(right_location.x,right_location.y,right_location.x+width,right_location.y+50);
+  }
+
+
 }
 
 
