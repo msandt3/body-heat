@@ -181,10 +181,11 @@ class MuscleMan{
     location = loc;
     head_radius = 50;
 	  _chest = new Chest(new Pt(location.x,location.y+head_radius/2));
-    _torso = new Torso(new Pt(location.x-_chest.width/2,_chest.location.y+_chest.height/2))
+    _torso = new Torso(new Pt(location.x-_chest.width/2,_chest.location.y+_chest.height/2));
     _quads = new Quads(new Pt(_torso.location.x+7,_torso.location.y+_torso.height+7),new Pt(_torso.location.x+_torso.width-7,_torso.location.y+_torso.height+7),20);
     _calves = new Calves(new Pt(_quads.left_location.x-_quads.width/2.0,_quads.left_location.y+50),new Pt(_quads.right_location.x+_quads.width/2.0,_quads.right_location.y),15);
-    _biceps = new Biceps(new Pt(_chest.x,_chest.y),new Pt(_chest.x+_chest.width,_chest.y),15);
+    _biceps = new Biceps(new Pt(_chest.location.x-_chest.width/2,_chest.location.y),new Pt(_chest.location.x+_chest.width/2.0,_chest.location.y),15,_chest.width*.75);
+    
 	} 
 
 
@@ -198,6 +199,7 @@ class MuscleMan{
     _calves.show();
      //draw the torso
     _torso.show();
+    _biceps.show();
     //draw the right arm
     // line(_chest.location.x+_chest.width-7,_chest.location.y,_chest.location.x+_chest.width+55,_chest.location.y+55);
     // //draw the left arm
@@ -307,17 +309,25 @@ class Calves{
 
 class Biceps{
   float width;
+  float arm_length;
   Pt left_location,right_location;
-  Biceps(Pt l_loc,Pt r_loc,float w){
+  Biceps(Pt l_loc,Pt r_loc,float w,float a_length){
     left_location = l_loc;
     right_location = r_loc;
     width = w;
+    arm_length = a_length;
   }
 
   void show(){
     pushMatrix();
     translate(right_location.x,right_location.y);
-    ellipse(0,0,width);
+    ellipseMode(CORNER);
+    ellipse(0,0,arm_length,width);
+    popMatrix();
+    pushMatrix();
+    translate(left_location.x-arm_length,right_location.y);
+    ellipseMode(CORNER);
+    ellipse(0,0,arm_length,width);
     popMatrix();
   }
 
