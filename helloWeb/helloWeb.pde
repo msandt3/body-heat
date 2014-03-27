@@ -3,22 +3,22 @@ void setup(){
   size(600,400,P2D);
   muscleMan_control = new MuscleMan(new Pt(115,80));
   muscleMan_data = new MuscleMan(new Pt(350,80));
-
+  muscleMan_data._chest.scale(.5);
+  muscleMan_data._biceps.scale(1.5);
 }
 
 void draw(){
   background(255);
-
-
   fill(0);
   textSize(22);
   text("CONTROL",muscleMan_control.location.x-muscleMan_control.head_radius,muscleMan_control.location.y-30);
-  text("YOU",muscleMan_data.location.x-muscleMan_data.head_radius/2.0,muscleMan_data.location.y-30)
+  text("YOU",muscleMan_data.location.x-muscleMan_data.head_radius/2.0,muscleMan_data.location.y-30);
   stroke(0);
-  noFill();
+  fill(255);
+  muscleMan_data.relocate();
+  muscleMan_control.relocate();
   muscleMan_control.show();
   muscleMan_data.show();
-
 }
 
 class Pt {
@@ -188,7 +188,7 @@ class MuscleMan{
     location = loc;
     head_radius = 50;
 	  _chest = new Chest(new Pt(location.x,location.y+head_radius/2));
-    _torso = new Torso(new Pt(location.x-_chest.width,_chest.location.y+_chest.height));
+    _torso = new Torso(new Pt(location.x,_chest.location.y+_chest.height));
     _quads = new Quads(new Pt(_torso.location.x+7,_torso.location.y+_torso.height+7),new Pt(_torso.location.x+_torso.width-7,_torso.location.y+_torso.height+7),20);
     _calves = new Calves(new Pt(_quads.left_location.x-_quads.width/2.0,_quads.left_location.y+50),new Pt(_quads.right_location.x+_quads.width/2.0,_quads.right_location.y),15);
     _biceps = new Biceps(new Pt(_chest.location.x-_chest.width,_chest.location.y),new Pt(_chest.location.x+_chest.width,_chest.location.y),15,_chest.width*1.5);
@@ -201,30 +201,40 @@ class MuscleMan{
 	void show(){
     ellipseMode(CENTER);
     ellipse(location.x,location.y,head_radius,head_radius);
+         rectMode(CENTER);
+    _torso.show();
+
+    rectMode(CORNER);
 		_chest.show();
     //draw the quads
+    
     _quads.show();
     //draw the calves
     _calves.show();
      //draw the torso
-    _torso.show();
+
     _biceps.show();
     _forearms.show();
-    //draw the right arm
-    // line(_chest.location.x+_chest.width-7,_chest.location.y,_chest.location.x+_chest.width+55,_chest.location.y+55);
-    // //draw the left arm
-    // line(_chest.location.x-_chest.width+7,_chest.location.y,_chest.location.x-_chest.width-55,_chest.location.y+55);
-    // //draw the left leg
-    // line(_torso.location.x+7,_torso.location.y+_torso.height,_torso.location.x-15,_torso.location.y+_torso.height+70);   
-    // //draw the right leg
-    // line(_torso.location.x-7+_torso.width,_torso.location.y+_torso.height,_torso.location.x+15+_torso.width,_torso.location.y+_torso.height+70);
 
 	}
+
+  void relocate(){
+    _biceps.left_location = new Pt(_chest.location.x-_chest.width,_chest.location.y);
+    _biceps.right_location = new Pt(_chest.location.x+_chest.width,_chest.location.y);
+    _forearms.left_location = new Pt(_biceps.left_location.x-_biceps.arm_length,_biceps.left_location.y);
+    _forearms.right_location = new Pt(_biceps.right_location.x+_biceps.arm_length,_biceps.right_location.y+_biceps.width*.25);
+    _torso.location = new Pt(location.x,location.y+_chest.height+head_radius);
+    _quads.left_location = new Pt(_torso.location.x-_torso.width/2.0,_torso.location.y+_torso.height/2.0+7);
+    _quads.right_location = new Pt(_torso.location.x + _torso.width/2.0,_torso.location.y+_torso.height/2.0+7);
+    _calves.left_location = new Pt(_quads.left_location.x-_quads.width/2.0,_quads.left_location.y+50);
+    _calves.right_location = new Pt(_quads.right_location.x+_quads.width/2.0,_quads.right_location.y);
+  }
 }
 
 class Torso{
   Pt location;
   float height,width;
+  float scale_factor;
   public Torso(Pt loc){
     location = loc;
     width = 50;
@@ -232,6 +242,11 @@ class Torso{
   }
   void show(){
     rect(location.x,location.y,width,height,7);
+  }
+  void scale(float newScale){
+    scale_factor = newScale;
+    width *= scale_factor;
+    //height *= scale_factor;
   }
 
 }
@@ -257,12 +272,13 @@ class Chest{
     scale_factor = newScale;
     width *= scale_factor;
     height *= scale_factor;
+
   }
 }
 
 class Quads{
 
-  float width,length;
+  float width,length,scale_factor;
   Pt left_location,right_location;
   Quads(Pt l_loc,Pt r_loc,float w){
     left_location = l_loc;
@@ -284,12 +300,17 @@ class Quads{
     ellipse(0,0,width,40);
     popMatrix();
 
-    
+  }
+
+  void scale(float newScale){
+    scale_factor = newScale;
+    width *= scale_factor;
+    //height *= scale_factor;
   }
 }
 
 class Calves{
-  float width;
+  float width,scale_factor;
   Pt left_location,right_location;
   Calves(Pt l_loc,Pt r_loc,float w){
     left_location = l_loc;
@@ -315,10 +336,16 @@ class Calves{
     // ellipse(left_location.x,left_location.y,left_location.x+width,left_location.y+50);
     // ellipse(right_location.x,right_location.y,right_location.x+width,right_location.y+50);
   }
+
+  void scale(float newScale){
+    scale_factor = newScale;
+    width *= scale_factor;
+  //  height *= scale_factor;
+  }
 }
 
 class Biceps{
-  float width;
+  float width,scale_factor;
   float arm_length;
   Pt left_location,right_location;
   Biceps(Pt l_loc,Pt r_loc,float w,float a_length){
@@ -340,10 +367,18 @@ class Biceps{
     ellipse(0,0,arm_length,width);
     popMatrix();
   }
+  
+  void scale(float newScale){
+    scale_factor = newScale;
+    width *= scale_factor;
+   // height *= scale_factor;
+  }
+
+
 }
 
 class Forearms{
-  float width;
+  float width,scale_factor;
   float length;
   Pt left_location, right_location;
   Forearms(Pt l_loc,Pt r_loc,float w, float l){
@@ -364,6 +399,12 @@ class Forearms{
     ellipseMode(CORNER);
     ellipse(0,0,length,width);
     popMatrix();
+  }
+
+  void scale(float newScale){
+    scale_factor = newScale;
+    width *= scale_factor;
+  //  height *= scale_factor;
   }
 
 }
