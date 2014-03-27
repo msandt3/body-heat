@@ -8,8 +8,14 @@ void setup(){
 
 void draw(){
   background(255);
-  noFill();
+
+
+  fill(0);
+  textSize(22);
+  text("CONTROL",muscleMan_control.location.x-muscleMan_control.head_radius,muscleMan_control.location.y-30);
+  text("YOU",muscleMan_data.location.x-muscleMan_data.head_radius/2.0,muscleMan_data.location.y-30)
   stroke(0);
+  noFill();
   muscleMan_control.show();
   muscleMan_data.show();
 
