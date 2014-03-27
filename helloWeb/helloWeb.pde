@@ -1,17 +1,17 @@
-MuscleMan muscleMan;
+MuscleMan muscleMan_control,muscleMan_data;
 void setup(){
   size(600,400,P2D);
-  muscleMan = new MuscleMan(new Pt(200,50));
-  muscleMan._chest.scale(.5);
+  muscleMan_control = new MuscleMan(new Pt(115,80));
+  muscleMan_data = new MuscleMan(new Pt(350,80));
+
 }
 
 void draw(){
   background(255);
   noFill();
   stroke(0);
-  muscleMan.show();
-  fill(255,0,0);
-  muscleMan._chest.location.show();
+  muscleMan_control.show();
+  muscleMan_data.show();
 
 }
 
@@ -182,12 +182,12 @@ class MuscleMan{
     location = loc;
     head_radius = 50;
 	  _chest = new Chest(new Pt(location.x,location.y+head_radius/2));
-    _torso = new Torso(new Pt(location.x-_chest.width/2,_chest.location.y+_chest.height/2));
+    _torso = new Torso(new Pt(location.x-_chest.width,_chest.location.y+_chest.height));
     _quads = new Quads(new Pt(_torso.location.x+7,_torso.location.y+_torso.height+7),new Pt(_torso.location.x+_torso.width-7,_torso.location.y+_torso.height+7),20);
     _calves = new Calves(new Pt(_quads.left_location.x-_quads.width/2.0,_quads.left_location.y+50),new Pt(_quads.right_location.x+_quads.width/2.0,_quads.right_location.y),15);
-    _biceps = new Biceps(new Pt(_chest.location.x-_chest.width/2,_chest.location.y),new Pt(_chest.location.x+_chest.width/2.0,_chest.location.y),15,_chest.width*.75);
+    _biceps = new Biceps(new Pt(_chest.location.x-_chest.width,_chest.location.y),new Pt(_chest.location.x+_chest.width,_chest.location.y),15,_chest.width*1.5);
     _forearms = new Forearms(new Pt(_biceps.left_location.x-_biceps.arm_length,_biceps.left_location.y),
-      new Pt(_biceps.right_location.x+_biceps.arm_length,_biceps.right_location.y+_biceps.width*.25),_biceps.width*.75,_biceps.arm_length);
+      new Pt(_biceps.right_location.x+_biceps.arm_length,_biceps.right_location.y+_biceps.width*.25),_biceps.width,_biceps.arm_length);
     
 	} 
 
@@ -238,8 +238,8 @@ class Chest{
 	Chest(Pt loc){
 		location = loc;
 		scale_factor = 1;
-    width = 50;
-    height = 50;
+    width = 25;
+    height = 25;
 	}
 
 	void show(){
