@@ -59,38 +59,47 @@
     </head>
     <body>
         <div id="main">
-            <h1>Body Heatmap</h1>
-            <div id="heatmapArea">
-            
-            </div>
-            <div id="configArea">
+            <h1>Chernoff Muscles</h1>
+          <!--   <div id="configArea">
                 
-            </div>
+            </div> -->
+            <canvas id ="myCanvas" width = 600 height = 400 
+                style="border:1px solid #000000;"
+                data-processing-sources="helloWeb/helloWeb.pde">
+            </canvas>
         </div>
         <script type="text/javascript" src="scripts/heatmap.js"></script>
+        <script src="scripts/processing-1.4.1.js"></script>
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
         <script type="text/javascript">
     
-    
-        window.onload = function(){
-            var xx = h337.create({"element":document.getElementById("heatmapArea"), "radius":10, "visible":true});
-            
-            xx.get("canvas").onclick = function(ev){
-                var pos = h337.util.mousePosition(ev);
-                xx.store.addDataPoint(pos[0],pos[1]);
-            };
-            
-            document.getElementById("gen").onclick = function(){
-                xx.store.generateRandomDataSet(100);
-            };
-        };
         
+
+
+        window.onload = function(){
+
+            var pjs = Processing.getInstanceById('myCanvas');
+            pjs.showCircleTest();
+            var exercises = new Array();
+            $.getJSON("data/activities.json", function(json) {
+               // console.log(json); // this will show the info it in firebug console
+                
+                for(var i=0; i<json.length; i++){
+                    var activity = json[i];
+                    console.log(activity.exercise_id);
+                    exercises.push(activity.exercise_id);
+                    
+                }
+                exercises.sort();
+                console.log(exercises);
+                var frequency = new Array();
+
+                for(var i=0; i<exercises.length;i++){
+                    //var freq_exercise = 
+                }
+            });
+            
+        };
         </script>
-    </body>
-    <body>
-        <script src="scripts/processing-1.4.1.js"></script>
-        <canvas id ="myCanvas" width = 600 height = 400 
-            style="border:1px solid #000000;"
-            data-processing-sources="helloWeb/helloWeb.pde">
-        </canvas>
     </body>
 </html>

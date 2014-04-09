@@ -1,10 +1,16 @@
 MuscleMan muscleMan_control,muscleMan_data;
+//JSONArray json;
+boolean test;
+
 void setup(){
   size(600,400,P2D);
   muscleMan_control = new MuscleMan(new Pt(115,80));
   muscleMan_data = new MuscleMan(new Pt(350,80));
-  muscleMan_data._chest.scale(.5);
-  muscleMan_data._biceps.scale(1.5);
+  muscleMan_data._chest.scale(2.0);
+  muscleMan_data._biceps.scale(2.0);
+  muscleMan_data._calves.scale(.05);
+  muscleMan_data._quads.scale(.05); 
+  test =false; 
 }
 
 void draw(){
@@ -19,6 +25,202 @@ void draw(){
   muscleMan_control.relocate();
   muscleMan_control.show();
   muscleMan_data.show();
+
+  if(test){
+    fill(0);
+    textSize(22);
+    text("INTERACTING WITH JAVASCRIPT",150,150);
+  }
+
+}
+
+//void addActivity(Activity a){
+//
+//
+//}
+
+void showCircleTest(){
+  test = true;
+}
+
+
+class Workout{
+
+  String start_date;
+  private String id;
+  public ArrayList<Exercise> exerciseList;
+  public boolean empty;
+  
+  public Workout(String sd, String i){
+    start_date=sd;
+    setId(i);
+    exerciseList= new ArrayList<Exercise>();
+  }
+
+//  public String toString() {    
+//    DateFormat fromFormat = new SimpleDateFormat("yyyy-MM-dd");
+//    fromFormat.setLenient(false);
+//    
+//    DateFormat toFormat = new SimpleDateFormat("EEEEEEEEE, MMMMMMMM dd, yyyy");
+//    fromFormat.setLenient(false);
+//    
+//    Date date = new Date();
+//    try {
+//      date = fromFormat.parse(start_date);
+//    } catch (ParseException e) {
+//    
+//      e.printStackTrace();
+//    }
+//    
+//    String return_start_date = toFormat.format(date);
+//    
+//    return return_start_date;
+//  }
+ 
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
+}
+
+
+public class ExerciseData{
+        
+        String reps;
+        String weight;
+        String workout_id;
+        String date;
+        private String activity_id;
+        
+        public ExerciseData(String r, String w){
+                reps = r;
+                weight = w;
+        }
+        
+        public ExerciseData(String r, String w, String wo_id, String a_id){
+          this(w,r,wo_id);
+          setActivity_id(a_id);
+        }
+        
+        public ExerciseData(String weight2, String reps2, String workout_id2) {
+                this(reps2,weight2);
+                workout_id=workout_id2;
+        }
+
+    public String toString(){
+                return reps+" X "+weight+" lbs";
+        }
+
+    public String getReps() {
+      // TODO Auto-generated method stub
+      return reps;
+    }
+
+    public String getWeight() {
+      // TODO Auto-generated method stub
+      return weight;
+    }
+
+    public String getActivity_id() {
+      return activity_id;
+    }
+
+    public void setActivity_id(String activity_id) {
+      this.activity_id = activity_id;
+    }
+
+    public void setWeight(int weightAmount) {
+      weight = String.valueOf(weightAmount);
+      
+    }
+
+    public void setReps(int numReps) {
+      reps = String.valueOf(numReps);
+      
+    }
+}
+
+
+public class Exercise{
+  int id;
+  String qr_code;
+  String name;
+  public ArrayList<ExerciseData> exerciseDataList;
+  
+  Exercise(String n,String qr,int i){
+    id=i;
+    qr_code=qr;
+    name=n;
+    exerciseDataList= new ArrayList<ExerciseData>();
+  }
+  
+//  public Exercise(int i, String qr,String n){
+//    id=i;
+//    qr_code=qr;
+//    name=n;
+//    exerciseDataList= new ArrayList<ExerciseData>();
+//  }
+//  
+//  public Exercise(String n){
+//    name= n;
+//    exerciseDataList= new ArrayList<ExerciseData>();
+//  }
+  
+  public String toString(){
+    return name;
+  }
+  
+  public void setData(ArrayList<ExerciseData> dd){
+    if(exerciseDataList!=null){
+      exerciseDataList.clear();
+    }
+    else{
+      exerciseDataList=new ArrayList<ExerciseData>();
+    }
+    for(ExerciseData ed: dd){
+      ExerciseData temp= new ExerciseData(ed.reps,ed.weight,"-1",ed.getActivity_id());
+      exerciseDataList.add(temp);
+    }
+  }
+
+//  public ArrayList<ExerciseData> convertExerciseData(JSONArray dataOBJ) throws JSONException {
+//    ArrayList<ExerciseData> myList=new ArrayList<ExerciseData>();
+//    for(int i=0;i<dataOBJ.length();i++){
+//      myList.add(getExerciseData(dataOBJ.getJSONObject(i)));
+//    }
+//    return myList;
+//  }
+
+//  private ExerciseData getExerciseData(JSONObject jsonObject) throws JSONException {
+//    return new ExerciseData(jsonObject.getString("reps"),jsonObject.getString("weight")
+//        ,"-1",jsonObject.getString("activity_id"));
+//  }
+
+  public String printSetsAndReps() {
+    String ret=" "+name+":\n ";
+    for(ExerciseData exD: exerciseDataList){
+      ret+=exD+" lbs\n ";
+    }
+    return ret;
+  }
+
+  public void setId(String string) {
+    id = Integer.parseInt(string);
+    
+  }
+
+  public String getName() {
+
+    return name;
+  }
+
+  public void addSet(ExerciseData exerciseData) {
+    exerciseDataList.add(exerciseData);
+    
+  }
 }
 
 class Pt {

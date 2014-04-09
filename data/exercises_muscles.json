@@ -1,0 +1,9 @@
+/**
+ Export to JSON plugin for PHPMyAdmin
+ @version 0.1
+ */
+
+// Database 'CONTRIB_tapps'
+// CONTRIB_tapps.exercises_muscles
+
+[{"id": 8,"muscle_id": 11,"exercise_id": 7}, {"id": 11,"muscle_id": 11,"exercise_id": 15}, {"id": 14,"muscle_id": 11,"exercise_id": 16}, {"id": 50,"muscle_id": 11,"exercise_id": 60}, {"id": 9,"muscle_id": 12,"exercise_id": 7}, {"id": 12,"muscle_id": 12,"exercise_id": 15}, {"id": 44,"muscle_id": 12,"exercise_id": 60}, {"id": 63,"muscle_id": 13,"exercise_id": 2}, {"id": 22,"muscle_id": 13,"exercise_id": 26}, {"id": 51,"muscle_id": 13,"exercise_id": 60}, {"id": 64,"muscle_id": 14,"exercise_id": 2}, {"id": 2,"muscle_id": 14,"exercise_id": 3}, {"id": 19,"muscle_id": 14,"exercise_id": 38}, {"id": 45,"muscle_id": 14,"exercise_id": 60}, {"id": 21,"muscle_id": 15,"exercise_id": 38}, {"id": 52,"muscle_id": 15,"exercise_id": 60}, {"id": 65,"muscle_id": 16,"exercise_id": 2}, {"id": 5,"muscle_id": 16,"exercise_id": 4}, {"id": 46,"muscle_id": 16,"exercise_id": 60}, {"id": 47,"muscle_id": 17,"exercise_id": 60}, {"id": 10,"muscle_id": 18,"exercise_id": 7}, {"id": 13,"muscle_id": 18,"exercise_id": 15}, {"id": 53,"muscle_id": 18,"exercise_id": 60}, {"id": 20,"muscle_id": 19,"exercise_id": 39}, {"id": 48,"muscle_id": 19,"exercise_id": 60}, {"id": 15,"muscle_id": 20,"exercise_id": 17}, {"id": 16,"muscle_id": 20,"exercise_id": 29}, {"id": 17,"muscle_id": 20,"exercise_id": 34}, {"id": 54,"muscle_id": 20,"exercise_id": 60}, {"id": 66,"muscle_id": 20,"exercise_id": 61}, {"id": 23,"muscle_id": 21,"exercise_id": 27}, {"id": 49,"muscle_id": 21,"exercise_id": 60}, {"id": 1,"muscle_id": 22,"exercise_id": 3}, {"id": 18,"muscle_id": 22,"exercise_id": 38}, {"id": 55,"muscle_id": 22,"exercise_id": 60}]

@@ -1,0 +1,9 @@
+/**
+ Export to JSON plugin for PHPMyAdmin
+ @version 0.1
+ */
+
+// Database 'CONTRIB_tapps'
+// CONTRIB_tapps.muscles
+
+[{"id": 11,"name": "Upper Back"}, {"id": 12,"name": "Lower Back"}, {"id": 13,"name": "Triceps"}, {"id": 14,"name": "Glutes"}, {"id": 15,"name": "Hamstrings"}, {"id": 16,"name": "Calves"}, {"id": 17,"name": "Forearm"}, {"id": 18,"name": "Shoulder"}, {"id": 19,"name": "Abdominals"}, {"id": 20,"name": "Chest"}, {"id": 21,"name": "Biceps"}, {"id": 22,"name": "Thigh"}]
