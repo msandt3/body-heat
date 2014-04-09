@@ -72,34 +72,92 @@
         <script src="scripts/processing-1.4.1.js"></script>
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
         <script type="text/javascript">
-    
         
-
-
         window.onload = function(){
-
             var pjs = Processing.getInstanceById('myCanvas');
             pjs.showCircleTest();
+            //GET THE json data for all the activities
+            getActivitiesJSON("data/activities.json",new Date(2014,0,1),new Date(2014,2,30));
+           // getMusclesIncludedJSON("data/muscles.json");
+        };
+
+        //Returns the exercises performed, excludes those that fall outside 
+        //given range
+        function getActivitiesJSON(path,start_date,end_date){
             var exercises = new Array();
-            $.getJSON("data/activities.json", function(json) {
-               // console.log(json); // this will show the info it in firebug console
-                
+            $.getJSON(path, function(json) {
+                console.log("start_date: "+start_date);
+                console.log("end_date: "+end_date);
                 for(var i=0; i<json.length; i++){
                     var activity = json[i];
-                    console.log(activity.exercise_id);
-                    exercises.push(activity.exercise_id);
-                    
+                    var d = new Date(activity.created_on);
+                    //Check to make sure that the json data is within the date range
+                    if(d>=start_date && d<=end_date){    
+                        exercises.push(activity.exercise_id);
+                    }
                 }
-                exercises.sort();
-                console.log(exercises);
-                var frequency = new Array();
-
-                for(var i=0; i<exercises.length;i++){
-                    //var freq_exercise = 
+                exercises.sort(function(a,b){return a-b});
+               // console.log(exercises);
+                var frequencies = new Array();
+                var num = 1;
+                var currExercise = exercises[0];
+                for(var i=1; i<exercises.length;i++){
+                    var obj = new Object();
+                    if(currExercise==exercises[i]){
+                        num++;
+                    }
+                    else{
+                        obj.exercise_id = currExercise;
+                        obj.frequency = num;
+                        frequencies.push(obj);
+                        num = 1;
+                        currExercise = exercises[i];
+                    }
                 }
+                var edgeCase = new Object();
+                edgeCase.exercise_id = currExercise;
+                edgeCase.frequency = num;
+                frequencies.push(edgeCase);
+   //             mapToFrequency(frequencies);
+                // console.log(frequencies);
             });
-            
-        };
+            return exercises;
+        }
+
+        // function getMusclesIncludedJSON(path){
+        //     var muscles = new Array();
+        //    $.getJSON(path, function(json) {
+        //         for(var i=0; i<json.length; i++){
+        //             var activity = json[i];
+        //             var muscle = new Object();
+        //             muscle.name = activity.name;
+        //             muscle.id = 
+        //             muscles.push(activity.exercise_id);
+        //         } 
+
+        // }
+
+        // function mapToFrequency(array){
+        //     console.log("inside function");
+        //     var mappedValues = new Array();
+        //     var maxVal = findMaxFrequency(array);
+        //     var minVal = array[0].frequency;
+        //     console.log("Max frequency: "+maxVal);
+        //     console.log("min frequency: "+minVal);
+        //     //map the frequency values to .1-2.0
+        //     for(var i=0;i<array.length;i++){
+
+        //     }
+        //     return mappedValues;
+        // }
+
+        // function findMaxFrequency(array){
+        //     var maxF = 0;
+        //     for(var i=0; i< array.length;i++){
+
+        //     }
+        // }
+
         </script>
     </body>
 </html>
