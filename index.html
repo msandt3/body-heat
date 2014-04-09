@@ -72,92 +72,105 @@
         <script src="scripts/processing-1.4.1.js"></script>
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
         <script type="text/javascript">
-        
+        var frequencies = new Array();
         window.onload = function(){
             var pjs = Processing.getInstanceById('myCanvas');
             pjs.showCircleTest();
             //GET THE json data for all the activities
-            getActivitiesJSON("data/activities.json",new Date(2014,0,1),new Date(2014,2,30));
-           // getMusclesIncludedJSON("data/muscles.json");
+            
+            getActivitiesJSON("data/activities_full.json",new Date(2014,0,1),new Date(2014,2,30));
+            
         };
-
         //Returns the exercises performed, excludes those that fall outside 
         //given range
         function getActivitiesJSON(path,start_date,end_date){
             var exercises = new Array();
+            
             $.getJSON(path, function(json) {
+
                 console.log("start_date: "+start_date);
                 console.log("end_date: "+end_date);
                 for(var i=0; i<json.length; i++){
                     var activity = json[i];
                     var d = new Date(activity.created_on);
                     //Check to make sure that the json data is within the date range
-                    if(d>=start_date && d<=end_date){    
-                        exercises.push(activity.exercise_id);
+                    if(d>=start_date && d<=end_date){
+                        var obj = new Object();
+                        exercises.push(activity.muscle_name);
+                        //console.log(d);
                     }
                 }
-                exercises.sort(function(a,b){return a-b});
-               // console.log(exercises);
-                var frequencies = new Array();
+                console.log(exercises);
+                exercises.sort();//function(a,b){return a-b});
+                console.log(exercises);
+       
                 var num = 1;
-                var currExercise = exercises[0];
+                var currMuscle = exercises[0];
                 for(var i=1; i<exercises.length;i++){
                     var obj = new Object();
-                    if(currExercise==exercises[i]){
+                    if(currMuscle==exercises[i]){
                         num++;
                     }
                     else{
-                        obj.exercise_id = currExercise;
+                        obj.muscle = currMuscle;
                         obj.frequency = num;
                         frequencies.push(obj);
                         num = 1;
-                        currExercise = exercises[i];
+                        currMuscle = exercises[i];
                     }
                 }
                 var edgeCase = new Object();
-                edgeCase.exercise_id = currExercise;
+                edgeCase.muscle = currMuscle;
                 edgeCase.frequency = num;
                 frequencies.push(edgeCase);
-   //             mapToFrequency(frequencies);
-                // console.log(frequencies);
+                console.log(frequencies);
+                //find the max value of the muscle frequencies
+                var max = findMaxFrequency(frequencies);
+                //find the in value of the muscle frequencies
+                var min = findMinFrequency(frequencies);
+                
+                var encodedVals = encodeValues(frequencies,max,min);
             });
-            return exercises;
+            
         }
 
-        // function getMusclesIncludedJSON(path){
-        //     var muscles = new Array();
-        //    $.getJSON(path, function(json) {
-        //         for(var i=0; i<json.length; i++){
-        //             var activity = json[i];
-        //             var muscle = new Object();
-        //             muscle.name = activity.name;
-        //             muscle.id = 
-        //             muscles.push(activity.exercise_id);
-        //         } 
+        function findMaxFrequency(array){
+            var maxF = 0;
+            for(var i=0; i< array.length;i++){
+                if(array[i].frequency>maxF) maxF = array[i].frequency;
+            }
+            return maxF;
+        }
 
-        // }
+        function findMinFrequency(array){
+            var minF = 999999999;
+            for(var i=0;i<array.length;i++){
+                if(array[i].frequency<minF) minF = array[i].frequency;
+            }
+            return minF;
+        }
 
-        // function mapToFrequency(array){
-        //     console.log("inside function");
-        //     var mappedValues = new Array();
-        //     var maxVal = findMaxFrequency(array);
-        //     var minVal = array[0].frequency;
-        //     console.log("Max frequency: "+maxVal);
-        //     console.log("min frequency: "+minVal);
-        //     //map the frequency values to .1-2.0
-        //     for(var i=0;i<array.length;i++){
+        function encodeValues(array,max,min){
+            console.log("INSIDE OF encodeValues   max: " + max+ " min: "+min);
+            var encodedArray = new Array();
+            console.log("array.length: "+array.length);
+            for(var i = 0; i<array.length; i++){
+                //compute the frequency mapped to the range .5 -> 2
+                var mapping = computeMapping(array[i].frequency,min,max,.5,2);
+                console.log(array[i].frequency+" --> "+mapping);
+                var obj = new Object();
+                obj.frequency = mapping;
+                obj.muscle = array[i].muscle;
+                encodedArray.push(obj);
+            }
+            console.log("encodedArray:");
+            console.log(encodedArray);
+            return encodedArray;
+        }
 
-        //     }
-        //     return mappedValues;
-        // }
-
-        // function findMaxFrequency(array){
-        //     var maxF = 0;
-        //     for(var i=0; i< array.length;i++){
-
-        //     }
-        // }
-
+        function computeMapping(s,a1,a2,b1,b2){
+            return b1 + (((s-a1)*(b2-b1))/(a2-a1));
+        }
         </script>
     </body>
 </html>
