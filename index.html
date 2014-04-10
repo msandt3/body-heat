@@ -73,13 +73,22 @@
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
         <script type="text/javascript">
         var frequencies = new Array();
+        
         window.onload = function(){
             var pjs = Processing.getInstanceById('myCanvas');
             pjs.showCircleTest();
             //GET THE json data for all the activities
             
             getActivitiesJSON("data/activities_full.json",new Date(2014,0,1),new Date(2014,2,30));
-            
+            /*
+SELECT activities.`weight` , activities.`reps` , activities.`created_on` , muscles.`name` AS  'muscle_name', exercises.`name` AS  'exercise_name', activities.workout_id
+FROM  `activities` 
+INNER JOIN  `exercises_muscles` ON activities.exercise_id = exercises_muscles.exercise_id
+INNER JOIN  `muscles` ON exercises_muscles.muscle_id = muscles.id
+INNER JOIN  `exercises` ON exercises.id = activities.exercise_id
+WHERE user_id =45
+        Use SQL above to get the data
+            */
         };
         //Returns the exercises performed, excludes those that fall outside 
         //given range
@@ -103,7 +112,6 @@
                 console.log(exercises);
                 exercises.sort();//function(a,b){return a-b});
                 console.log(exercises);
-       
                 var num = 1;
                 var currMuscle = exercises[0];
                 for(var i=1; i<exercises.length;i++){
@@ -128,7 +136,6 @@
                 var max = findMaxFrequency(frequencies);
                 //find the in value of the muscle frequencies
                 var min = findMinFrequency(frequencies);
-                
                 var encodedVals = encodeValues(frequencies,max,min);
             });
             
@@ -151,26 +158,76 @@
         }
 
         function encodeValues(array,max,min){
-            console.log("INSIDE OF encodeValues   max: " + max+ " min: "+min);
             var encodedArray = new Array();
+            var muscles = new Array();
+            var frequencies = new Array();
             console.log("array.length: "+array.length);
             for(var i = 0; i<array.length; i++){
                 //compute the frequency mapped to the range .5 -> 2
                 var mapping = computeMapping(array[i].frequency,min,max,.5,2);
                 console.log(array[i].frequency+" --> "+mapping);
-                var obj = new Object();
-                obj.frequency = mapping;
-                obj.muscle = array[i].muscle;
-                encodedArray.push(obj);
+                frequencies.push(mapping);
+                console.log("muscle_type: "+array[i].muscle);
+                muscles.push(array[i].muscle);
+
+                //var obj = new Object();
+                // obj.frequency = mapping;
+                // obj.muscle = array[i].muscle;
+                // encodedArray.push(obj);
             }
             console.log("encodedArray:");
-            console.log(encodedArray);
+            console.log("muscles: "+muscles);
+            var pjs = Processing.getInstanceById('myCanvas');
+            for(var j=0;j<muscles.length;j++){
+                console.log("muscle type: "+muscles[j]);
+                var muscle_type = muscles[j];
+               // console.log("muscle type: "+muscle_type);
+                if(muscle_type=="Chest"){
+                    pjs.scaleChest(frequencies[j]);
+                }
+                else if(muscle_type=="Calves"){
+                    console.log("Calves frequency: "+frequencies[j]);
+                    pjs.scaleCalves(frequencies[j]);
+                }
+                else if(muscle_type=="Upper Back"){
+                    //do something
+                }
+                else if(muscle_type=="Lower Back"){
+                    //do something
+                }
+                else if(muscle_type=="Triceps"){
+
+                }
+                else if(muscle_type=="Glutes"){
+                    //do something
+                }
+                else if(muscle_type=="Hamstrings"){
+
+                }
+                else if(muscle_type=="Forearm"){
+                    pjs.scaleForearm(frequencies[j]);
+                }
+                else if(muscle_type=="Shoulder"){
+                    //pjs.scaleShoulder
+                }
+                else if(muscle_type=="Abdominals"){
+                    //pjs.scaleAbdominals
+                }
+                else if(muscle_type=="Biceps"){
+                    pjs.scaleBiceps(frequencies[j]);
+                }
+                else if(muscle_type=="Thigh"){
+                    pjs.scaleQuads(frequencies[j]);
+                }
+// Thigh
+            }
             return encodedArray;
         }
 
         function computeMapping(s,a1,a2,b1,b2){
             return b1 + (((s-a1)*(b2-b1))/(a2-a1));
         }
+        
         </script>
     </body>
 </html>

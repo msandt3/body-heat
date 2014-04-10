@@ -6,10 +6,9 @@ void setup(){
   size(600,400,P2D);
   muscleMan_control = new MuscleMan(new Pt(115,80));
   muscleMan_data = new MuscleMan(new Pt(350,80));
-  muscleMan_data._chest.scale(2.0);
-  muscleMan_data._biceps.scale(2.0);
-  muscleMan_data._calves.scale(.05);
-  muscleMan_data._quads.scale(.05); 
+  //muscleMan_data._biceps.scale(2.0);
+  //muscleMan_data._calves.scale(.05);
+  //muscleMan_data._quads.scale(.05); 
   test =false; 
 }
 
@@ -41,6 +40,22 @@ void draw(){
 
 void showCircleTest(){
   test = true;
+}
+
+void scaleChest(float s){
+  muscleMan_data._chest.scale(s);
+}
+
+void scaleCalves(float s){
+  muscleMan_data._calves.scale(s);
+}
+
+void scaleForearm(float s){
+  muscleMan_data._forearms.scale(s);
+}
+
+void scaleQuads(float s){
+  muscleMan_data._quads.scale(s);
 }
 
 
