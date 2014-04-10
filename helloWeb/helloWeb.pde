@@ -1,15 +1,11 @@
-MuscleMan muscleMan_control,muscleMan_data;
-//JSONArray json;
-boolean test;
-
+MuscleMan_Front muscleMan_control,muscleMan_data;
+MuscleMan_Back mm_control,mm_data;
 void setup(){
-  size(600,400,P2D);
-  muscleMan_control = new MuscleMan(new Pt(115,80));
-  muscleMan_data = new MuscleMan(new Pt(350,80));
-  //muscleMan_data._biceps.scale(2.0);
-  //muscleMan_data._calves.scale(.05);
-  //muscleMan_data._quads.scale(.05); 
-  test =false; 
+  size(600,1000,P2D);
+  muscleMan_control = new MuscleMan_Front(new Pt(115,80));
+  muscleMan_data = new MuscleMan_Front(new Pt(350,80)); 
+  mm_control = new MuscleMan_Back(new Pt(115,350));
+  mm_data = new MuscleMan_Back(new Pt(350,350));
 }
 
 void draw(){
@@ -24,22 +20,9 @@ void draw(){
   muscleMan_control.relocate();
   muscleMan_control.show();
   muscleMan_data.show();
+  mm_control.show();
+//  mm_data.show();
 
-  if(test){
-    fill(0);
-    textSize(22);
-    text("INTERACTING WITH JAVASCRIPT",150,150);
-  }
-
-}
-
-//void addActivity(Activity a){
-//
-//
-//}
-
-void showCircleTest(){
-  test = true;
 }
 
 void scaleChest(float s){
@@ -59,184 +42,94 @@ void scaleQuads(float s){
 }
 
 
-class Workout{
-
-  String start_date;
-  private String id;
-  public ArrayList<Exercise> exerciseList;
-  public boolean empty;
-  
-  public Workout(String sd, String i){
-    start_date=sd;
-    setId(i);
-    exerciseList= new ArrayList<Exercise>();
-  }
-
-//  public String toString() {    
-//    DateFormat fromFormat = new SimpleDateFormat("yyyy-MM-dd");
-//    fromFormat.setLenient(false);
-//    
-//    DateFormat toFormat = new SimpleDateFormat("EEEEEEEEE, MMMMMMMM dd, yyyy");
-//    fromFormat.setLenient(false);
-//    
-//    Date date = new Date();
-//    try {
-//      date = fromFormat.parse(start_date);
-//    } catch (ParseException e) {
-//    
-//      e.printStackTrace();
-//    }
-//    
-//    String return_start_date = toFormat.format(date);
-//    
-//    return return_start_date;
-//  }
- 
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
+class MuscleMan_Back{
+  Pt location;
+  float head_radius;
+  UpperBack ub; LowerBack lb;
+  Glutes gl;
+  MuscleMan_Back(Pt loc){
+    location = loc;
+    head_radius = 50;
+    ub = new UpperBack(new Pt(location.x-head_radius/2.0,location.y+head_radius/2.0));
+    lb = new LowerBack(new Pt(location.x-head_radius/2.0,ub.location.y+ub.height));
+    gl = new Glutes(new Pt(location.x-lb.width/4.0,location.y+ub.height+lb.height+head_radius/2.0),
+      new Pt(location.x+lb.width/4.0,location.y+ub.height+lb.height+head_radius/2.0));
+  } 
+  void show(){
+    ellipseMode(CENTER);
+    ellipse(location.x,location.y,head_radius,head_radius);
+    rectMode(CORNER);
+    location.show();
+    ub.show();
+    lb.show();
+    gl.show();
+    gl.left_l.show();
+    gl.right_l.show();
   }
 }
 
+class UpperBack{
+  Pt location;
+  float width,height;
+  UpperBack(Pt l){
+    location=l;
+    width = 50;
+    height = 50;
+  }
+  
+  void show(){
+    location.show();
+    rect(location.x, location.y, width,height, 7); 
+  }
+  
+}
 
-public class ExerciseData{
-        
-        String reps;
-        String weight;
-        String workout_id;
-        String date;
-        private String activity_id;
-        
-        public ExerciseData(String r, String w){
-                reps = r;
-                weight = w;
-        }
-        
-        public ExerciseData(String r, String w, String wo_id, String a_id){
-          this(w,r,wo_id);
-          setActivity_id(a_id);
-        }
-        
-        public ExerciseData(String weight2, String reps2, String workout_id2) {
-                this(reps2,weight2);
-                workout_id=workout_id2;
-        }
+class Glutes{
+  Pt left_l,right_l;
+  float width,height;
+  Glutes(Pt l_l,Pt r_l){
+    left_l = l_l;
+    right_l = r_l;
+    width= 25;
+    height=25;
+  } 
+  
+  void show(){
+   //Need to apply rotations to ellipses here
+    pushMatrix();
+    translate(left_l.x,left_l.y+12);
+    //rotate(PI/24.0);
+    ellipse(0,0,width,height);
+    popMatrix();
 
-    public String toString(){
-                return reps+" X "+weight+" lbs";
-        }
+    pushMatrix();
+    translate(right_l.x,right_l.y+12);
+    //rotate(11*PI/12.0);
+    ellipse(0,0,width,height);
+    popMatrix();
+  }
+}
 
-    public String getReps() {
-      // TODO Auto-generated method stub
-      return reps;
-    }
-
-    public String getWeight() {
-      // TODO Auto-generated method stub
-      return weight;
-    }
-
-    public String getActivity_id() {
-      return activity_id;
-    }
-
-    public void setActivity_id(String activity_id) {
-      this.activity_id = activity_id;
-    }
-
-    public void setWeight(int weightAmount) {
-      weight = String.valueOf(weightAmount);
-      
-    }
-
-    public void setReps(int numReps) {
-      reps = String.valueOf(numReps);
-      
-    }
+class LowerBack{
+  Pt location;
+  float width,height;
+  LowerBack(Pt l){
+    location= l;
+    width=50;
+    height = 50;
+  }
+  
+  void show(){
+    location.show();
+    rect(location.x, location.y, width,height, 7); 
+  } 
+  
 }
 
 
-public class Exercise{
-  int id;
-  String qr_code;
-  String name;
-  public ArrayList<ExerciseData> exerciseDataList;
-  
-  Exercise(String n,String qr,int i){
-    id=i;
-    qr_code=qr;
-    name=n;
-    exerciseDataList= new ArrayList<ExerciseData>();
-  }
-  
-//  public Exercise(int i, String qr,String n){
-//    id=i;
-//    qr_code=qr;
-//    name=n;
-//    exerciseDataList= new ArrayList<ExerciseData>();
-//  }
-//  
-//  public Exercise(String n){
-//    name= n;
-//    exerciseDataList= new ArrayList<ExerciseData>();
-//  }
-  
-  public String toString(){
-    return name;
-  }
-  
-  public void setData(ArrayList<ExerciseData> dd){
-    if(exerciseDataList!=null){
-      exerciseDataList.clear();
-    }
-    else{
-      exerciseDataList=new ArrayList<ExerciseData>();
-    }
-    for(ExerciseData ed: dd){
-      ExerciseData temp= new ExerciseData(ed.reps,ed.weight,"-1",ed.getActivity_id());
-      exerciseDataList.add(temp);
-    }
-  }
 
-//  public ArrayList<ExerciseData> convertExerciseData(JSONArray dataOBJ) throws JSONException {
-//    ArrayList<ExerciseData> myList=new ArrayList<ExerciseData>();
-//    for(int i=0;i<dataOBJ.length();i++){
-//      myList.add(getExerciseData(dataOBJ.getJSONObject(i)));
-//    }
-//    return myList;
-//  }
 
-//  private ExerciseData getExerciseData(JSONObject jsonObject) throws JSONException {
-//    return new ExerciseData(jsonObject.getString("reps"),jsonObject.getString("weight")
-//        ,"-1",jsonObject.getString("activity_id"));
-//  }
 
-  public String printSetsAndReps() {
-    String ret=" "+name+":\n ";
-    for(ExerciseData exD: exerciseDataList){
-      ret+=exD+" lbs\n ";
-    }
-    return ret;
-  }
-
-  public void setId(String string) {
-    id = Integer.parseInt(string);
-    
-  }
-
-  public String getName() {
-
-    return name;
-  }
-
-  public void addSet(ExerciseData exerciseData) {
-    exerciseDataList.add(exerciseData);
-    
-  }
-}
 
 class Pt {
   
@@ -381,18 +274,9 @@ class Pt {
 	}
 }
 
-// class Line{
-//   Pt start, end;
-//   Line(Pt a, Pt b){
-//     start = a;
-//     end = b;
-//   }
-//   show(){
-//     line(start.x,start.y,end.x,end.y);
-//   }
-// }
 
-class MuscleMan{
+
+class MuscleMan_Front{
 	Chest _chest;
   Torso _torso;
   Quads _quads;
@@ -401,7 +285,7 @@ class MuscleMan{
   Forearms _forearms;
   Pt location;
   float head_radius;
-	MuscleMan(Pt loc){
+	MuscleMan_Front(Pt loc){
     location = loc;
     head_radius = 50;
 	  _chest = new Chest(new Pt(location.x,location.y+head_radius/2));

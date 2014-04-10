@@ -75,8 +75,8 @@
         var frequencies = new Array();
         
         window.onload = function(){
-            var pjs = Processing.getInstanceById('myCanvas');
-            pjs.showCircleTest();
+           // var pjs = Processing.getInstanceById('myCanvas');
+            //pjs.showCircleTest();
             //GET THE json data for all the activities
             
             getActivitiesJSON("data/activities_full.json",new Date(2014,0,1),new Date(2014,2,30));
@@ -169,11 +169,6 @@ WHERE user_id =45
                 frequencies.push(mapping);
                 console.log("muscle_type: "+array[i].muscle);
                 muscles.push(array[i].muscle);
-
-                //var obj = new Object();
-                // obj.frequency = mapping;
-                // obj.muscle = array[i].muscle;
-                // encodedArray.push(obj);
             }
             console.log("encodedArray:");
             console.log("muscles: "+muscles);
@@ -219,7 +214,6 @@ WHERE user_id =45
                 else if(muscle_type=="Thigh"){
                     pjs.scaleQuads(frequencies[j]);
                 }
-// Thigh
             }
             return encodedArray;
         }
