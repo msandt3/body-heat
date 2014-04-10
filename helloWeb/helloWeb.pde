@@ -46,7 +46,9 @@ class MuscleMan_Back{
   Pt location;
   float head_radius;
   UpperBack ub; LowerBack lb;
-  Glutes gl;
+  Glutes gl; Hamstrings hammys;
+  Triceps tr;
+  
   MuscleMan_Back(Pt loc){
     location = loc;
     head_radius = 50;
@@ -54,6 +56,9 @@ class MuscleMan_Back{
     lb = new LowerBack(new Pt(location.x-head_radius/2.0,ub.location.y+ub.height));
     gl = new Glutes(new Pt(location.x-lb.width/4.0,location.y+ub.height+lb.height+head_radius/2.0),
       new Pt(location.x+lb.width/4.0,location.y+ub.height+lb.height+head_radius/2.0));
+    hammys = new Hamstrings(new Pt(gl.left_l.x,gl.left_l.y+gl.height),new Pt(gl.right_l.x,gl.right_l.y+gl.height));
+   // tr = new Triceps(new Pt();
+   // new Biceps(new Pt(_chest.location.x-_chest.width,_chest.location.y),new Pt(_chest.location.x+_chest.width,_chest.location.y),15,_chest.width*1.5);
   } 
   void show(){
     ellipseMode(CENTER);
@@ -65,7 +70,39 @@ class MuscleMan_Back{
     gl.show();
     gl.left_l.show();
     gl.right_l.show();
+    hammys.show();
   }
+}
+
+class Triceps{
+  Pt left; Pt right;
+  float width, arm_length;
+  Triceps(Pt ll,Pt rr){
+    left = ll;
+    right = rr;
+    width = 15;
+    arm_length=25;
+  } 
+
+  void show(){
+    pushMatrix();
+    translate(right.x,right.y);
+    ellipseMode(CORNER);
+    ellipse(0,0,arm_length,width);
+    popMatrix();
+    pushMatrix();
+    translate(left.x-arm_length,right.y);
+    ellipseMode(CORNER);
+    ellipse(0,0,arm_length,width);
+    popMatrix();
+  }
+  
+//  void scale(float newScale){
+//    scale_factor = newScale;
+//    width *= scale_factor;
+//   // height *= scale_factor;
+//  } 
+  
 }
 
 class UpperBack{
@@ -127,9 +164,31 @@ class LowerBack{
 }
 
 
+class Hamstrings{
+  Pt left_l,right_l;
+  float width,height;
+  Hamstrings(Pt ll,Pt rr){
+    left_l=ll;
+    right_l=rr;
+    width= 20;
+    height=30;
+  }  
+  
+  void show(){
+    pushMatrix();
+    translate(left_l.x,left_l.y+12);
+    //rotate(PI/24.0);
+    ellipse(0,0,width,height);
+    popMatrix();
 
-
-
+    pushMatrix();
+    translate(right_l.x,right_l.y+12);
+    //rotate(11*PI/12.0);
+    ellipse(0,0,width,height);
+    popMatrix();
+  }
+  
+}
 
 class Pt {
   
