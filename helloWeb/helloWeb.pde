@@ -8,6 +8,9 @@ void setup(){
   mm_data = new MuscleMan_Back(new Pt(350,350));
   mm_control.tr.scale(.5);
   mm_control.ub.scale(.5);
+  mm_control.lb.scale(1.5);
+  mm_control.gl.scale(1.3);
+  mm_control.hammys.scale(.3);
 }
 
 void draw(){
@@ -23,8 +26,9 @@ void draw(){
   muscleMan_control.show();
   muscleMan_data.show();
   mm_control.relocate();
+  mm_data.relocate();
   mm_control.show();
-//  mm_data.show();
+  mm_data.show();
 
 }
 
@@ -67,10 +71,12 @@ class MuscleMan_Back{
   void relocate(){
     ub.location = new Pt(location.x,location.y+head_radius);
     lb.location = new Pt(location.x,ub.location.y+ub.height);
-    gl = new Glutes(new Pt(location.x-lb.width/4.0,location.y+ub.height+lb.height+head_radius/2.0),
-      new Pt(location.x+lb.width/4.0,location.y+ub.height+lb.height+head_radius/2.0));
-    hammys = new Hamstrings(new Pt(gl.left_l.x,gl.left_l.y+gl.height),new Pt(gl.right_l.x,gl.right_l.y+gl.height));
-    tr = new Triceps(new Pt(location.x-ub.width/2.0,location.y+head_radius/2.0),new Pt(location.x+ub.width/2.0,location.y+head_radius/2.0));
+    gl.left_l= new Pt(location.x-lb.width/4.0,location.y+ub.height+lb.height+head_radius/2.0);
+    gl.right_l= new Pt(location.x+lb.width/4.0,location.y+ub.height+lb.height+head_radius/2.0);
+    hammys.left_l = new Pt(gl.left_l.x,gl.left_l.y+gl.height);
+    hammys.right_l= new Pt(gl.right_l.x,gl.right_l.y+gl.height);
+    tr.left = new Pt(location.x-ub.width/2.0,location.y+head_radius/2.0);
+    tr.right=new Pt(location.x+ub.width/2.0,location.y+head_radius/2.0);
   }
   
   void show(){
@@ -83,8 +89,6 @@ class MuscleMan_Back{
     lb.show();
     lb.location.show();
     gl.show();
-    //gl.left_l.show();
-    //gl.right_l.show();
     hammys.show();
     tr.show();
   }
@@ -151,6 +155,11 @@ class Glutes{
     height=25;
   } 
   
+  void scale(float s){
+    width*=s;
+    height*=s;
+  }
+  
   void show(){
    //Need to apply rotations to ellipses here
     pushMatrix();
@@ -169,7 +178,7 @@ class Glutes{
 
 class LowerBack{
   Pt location;
-  float width,height;
+  float width,height,scale_factor;
   LowerBack(Pt l){
     location= l;
     width=50;
@@ -180,6 +189,11 @@ class LowerBack{
     //location.show();
     rect(location.x, location.y, width,height, 7); 
   } 
+  
+  void scale(float s){
+    scale_factor = s;
+    width*=scale_factor;
+  }
   
 }
 
@@ -207,7 +221,10 @@ class Hamstrings{
     ellipse(0,0,width,height);
     popMatrix();
   }
-  
+  void scale(float s){
+    width*=s;
+   
+  } 
 }
 
 class Pt {
