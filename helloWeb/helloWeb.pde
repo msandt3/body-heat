@@ -57,7 +57,7 @@ class MuscleMan_Back{
     gl = new Glutes(new Pt(location.x-lb.width/4.0,location.y+ub.height+lb.height+head_radius/2.0),
       new Pt(location.x+lb.width/4.0,location.y+ub.height+lb.height+head_radius/2.0));
     hammys = new Hamstrings(new Pt(gl.left_l.x,gl.left_l.y+gl.height),new Pt(gl.right_l.x,gl.right_l.y+gl.height));
-   // tr = new Triceps(new Pt();
+    tr = new Triceps(new Pt(location.x-head_radius/2.0,location.y+head_radius/2.0),new Pt(location.x+head_radius/2.0,location.y+head_radius/2.0));
    // new Biceps(new Pt(_chest.location.x-_chest.width,_chest.location.y),new Pt(_chest.location.x+_chest.width,_chest.location.y),15,_chest.width*1.5);
   } 
   void show(){
@@ -71,6 +71,7 @@ class MuscleMan_Back{
     gl.left_l.show();
     gl.right_l.show();
     hammys.show();
+    tr.show();
   }
 }
 
@@ -81,7 +82,7 @@ class Triceps{
     left = ll;
     right = rr;
     width = 15;
-    arm_length=25;
+    arm_length=35;
   } 
 
   void show(){
