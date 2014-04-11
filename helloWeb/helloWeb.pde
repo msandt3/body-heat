@@ -6,11 +6,7 @@ void setup(){
   muscleMan_data = new MuscleMan_Front(new Pt(350,80)); 
   mm_control = new MuscleMan_Back(new Pt(115,350));
   mm_data = new MuscleMan_Back(new Pt(350,350));
-  mm_control.tr.scale(.5);
-  mm_control.ub.scale(.5);
-  mm_control.lb.scale(1.5);
-  mm_control.gl.scale(1.3);
-  mm_control.hammys.scale(.3);
+  
 }
 
 void draw(){
@@ -46,6 +42,27 @@ void scaleForearm(float s){
 
 void scaleQuads(float s){
   muscleMan_data._quads.scale(s);
+}
+
+void scaleTriceps(float s){
+  mm_data.tr.scale(s);
+
+}
+  
+void scaleUpperBack(float s){
+  mm_data.ub.scale(s);
+}
+
+void scaleLowerBack(float s){
+  mm_data.lb.scale(s); 
+}
+
+void scaleGlutes(float s){
+  mm_data.gl.scale(s);
+}
+  
+void scaleHammies(float s){
+  mm_data.hammys.scale(s);
 }
 
 
