@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Slider for Bootstrap, from Twitter</title>
+    <link href="slider/css/slider.css" rel="stylesheet">
+	<style>
+  #sl2 {
+    width: 400px;
+  }
+   </style>
+  </head>
+
+  <body>
+      <div class="page-header">
+        <h1>Slider for Bootstrap <small>bootstrap-slider.js</small></h1>
+      </div>
+          <div class="well">
+          <b>€ 10</b> 
+          <input type="text" class="span2" 
+                 value="" data-slider-min="10" 
+                 data-slider-max="1000" 
+                 data-slider-step="5" 
+                 data-slider-value="[250,450]" 
+                 id="sl2" > 
+          <b>€ 1000</b>
+          </div>
+    <script src="slider/js/jquery.js"></script>
+    <script src="slider/js/bootstrap-slider.js"></script>
+	<script>
+	$(function(){
+		window.prettyPrint && prettyPrint();
+        $('#sl2').slider();
+    });
+  </script>
+  </body>
+ </html>

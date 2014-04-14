@@ -6,8 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <title>heatmap.js Realtime heatmap based on mouse clicks</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- Bootstrap CDN-->
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+        <link href="css/slider.css" rel="stylesheet">
         <style>
             body, html {
                 margin:0;
@@ -55,6 +54,9 @@
                 background-color:grey;
                 color:black;
             }
+            #sl2 {
+    			width: 400px;
+  			}
         </style>
     </head>
     <body>
@@ -223,5 +225,36 @@ WHERE user_id =45
         }
         
         </script>
+        
     </body>
-</html>
+    <link href="slider/css/slider.css" rel="stylesheet">
+	<style>
+  #sl2 {
+    width: 400px;
+  }
+   </style>
+  </head>
+
+  <body>
+      <div class="page-header">
+      </div>
+          <div class="well">
+          <b>€ 10</b> 
+          <input type="text" class="span2" 
+                 value="" data-slider-min="10" 
+                 data-slider-max="1000" 
+                 data-slider-step="5" 
+                 data-slider-value="[250,450]" 
+                 id="sl2" > 
+          <b>€ 1000</b>
+          </div>
+    <script src="slider/js/jquery.js"></script>
+    <script src="slider/js/bootstrap-slider.js"></script>
+	<script>
+	$(function(){
+		window.prettyPrint && prettyPrint();
+        $('#sl2').slider();
+    });
+  </script>
+  </body>
+ </html>
