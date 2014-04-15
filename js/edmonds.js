@@ -7,12 +7,10 @@ window.onload = function(){
 };
 
 //Returns the exercises performed, excludes those that fall outside 
-        //given range
+//given range
 function getActivitiesJSON(path,start_date,end_date){
     var exercises = new Array();
-    
     $.getJSON(path, function(json) {
-
         console.log("start_date: "+start_date);
         console.log("end_date: "+end_date);
         for(var i=0; i<json.length; i++){
@@ -20,8 +18,10 @@ function getActivitiesJSON(path,start_date,end_date){
             var d = new Date(activity.created_on);
             //Check to make sure that the json data is within the date range
             if(d>=start_date && d<=end_date){
-                var obj = new Object();
-                exercises.push(activity.muscle_name);
+                if(activity.weight>0&&activity.reps>0){
+                    var obj = new Object();
+                    exercises.push(activity.muscle_name);
+                }   
             }
         }
         console.log(exercises);
@@ -56,10 +56,7 @@ function getActivitiesJSON(path,start_date,end_date){
             console.log("DATA OBJ: "+obj.muscle+" : "+obj.frequency);
 
         }
-        
         encodeValues(frequencies,max,min);
-
-
     });
     
 }
