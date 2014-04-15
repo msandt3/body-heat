@@ -6,15 +6,11 @@ window.onload = function(){
     getActivitiesJSON("data/activities_full.json",new Date(2014,0,1),new Date(2014,2,30));
 };
 
-
-
 //Returns the exercises performed, excludes those that fall outside 
-        //given range
+//given range
 function getActivitiesJSON(path,start_date,end_date){
     var exercises = new Array();
-    
     $.getJSON(path, function(json) {
-
         console.log("start_date: "+start_date);
         console.log("end_date: "+end_date);
         for(var i=0; i<json.length; i++){
@@ -22,9 +18,10 @@ function getActivitiesJSON(path,start_date,end_date){
             var d = new Date(activity.created_on);
             //Check to make sure that the json data is within the date range
             if(d>=start_date && d<=end_date){
-                var obj = new Object();
-                exercises.push(activity.muscle_name);
-                //console.log(d);
+                if(activity.weight>0&&activity.reps>0){
+                    var obj = new Object();
+                    exercises.push(activity.muscle_name);
+                }   
             }
         }
         console.log(exercises);
@@ -59,10 +56,7 @@ function getActivitiesJSON(path,start_date,end_date){
             console.log("DATA OBJ: "+obj.muscle+" : "+obj.frequency);
 
         }
-        
         encodeValues(frequencies,max,min);
-
-
     });
     
 }
@@ -163,8 +157,6 @@ function encodeValues(array,max,min){
 }
 
     function populateAllMuscles(muscles){
-
-
         muscles.push("Chest");
         muscles.push( "Calves");
         muscles.push( "Upper Back");
@@ -177,10 +169,6 @@ function encodeValues(array,max,min){
         muscles.push( "Abdominals");
         muscles.push( "Biceps");
         muscles.push( "Thigh"); 
-
-        // for (var i=0;i<12;i++){
-        //     frequencies.push("1");
-        // }
     }
 
     function createArrayForAddition(array){
@@ -194,6 +182,6 @@ function encodeValues(array,max,min){
 
     }
 
-function computeMapping(s,a1,a2,b1,b2){
-    return b1 + (((s-a1)*(b2-b1))/(a2-a1));
-}
+    function computeMapping(s,a1,a2,b1,b2){
+        return b1 + (((s-a1)*(b2-b1))/(a2-a1));
+    }
