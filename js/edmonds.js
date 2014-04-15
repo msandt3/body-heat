@@ -49,12 +49,20 @@ function getActivitiesJSON(path,start_date,end_date){
         edgeCase.muscle = currMuscle;
         edgeCase.frequency = num;
         frequencies.push(edgeCase);
-        console.log(frequencies);
+        //console.log(frequencies);
         //find the max value of the muscle frequencies
         var max = findMaxFrequency(frequencies);
         //find the in value of the muscle frequencies
         var min = findMinFrequency(frequencies);
-        var encodedVals = encodeValues(frequencies,max,min);
+        for(var key in frequencies){
+            var obj = frequencies[key];
+            console.log("DATA OBJ: "+obj.muscle+" : "+obj.frequency);
+
+        }
+        
+        encodeValues(frequencies,max,min);
+
+
     });
     
 }
@@ -76,83 +84,114 @@ function findMinFrequency(array){
 }
 
 function encodeValues(array,max,min){
-    var encodedArray = new Array();
     var muscles = new Array();
-    var frequencies = new Array();
-    console.log("array.length: "+array.length);
+    var _m = new Array();
+    for(var i=0;i<array.length;i++){
+        _m[i]= array[i].muscle;
+
+    }
+    console.log(_m);
+   
+    populateAllMuscles(muscles);
+    for(var j=0;j<_m.length;j++){
+        var index = muscles.indexOf(_m[j]);
+        muscles.splice(index,1);
+    }
+   
+    console.log("muscles: "+muscles);
+    
+    console.log("LENGTH: "+array.length);
+
+    
     for(var i = 0; i<array.length; i++){
         //compute the frequency mapped to the range .5 -> 2
-        var mapping = computeMapping(array[i].frequency,min,max,.5,2);
-        console.log(array[i].frequency+" --> "+mapping);
-        frequencies.push(mapping);
-        console.log("muscle_type: "+array[i].muscle);
-        muscles.push(array[i].muscle);
+        var mapping = computeMapping(array[i].frequency,min,max,1,2);
+       // console.log(array[i].frequency+" --> "+mapping);
+        array[i].frequency = mapping;
+        // frequencies.push(mapping);
+        // console.log("muscle_type: "+array[i].muscle);
+        // muscles.push(array[i].muscle);
     }
-    console.log("encodedArray:");
-    console.log("muscles: "+muscles);
+
+    for(var i=0;i<array.length;i++){
+        console.log("muscle: "+array[i].muscle);
+        console.log("frequency: "+array[i].frequency);
+    }
+    var xx = createArrayForAddition(muscles);
+    array.push.apply(array,xx);
+
     var pjs = Processing.getInstanceById('myCanvas');
-    for(var j=0;j<muscles.length;j++){
-        console.log("muscle type: "+muscles[j]);
-        var muscle_type = muscles[j];
-       // console.log("muscle type: "+muscle_type);
+    for(var j=0;j<array.length;j++){
+        var muscle_type = array[j].muscle;
         if(muscle_type=="Chest"){
-            pjs.scaleChest(frequencies[j]);
+            pjs.scaleChest(array[j].frequency);
         }
         else if(muscle_type=="Calves"){
-            console.log("Calves frequency: "+frequencies[j]);
-            pjs.scaleCalves(frequencies[j]);
+            pjs.scaleCalves(array[j].frequency);
         }
         else if(muscle_type=="Upper Back"){
-            pjs.scaleUpperBack(frequencies[j]);
+            pjs.scaleUpperBack(array[j].frequency);
         }
         else if(muscle_type=="Lower Back"){
-            pjs.scaleLowerBack(frequencies[j]);
+            pjs.scaleLowerBack(array[j].frequency);
         }
         else if(muscle_type=="Triceps"){
-            pjs.scaleTriceps(frequencies[j]);
+            pjs.scaleTriceps(array[j].frequency);
         }
         else if(muscle_type=="Glutes"){
-            pjs.scaleGlutes(frequencies[j]);
+            pjs.scaleGlutes(array[j].frequency);
         }
         else if(muscle_type=="Hamstrings"){
-            pjs.scaleHammies(frequencies[j]);
+            pjs.scaleHammies(array[j].frequency);
         }
         else if(muscle_type=="Forearm"){
-            pjs.scaleForearm(frequencies[j]);
+            pjs.scaleForearm(array[j].frequency);
         }
         else if(muscle_type=="Shoulder"){
-            //pjs.scaleShoulder
+            pjs.scaleShoulders(array[j].frequency);
         }
         else if(muscle_type=="Abdominals"){
             //pjs.scaleAbdominals
         }
         else if(muscle_type=="Biceps"){
-            pjs.scaleBiceps(frequencies[j]);
+            pjs.scaleBiceps(array[j].frequency);
         }
         else if(muscle_type=="Thigh"){
-            pjs.scaleQuads(frequencies[j]);
+            pjs.scaleQuads(array[j].frequency);
         }
     }
-    return encodedArray;
 }
 
-    function populateAllMuscles(muscles, frequencies){
-        muscles.push("Chest");
-        muscles.push("Calves");
-        muscles.push("Upper Back");
-        muscles.push("Lower Back");
-        muscles.push("Triceps");
-        muscles.push("Glutes");
-        muscles.push("Hamstrings");
-        muscles.push("Forearm");
-        muscles.push("Shoulder");
-        muscles.push("Abdominals");
-        muscles.push("Biceps");
-        muscles.push("Thigh"); 
+    function populateAllMuscles(muscles){
 
-        for (var i=0;i<12;i++){
-            frequencies[i].push(1);
+
+        muscles.push("Chest");
+        muscles.push( "Calves");
+        muscles.push( "Upper Back");
+        muscles.push( "Lower Back");
+        muscles.push( "Triceps");
+        muscles.push( "Glutes");
+        muscles.push( "Hamstrings");
+        muscles.push( "Forearm");
+        muscles.push( "Shoulder");
+        muscles.push( "Abdominals");
+        muscles.push( "Biceps");
+        muscles.push( "Thigh"); 
+
+        // for (var i=0;i<12;i++){
+        //     frequencies.push("1");
+        // }
+    }
+
+    function createArrayForAddition(array){
+        var ret = new Array();
+        
+        for(var i=0;i<array.length;i++){
+            ret.push({muscle : array[i], frequency : ".5    "});
         }
+
+        return ret;
+
     }
 
 function computeMapping(s,a1,a2,b1,b2){

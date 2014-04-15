@@ -1,11 +1,12 @@
 MuscleMan_Front muscleMan_control,muscleMan_data;
 MuscleMan_Back mm_control,mm_data;
 void setup(){
-  size(600,600,P2D);
+  size(600,1000,P2D);
   muscleMan_control = new MuscleMan_Front(new Pt(115,80));
   muscleMan_data = new MuscleMan_Front(new Pt(350,80)); 
   mm_control = new MuscleMan_Back(new Pt(115,350));
   mm_data = new MuscleMan_Back(new Pt(350,350));
+
   
 }
 
@@ -30,6 +31,11 @@ void draw(){
 
 void scaleChest(float s){
   muscleMan_data._chest.scale(s);
+}
+
+void scaleBiceps(float s){
+  muscleMan_data._biceps.scale(s);
+
 }
 
 void scaleCalves(float s){
@@ -65,6 +71,10 @@ void scaleHammies(float s){
   mm_data.hammys.scale(s);
 }
 
+void scaleShoulders(float s){
+  muscleMan_data.shoulder.scale(s);
+}
+
 
 class MuscleMan_Back{
   Pt location;
@@ -72,7 +82,7 @@ class MuscleMan_Back{
   UpperBack ub; LowerBack lb;
   Glutes gl; Hamstrings hammys;
   Triceps tr;
-  
+ 
   MuscleMan_Back(Pt loc){
     location = loc;
     head_radius = 50;
@@ -82,7 +92,7 @@ class MuscleMan_Back{
       new Pt(location.x+lb.width/4.0,location.y+ub.height+lb.height+head_radius/2.0));
     hammys = new Hamstrings(new Pt(gl.left_l.x,gl.left_l.y+gl.height),new Pt(gl.right_l.x,gl.right_l.y+gl.height));
     tr = new Triceps(new Pt(location.x-head_radius/2.0,location.y+head_radius/2.0),new Pt(location.x+head_radius/2.0,location.y+head_radius/2.0));
-   // new Biceps(new Pt(_chest.location.x-_chest.width,_chest.location.y),new Pt(_chest.location.x+_chest.width,_chest.location.y),15,_chest.width*1.5);
+    
   } 
   
   void relocate(){
@@ -90,8 +100,8 @@ class MuscleMan_Back{
     lb.location = new Pt(location.x,ub.location.y+ub.height);
     gl.left_l= new Pt(location.x-lb.width/4.0,location.y+ub.height+lb.height+head_radius/2.0);
     gl.right_l= new Pt(location.x+lb.width/4.0,location.y+ub.height+lb.height+head_radius/2.0);
-    hammys.left_l = new Pt(gl.left_l.x,gl.left_l.y+gl.height);
-    hammys.right_l= new Pt(gl.right_l.x,gl.right_l.y+gl.height);
+    hammys.left_l = new Pt(gl.left_l.x,gl.left_l.y+hammys.height-5);
+    hammys.right_l= new Pt(gl.right_l.x,gl.right_l.y+hammys.height-5);
     tr.left = new Pt(location.x-ub.width/2.0,location.y+head_radius/2.0);
     tr.right=new Pt(location.x+ub.width/2.0,location.y+head_radius/2.0);
   }
@@ -100,14 +110,46 @@ class MuscleMan_Back{
     ellipseMode(CENTER);
     ellipse(location.x,location.y,head_radius,head_radius);
     rectMode(CORNER);
-    location.show();
+    //location.show();
     ub.show();
-    ub.location.show();
+    //ub.location.show();
     lb.show();
-    lb.location.show();
+    //lb.location.show();
     gl.show();
     hammys.show();
+    hammys.left_l.show();
     tr.show();
+  }
+}
+
+
+class Shoulder{
+  Pt left_l, right_l;
+  float width, height;
+  public Shoulder(Pt l, Pt r,float w){
+    left_l = l;
+    right_l = r;
+    width = w;
+    height = 20;
+  }
+  
+  void show(){
+    pushMatrix();
+    translate(left_l.x,left_l.y);
+    ellipseMode(CENTER);
+    ellipse(0,0,width,height);
+    popMatrix();
+    
+    pushMatrix();
+    translate(right_l.x,right_l.y);
+    ellipseMode(CENTER);
+    ellipse(0,0,width,height);
+    popMatrix();
+    
+  }
+  
+  void scale(float s){
+   height*=s; 
   }
 }
 
@@ -138,7 +180,6 @@ class Triceps{
     scale_factor = newScale;
     width *= scale_factor;
   } 
-  
 }
 
 class UpperBack{
@@ -354,60 +395,63 @@ class Pt {
     vertex(x, y);
   };
 
-  	void vertext(float u, float v) {
-    	vertex(x, y, u, v);
-  	}
+    void vertext(float u, float v) {
+      vertex(x, y, u, v);
+    }
 
-  	boolean isInWindow() {
-    	return(((x<0)||(x>width)||(y<0)||(y>height)));
-  	}
-  	
-  	float disTo(Pt P) {
-    	return sqrt(sq(P.x-x)+sq(P.y-y));
-  	}
+    boolean isInWindow() {
+      return(((x<0)||(x>width)||(y<0)||(y>height)));
+    }
+    
+    float disTo(Pt P) {
+      return sqrt(sq(P.x-x)+sq(P.y-y));
+    }
 
-  	void addPt(Pt P) {
-    	x+=P.x; 
-    	y+=P.y; 
-  	}
+    void addPt(Pt P) {
+      x+=P.x; 
+      y+=P.y; 
+    }
 
-  	void subPt(Pt P) {
-    	x-=P.x; 
-    	y-=P.y; 
-  	}
+    void subPt(Pt P) {
+      x-=P.x; 
+      y-=P.y; 
+    }
 
-  	void mul(float f) {
-		x*=f; 
-    		y*=f; 
-  		}
+    void mul(float f) {
+    x*=f; 
+        y*=f; 
+      }
 
-	void show() {
+  void show() {
     ellipseMode(CENTER);
-  		ellipse(x, y, 6, 6);
-	}
+      ellipse(x, y, 6, 6);
+  }
 }
 
 
 
 class MuscleMan_Front{
-	Chest _chest;
+  Chest _chest;
   Torso _torso;
   Quads _quads;
   Calves _calves;
   Biceps _biceps;
   Forearms _forearms;
+  Shoulder shoulder; 
   Pt location;
   float head_radius;
-	MuscleMan_Front(Pt loc){
+  
+  MuscleMan_Front(Pt loc){
     location = loc;
     head_radius = 50;
-	  _chest = new Chest(new Pt(location.x,location.y+head_radius/2));
+    _chest = new Chest(new Pt(location.x,location.y+head_radius/2));
     _torso = new Torso(new Pt(location.x,_chest.location.y+_chest.height));
     _quads = new Quads(new Pt(_torso.location.x+7,_torso.location.y+_torso.height+7),new Pt(_torso.location.x+_torso.width-7,_torso.location.y+_torso.height+7),20);
     _calves = new Calves(new Pt(_quads.left_location.x-_quads.width/2.0,_quads.left_location.y+50),new Pt(_quads.right_location.x+_quads.width/2.0,_quads.right_location.y),15);
     _biceps = new Biceps(new Pt(_chest.location.x-_chest.width,_chest.location.y),new Pt(_chest.location.x+_chest.width,_chest.location.y),15,_chest.width*1.5);
     _forearms = new Forearms(new Pt(_biceps.left_location.x-_biceps.arm_length,_biceps.left_location.y),
       new Pt(_biceps.right_location.x+_biceps.arm_length,_biceps.right_location.y+_biceps.width*.25),_biceps.width,_biceps.arm_length);
+      shoulder = new Shoulder(new Pt(_chest.location.x-_chest.width,_chest.location.y),new Pt(_chest.location.x+_chest.width,_chest.location.y),20.0);
   } 
 
   void show(){
@@ -417,18 +461,20 @@ class MuscleMan_Front{
     _torso.show();
 
     rectMode(CORNER);
-		_chest.show();
+    _chest.show();
     //draw the quads
     
     _quads.show();
     //draw the calves
     _calves.show();
      //draw the torso
-
     _biceps.show();
     _forearms.show();
+    shoulder.show();
+//    shoulder.left_l.show();
+//    shoulder.right_l.show();    
 
-	}
+  }
 
   void relocate(){
     _biceps.left_location = new Pt(_chest.location.x-_chest.width,_chest.location.y);
@@ -465,20 +511,20 @@ class Torso{
 
 class Chest{
 
-	Pt location; //the center location of the chest object
-	float scale_factor,width,height;
+  Pt location; //the center location of the chest object
+  float scale_factor,width,height;
 
-	Chest(Pt loc){
-	  location = loc;
-	  scale_factor = 1;
+  Chest(Pt loc){
+    location = loc;
+    scale_factor = 1;
           width = 25;
           height = 25;
-	}
+  }
 
-	void show(){
-		rect(location.x-width, location.y, width,height, 7);
+  void show(){
+    rect(location.x-width, location.y, width,height, 7);
     rect(location.x,location.y,width,height,7);
-	}
+  }
 
   void scale(float newScale){
     scale_factor = newScale;
