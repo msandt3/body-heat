@@ -9,6 +9,7 @@
 
         <!-- Stylesheets -->
         <link href="css/app.css" rel="stylesheet">
+        <link href="css/d3.slider.css" rel="stylesheet">
 
     </head>
     <body>
@@ -18,12 +19,22 @@
                 style="border:1px solid #000000;"
                 data-processing-sources="helloWeb/helloWeb.pde">
             </canvas>
+
+            <h1>Series Data</h1>
+            <div id="container">
+                <div id="vis">
+                </div>
+            </div>
         </div>
+
+        
 
         <script src="js/processing-1.4.1.js"></script>
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
         <script src="js/edmonds.js"></script>
         <script src="js/d3.v3.min.js"></script>
+        <script src="js/d3.tip.js"></script>
+        <script src="js/d3.slider.js"></script>
         <script src="js/main.js"></script>
         
     </body>

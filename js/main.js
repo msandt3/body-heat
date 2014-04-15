@@ -7,17 +7,26 @@ DIV ON THE PAGE.
 
 This function is passed the variables to initially draw on the x and y axes.
 **/
+
+$(document).ready(function(){
+	console.log("READY");
+	init("Axis1","Axis2");
+});
+
+
 var margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
-var x = d3.scale.linear()
+var x = d3.time.scale()
     .range([0, width]);
 
 var y = d3.scale.linear()
     .range([height, 0]);
 
 var color = d3.scale.category10();
+var size = d3.scale.linear()
+	.range([0,1]);
 
 var xAxis = d3.svg.axis()
     .scale(x)
@@ -26,6 +35,11 @@ var xAxis = d3.svg.axis()
 var yAxis = d3.svg.axis()
     .scale(y)
     .orient("left");
+
+var tip = d3.tip().attr('class','d3-tip').offset([-10,0])
+	.html(function(d){	
+		return "<ul><li>Weight: "+d.weight+"</li><li>Reps: "+d.reps+"</li><li>Exercise: "+d.exercise_name+"</li><li>Muscle Group: "+d.muscle_name+"</li></ul>";
+	});
 
 var text = function(d){
     d.compactness = parseFloat(d.compactness);
@@ -44,8 +58,9 @@ function draw(data){
       .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     
-    
-    x.domain(d3.extent(data, function(d) { return d.reps; })).nice();
+    svg.call(tip);
+
+    x.domain(d3.extent(data, function(d) { return d.created_on; })).nice(7);
     y.domain(d3.extent(data, function(d) { return d.weight; })).nice();
 
     svg.append("g")
@@ -57,7 +72,7 @@ function draw(data){
         .attr("x", width)
         .attr("y", -6)
         .style("text-anchor", "end")
-        .text("Reps");
+        .text("Created On");
 
     svg.append("g")
         .attr("class", "y axis")
@@ -74,66 +89,53 @@ function draw(data){
     svg.selectAll(".dot")
         .data(data)
       .enter().append("circle")
-    //     .on('mouseover',function(d){
-    //         console.log(d);
-    //         string = "Asymmetry Coefficient: " + d.asymmetryCoefficient + "<br />" +
-    //         "Compactness: " + d.compactness + "<br />" +
-    //         "Groove Length: " + d.grooveLength + "<br />" +
-    //         "Kernel Length: " + d.kernelLength + "<br />" +
-    //         "Kernel Width: " + d.kernelWidth + "<br />" +
-    //         "Variety: " + d.variety + "<br />";
-    //         showDetails(string);
-    //     })
-    //     .on('mouseout',function(d){
-    //         showDetails('');
-    //     })
         .attr("class", "dot")
-        .attr("r", 3.5)
+        .attr("r", function(d){
+        	return size(d.reps);
+        })
         .attr("cx", function(d){
-            console.log(x(d.reps));
-            return x(d.reps); 
+            return x(d.created_on); 
         })
         .attr("cy", function(d) {
-            console.log(y(d.weight));
             return y(d.weight); 
-        });
-        // .style("fill", function(d) { 
-        //     return #ff0000; 
-        // });
-
-    // var legend = svg.selectAll(".legend")
-    //     .data(color.domain())
-    //   .enter().append("g")
-    //     .attr("class", "legend")
-    //     .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
-
-    // legend.append("rect")
-    //     .attr("x", width - 18)
-    //     .attr("width", 18)
-    //     .attr("height", 18)
-    //     .style("fill", color);
-
-    // legend.append("text")
-    //     .attr("x", width - 24)
-    //     .attr("y", 9)
-    //     .attr("dy", ".35em")
-    //     .style("text-anchor", "end")
-    //     .text(function(d) { return d; });
+        })
+        .attr('fill',function(d){
+        	return color(d.muscle_name);
+        })
+        .on('mouseover',tip.show)
+        .on('mouseout', tip.hide);
 }
 
 function init(xAxis, yAxis){
     xLabel = xAxis;
     yLabel = yAxis;
     
-    d3.json('data/activities.json',function(error,data){
+    d3.json('data/activities_full.json',function(error,data){
         
-        data.sort(function(a,b){
-            console.log(new Date(a.created_on));
-            console.log(new Date(b.created_on));
-            console.log(new Date(a.created_on) - new Date(b.created_on));
+    	console.log(data);
+    	var parsed_data = [];
+    	for(var key in data){
+    		var obj = data[key];
+    		if(obj.weight != 0 && obj.reps != 0){
+    			parsed_data.push(obj);
+    		}
+
+    		obj.created_on = new Date(obj.created_on);
+    	}
+        
+
+        parsed_data.sort(function(a,b){
+        	if(a < b){
+        		return -1;
+        	}
+        	if(a > b){
+        		return 1;
+        	}
+        	return 0;
         });
-        console.log(data);
-        draw(data);
+        console.log(parsed_data);
+
+        draw(parsed_data);
     });
 }
 
