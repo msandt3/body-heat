@@ -136,6 +136,25 @@ function encodeValues(array,max,min){
     return encodedArray;
 }
 
+    function populateAllMuscles(muscles, frequencies){
+        muscles.push("Chest");
+        muscles.push("Calves");
+        muscles.push("Upper Back");
+        muscles.push("Lower Back");
+        muscles.push("Triceps");
+        muscles.push("Glutes");
+        muscles.push("Hamstrings");
+        muscles.push("Forearm");
+        muscles.push("Shoulder");
+        muscles.push("Abdominals");
+        muscles.push("Biceps");
+        muscles.push("Thigh"); 
+
+        for (var i=0;i<12;i++){
+            frequencies[i].push(1);
+        }
+    }
+
 function computeMapping(s,a1,a2,b1,b2){
     return b1 + (((s-a1)*(b2-b1))/(a2-a1));
 }
