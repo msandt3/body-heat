@@ -6,8 +6,6 @@ window.onload = function(){
     getActivitiesJSON("data/activities_full.json",new Date(2014,0,1),new Date(2014,2,30));
 };
 
-
-
 //Returns the exercises performed, excludes those that fall outside 
         //given range
 function getActivitiesJSON(path,start_date,end_date){
@@ -24,7 +22,6 @@ function getActivitiesJSON(path,start_date,end_date){
             if(d>=start_date && d<=end_date){
                 var obj = new Object();
                 exercises.push(activity.muscle_name);
-                //console.log(d);
             }
         }
         console.log(exercises);
@@ -163,8 +160,6 @@ function encodeValues(array,max,min){
 }
 
     function populateAllMuscles(muscles){
-
-
         muscles.push("Chest");
         muscles.push( "Calves");
         muscles.push( "Upper Back");
@@ -177,10 +172,6 @@ function encodeValues(array,max,min){
         muscles.push( "Abdominals");
         muscles.push( "Biceps");
         muscles.push( "Thigh"); 
-
-        // for (var i=0;i<12;i++){
-        //     frequencies.push("1");
-        // }
     }
 
     function createArrayForAddition(array){
@@ -194,6 +185,6 @@ function encodeValues(array,max,min){
 
     }
 
-function computeMapping(s,a1,a2,b1,b2){
-    return b1 + (((s-a1)*(b2-b1))/(a2-a1));
-}
+    function computeMapping(s,a1,a2,b1,b2){
+        return b1 + (((s-a1)*(b2-b1))/(a2-a1));
+    }
