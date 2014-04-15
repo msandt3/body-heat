@@ -1,7 +1,7 @@
 MuscleMan_Front muscleMan_control,muscleMan_data;
 MuscleMan_Back mm_control,mm_data;
 void setup(){
-  size(600,1000,P2D);
+  size(600,600,P2D);
   muscleMan_control = new MuscleMan_Front(new Pt(115,80));
   muscleMan_data = new MuscleMan_Front(new Pt(350,80)); 
   mm_control = new MuscleMan_Back(new Pt(115,350));

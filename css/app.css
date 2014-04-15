@@ -1,0 +1,49 @@
+body, html {
+    margin:0;
+    padding:0;
+    font-family:Arial;
+}
+h1 {
+    margin-bottom:10px;
+}
+#main {
+    position:relative;
+    width:940px;
+    padding:20px;
+    margin:auto;
+}
+#heatmapArea {
+    position:relative;
+    float:left;
+    width:600px;
+    height:400px;
+    background-image:url(img/muscle-groups-front.jpg);
+    background-repeat: no-repeat;
+    background-position:center;
+    border:1px dashed black;
+}
+#configArea {
+    position:relative;
+    float:left;
+    width:260px;
+    padding:20px;
+}
+#gen {
+    margin-top:25px;
+    padding:10px 20px 10px 20px;
+    -moz-border-radius:15px;
+    -o-border-radius:15px;
+    -webkit-border-radius:15px;
+    border-radius:15px;
+    border:2px solid black;
+    cursor:pointer;
+    color:white;
+    background-color:black;
+}
+#gen:hover{
+    background-color:grey;
+    color:black;
+}
+#sl2 {
+	width: 400px;
+	}

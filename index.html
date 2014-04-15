@@ -2,259 +2,29 @@
 
 <html lang="en">
     <head>
+        <title>heatmap.js Realtime heatmap based on mouse clicks</title>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-        <title>heatmap.js Realtime heatmap based on mouse clicks</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="css/slider.css" rel="stylesheet">
-        <style>
-            body, html {
-                margin:0;
-                padding:0;
-                font-family:Arial;
-            }
-            h1 {
-                margin-bottom:10px;
-            }
-            #main {
-                position:relative;
-                width:940px;
-                padding:20px;
-                margin:auto;
-            }
-            #heatmapArea {
-                position:relative;
-                float:left;
-                width:600px;
-                height:400px;
-                background-image:url(img/muscle-groups-front.jpg);
-                background-repeat: no-repeat;
-                background-position:center;
-                border:1px dashed black;
-            }
-            #configArea {
-                position:relative;
-                float:left;
-                width:260px;
-                padding:20px;
-            }
-            #gen {
-                margin-top:25px;
-                padding:10px 20px 10px 20px;
-                -moz-border-radius:15px;
-                -o-border-radius:15px;
-                -webkit-border-radius:15px;
-                border-radius:15px;
-                border:2px solid black;
-                cursor:pointer;
-                color:white;
-                background-color:black;
-            }
-            #gen:hover{
-                background-color:grey;
-                color:black;
-            }
-            #sl2 {
-    			width: 400px;
-  			}
-        </style>
+
+        <!-- Stylesheets -->
+        <link href="css/app.css" rel="stylesheet">
+
     </head>
     <body>
         <div id="main">
             <h1>Chernoff Muscles</h1>
-          <!--   <div id="configArea">
-                
-            </div> -->
-            <canvas id ="myCanvas" width = 600 height = 400 
+            <canvas id ="myCanvas" width = 600 height = 250
                 style="border:1px solid #000000;"
                 data-processing-sources="helloWeb/helloWeb.pde">
             </canvas>
         </div>
-        <script type="text/javascript" src="scripts/heatmap.js"></script>
-        <script src="scripts/processing-1.4.1.js"></script>
+
+        <script src="js/processing-1.4.1.js"></script>
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-        <script type="text/javascript">
-        var frequencies = new Array();
-        
-        window.onload = function(){
-           // var pjs = Processing.getInstanceById('myCanvas');
-            //pjs.showCircleTest();
-            //GET THE json data for all the activities
-            
-            getActivitiesJSON("data/activities_full.json",new Date(2014,0,1),new Date(2014,2,30));
-            /*
-SELECT activities.`weight` , activities.`reps` , activities.`created_on` , muscles.`name` AS  'muscle_name', exercises.`name` AS  'exercise_name', activities.workout_id
-FROM  `activities` 
-INNER JOIN  `exercises_muscles` ON activities.exercise_id = exercises_muscles.exercise_id
-INNER JOIN  `muscles` ON exercises_muscles.muscle_id = muscles.id
-INNER JOIN  `exercises` ON exercises.id = activities.exercise_id
-WHERE user_id =45
-        Use SQL above to get the data
-            */
-        };
-        //Returns the exercises performed, excludes those that fall outside 
-        //given range
-        function getActivitiesJSON(path,start_date,end_date){
-            var exercises = new Array();
-            
-            $.getJSON(path, function(json) {
-
-                console.log("start_date: "+start_date);
-                console.log("end_date: "+end_date);
-                for(var i=0; i<json.length; i++){
-                    var activity = json[i];
-                    var d = new Date(activity.created_on);
-                    //Check to make sure that the json data is within the date range
-                    if(d>=start_date && d<=end_date){
-                        var obj = new Object();
-                        exercises.push(activity.muscle_name);
-                        //console.log(d);
-                    }
-                }
-                console.log(exercises);
-                exercises.sort();//function(a,b){return a-b});
-                console.log(exercises);
-                var num = 1;
-                var currMuscle = exercises[0];
-                for(var i=1; i<exercises.length;i++){
-                    var obj = new Object();
-                    if(currMuscle==exercises[i]){
-                        num++;
-                    }
-                    else{
-                        obj.muscle = currMuscle;
-                        obj.frequency = num;
-                        frequencies.push(obj);
-                        num = 1;
-                        currMuscle = exercises[i];
-                    }
-                }
-                var edgeCase = new Object();
-                edgeCase.muscle = currMuscle;
-                edgeCase.frequency = num;
-                frequencies.push(edgeCase);
-                console.log(frequencies);
-                //find the max value of the muscle frequencies
-                var max = findMaxFrequency(frequencies);
-                //find the in value of the muscle frequencies
-                var min = findMinFrequency(frequencies);
-                var encodedVals = encodeValues(frequencies,max,min);
-            });
-            
-        }
-
-        function findMaxFrequency(array){
-            var maxF = 0;
-            for(var i=0; i< array.length;i++){
-                if(array[i].frequency>maxF) maxF = array[i].frequency;
-            }
-            return maxF;
-        }
-
-        function findMinFrequency(array){
-            var minF = 999999999;
-            for(var i=0;i<array.length;i++){
-                if(array[i].frequency<minF) minF = array[i].frequency;
-            }
-            return minF;
-        }
-
-        function encodeValues(array,max,min){
-            var encodedArray = new Array();
-            var muscles = new Array();
-            var frequencies = new Array();
-            console.log("array.length: "+array.length);
-            for(var i = 0; i<array.length; i++){
-                //compute the frequency mapped to the range .5 -> 2
-                var mapping = computeMapping(array[i].frequency,min,max,.5,2);
-                console.log(array[i].frequency+" --> "+mapping);
-                frequencies.push(mapping);
-                console.log("muscle_type: "+array[i].muscle);
-                muscles.push(array[i].muscle);
-            }
-            console.log("encodedArray:");
-            console.log("muscles: "+muscles);
-            var pjs = Processing.getInstanceById('myCanvas');
-            for(var j=0;j<muscles.length;j++){
-                console.log("muscle type: "+muscles[j]);
-                var muscle_type = muscles[j];
-               // console.log("muscle type: "+muscle_type);
-                if(muscle_type=="Chest"){
-                    pjs.scaleChest(frequencies[j]);
-                }
-                else if(muscle_type=="Calves"){
-                    console.log("Calves frequency: "+frequencies[j]);
-                    pjs.scaleCalves(frequencies[j]);
-                }
-                else if(muscle_type=="Upper Back"){
-                    pjs.scaleUpperBack(frequencies[j]);
-                }
-                else if(muscle_type=="Lower Back"){
-                    pjs.scaleLowerBack(frequencies[j]);
-                }
-                else if(muscle_type=="Triceps"){
-                    pjs.scaleTriceps(frequencies[j]);
-                }
-                else if(muscle_type=="Glutes"){
-                    pjs.scaleGlutes(frequencies[j]);
-                }
-                else if(muscle_type=="Hamstrings"){
-                    pjs.scaleHammies(frequencies[j]);
-                }
-                else if(muscle_type=="Forearm"){
-                    pjs.scaleForearm(frequencies[j]);
-                }
-                else if(muscle_type=="Shoulder"){
-                    //pjs.scaleShoulder
-                }
-                else if(muscle_type=="Abdominals"){
-                    //pjs.scaleAbdominals
-                }
-                else if(muscle_type=="Biceps"){
-                    pjs.scaleBiceps(frequencies[j]);
-                }
-                else if(muscle_type=="Thigh"){
-                    pjs.scaleQuads(frequencies[j]);
-                }
-            }
-            return encodedArray;
-        }
-
-        function computeMapping(s,a1,a2,b1,b2){
-            return b1 + (((s-a1)*(b2-b1))/(a2-a1));
-        }
-        
-        </script>
+        <script src="js/edmonds.js"></script>
+        <script src="js/d3.v3.min.js"></script>
+        <script src="js/main.js"></script>
         
     </body>
-    <link href="slider/css/slider.css" rel="stylesheet">
-	<style>
-  #sl2 {
-    width: 400px;
-  }
-   </style>
-  </head>
-
-  <body>
-      <div class="page-header">
-      </div>
-          <div class="well">
-          <b>€ 10</b> 
-          <input type="text" class="span2" 
-                 value="" data-slider-min="10" 
-                 data-slider-max="1000" 
-                 data-slider-step="5" 
-                 data-slider-value="[250,450]" 
-                 id="sl2" > 
-          <b>€ 1000</b>
-          </div>
-    <script src="slider/js/jquery.js"></script>
-    <script src="slider/js/bootstrap-slider.js"></script>
-	<script>
-	$(function(){
-		window.prettyPrint && prettyPrint();
-        $('#sl2').slider();
-    });
-  </script>
-  </body>
  </html>
