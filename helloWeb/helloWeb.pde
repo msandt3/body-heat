@@ -1,7 +1,11 @@
 MuscleMan_Front muscleMan_control,muscleMan_data;
 MuscleMan_Back mm_control,mm_data;
 void setup(){
+
+  //Set up screen size
   size(600,600,P2D);
+  
+  //Set up default Chernoff Bodies.
   muscleMan_control = new MuscleMan_Front(new Pt(115,80));
   muscleMan_data = new MuscleMan_Front(new Pt(350,80)); 
   mm_control = new MuscleMan_Back(new Pt(115,350));
@@ -11,13 +15,17 @@ void setup(){
 }
 
 void draw(){
+  //draw background color
   background(255);
   fill(0);
+  
+  //Set text Font
   textSize(22);
   text("CONTROL",muscleMan_control.location.x-muscleMan_control.head_radius,muscleMan_control.location.y-30);
   text("YOU",muscleMan_data.location.x-muscleMan_data.head_radius/2.0,muscleMan_data.location.y-30);
   stroke(0);
   fill(255);
+  
   muscleMan_data.relocate();
   muscleMan_control.relocate();
   muscleMan_control.show();
@@ -26,6 +34,7 @@ void draw(){
   mm_data.relocate();
   mm_control.show();
   mm_data.show();
+
 }
 
 void scaleChest(float s){
@@ -111,24 +120,26 @@ class MuscleMan_Back{
   }
   
   void show(){
+  	//Draw Head
     ellipseMode(CENTER);
     ellipse(location.x,location.y,head_radius,head_radius);
     rectMode(CORNER);
     //location.show();
+    
+    //Drawing Upper Back
     ub.show();
-    //ub.location.show();
+    //Draw lower back
     lb.show();
-    //lb.location.show();
+    //Draw glutes
     gl.show();
+    //draw hammys
     hammys.show();
-    //hammys.left_l.show();
+    //Draw triceps
     tr.show();
   }
 
   boolean mouseOver(Pt mouse){
-    if(_chest.mouseOver(mouse)){
-      return true;
-    }
+    return true;
   }
 
 }
@@ -143,8 +154,26 @@ class Shoulder{
     width = w;
     height = 20;
   }
+  boolean mouseOver() {     
+    float lConX = left_l.x - (width/2);
+    float lConY = left_l.y - (height/2);
+    float lCon2X = left_l.x + (width/2);
+    float lCon2Y = left_l.y + (height/2);
+    float rConX = right_l.x - (width/2);
+    float rConY = right_l.y - (height/2);
+    float rCon2X = right_l.x + (width/2);
+    float rCon2Y = right_l.y + (height/2);
+
+   if(mouseX > lConX && mouseX < lCon2X && mouseY > lConY && mouseY < lCon2Y 
+       || mouseX > rConX && mouseX < rCon2X && mouseY > rConY && mouseY < rCon2Y )       
+      return true;     
+   else
+      return false;
+  }
   
   void show(){
+    if(mouseOver())
+      fill(229,204,255);
     pushMatrix();
     translate(left_l.x,left_l.y);
     ellipseMode(CENTER);
@@ -156,6 +185,7 @@ class Shoulder{
     ellipseMode(CENTER);
     ellipse(0,0,width,height);
     popMatrix();
+    noFill();
     
   }
   
@@ -172,9 +202,28 @@ class Triceps{
     right = rr;
     width = 15;
     arm_length=35;
+  }
+  
+    boolean mouseOver() {     
+    float lConX = left.x - (arm_length);
+    float lConY = left.y;
+    float lCon2X = left.x;
+    float lCon2Y = left.y + (width);
+    float rConX = right.x;
+    float rConY = right.y;
+    float rCon2X = right.x + (arm_length);
+    float rCon2Y = right.y + (width);
+
+   if(mouseX > lConX && mouseX < lCon2X && mouseY > lConY && mouseY < lCon2Y 
+       || mouseX > rConX && mouseX < rCon2X && mouseY > rConY && mouseY < rCon2Y )       
+      return true;     
+   else
+      return false;
   } 
 
   void show(){
+    if(mouseOver())
+      fill(229,204,255);
     pushMatrix();
     translate(right.x,right.y);
     ellipseMode(CORNER);
@@ -185,6 +234,7 @@ class Triceps{
     ellipseMode(CORNER);
     ellipse(0,0,arm_length,width);
     popMatrix();
+    noFill();
   }
   
   void scale(float newScale){
@@ -201,10 +251,24 @@ class UpperBack{
     width = 50;
     height = 50;
   }
-  
+  boolean mouseOver() {
+    // Set up the container for each body part   
+    float conX = location.x - (width/2);
+    float conY = location.y - (height/2);
+    float con2X = location.x + (width/2);
+    float con2Y = location.y + (height/2);
+
+   if(mouseX > conX && mouseX < con2X && mouseY > conY && mouseY < con2Y)       
+      return true;     
+   else
+      return false;
+  }
   void show(){
+    if(mouseOver())
+      fill(229,204,255);
     rectMode(CENTER);
-    rect(location.x, location.y, width,height, 7); 
+    rect(location.x, location.y, width,height, 7);
+    noFill(); 
   }
   
   void scale(float sc){
@@ -217,19 +281,42 @@ class UpperBack{
 class Glutes{
   Pt left_l,right_l;
   float width,height;
+   float lConX;
+    float lConY;
+    float lCon2X;
+    float lCon2Y;
   Glutes(Pt l_l,Pt r_l){
     left_l = l_l;
     right_l = r_l;
     width= 25;
     height=25;
+   
   } 
   
   void scale(float s){
     width*=s;
     height*=s;
   }
+  boolean mouseOver() {     
+    float lConX = left_l.x - (width/2);
+    float lConY = left_l.y;
+    float lCon2X = left_l.x + (width/2);
+    float lCon2Y = left_l.y + (height);
+    float rConX = right_l.x - (width/2);
+    float rConY = right_l.y;
+    float rCon2X = right_l.x + (width/2);
+    float rCon2Y = right_l.y + (height);
+
+   if(mouseX > lConX && mouseX < lCon2X && mouseY > lConY && mouseY < lCon2Y 
+       || mouseX > rConX && mouseX < rCon2X && mouseY > rConY && mouseY < rCon2Y )       
+      return true;     
+   else
+      return false;
+  }
   
   void show(){
+   if(mouseOver())
+     fill(229,204,255); 
    //Need to apply rotations to ellipses here
     pushMatrix();
     translate(left_l.x,left_l.y+12);
@@ -242,6 +329,7 @@ class Glutes{
     //rotate(11*PI/12.0);
     ellipse(0,0,width,height);
     popMatrix();
+    noFill();
   }
 }
 
@@ -253,10 +341,26 @@ class LowerBack{
     width=50;
     height = 50;
   }
+  boolean mouseOver() {
+    // Set up the container for each body part   
+    float conX = location.x - (width/2);
+    float conY = location.y - (height/2);
+    float con2X = location.x + (width/2);
+    float con2Y = location.y + (height/2);
+
+   if(mouseX > conX && mouseX < con2X && mouseY > conY && mouseY < con2Y)       
+      return true;     
+   else
+      return false;
+  }
   
   void show(){
-    //location.show();
+    
+    if(mouseOver())
+      fill(229,204,255);
     rect(location.x, location.y, width,height, 7); 
+    noFill();
+   //location.show();
   } 
   
   void scale(float s){
@@ -276,8 +380,26 @@ class Hamstrings{
     width= 20;
     height=30;
   }  
+   boolean mouseOver() {     
+    float lConX = left_l.x - (width/2);
+    float lConY = left_l.y;
+    float lCon2X = left_l.x + (width/2);
+    float lCon2Y = left_l.y + (height);
+    float rConX = right_l.x - (width/2);
+    float rConY = right_l.y;
+    float rCon2X = right_l.x + (width/2);
+    float rCon2Y = right_l.y + (height);
+
+   if(mouseX > lConX && mouseX < lCon2X && mouseY > lConY && mouseY < lCon2Y 
+       || mouseX > rConX && mouseX < rCon2X && mouseY > rConY && mouseY < rCon2Y )       
+      return true;     
+   else
+      return false;
+  }
   
   void show(){
+    if(mouseOver())
+      fill(229,204,255);
     pushMatrix();
     translate(left_l.x,left_l.y+12);
     //rotate(PI/24.0);
@@ -289,6 +411,7 @@ class Hamstrings{
     //rotate(11*PI/12.0);
     ellipse(0,0,width,height);
     popMatrix();
+    noFill();
   }
   void scale(float s){
     width*=s;
@@ -509,8 +632,23 @@ class Torso{
     width = 50;
     height = 50;
   }
+  boolean mouseOver() {
+    // Set up the container for each body part   
+    float conX = location.x - (width/2);
+    float conY = location.y - (height/2);
+    float con2X = location.x + (width/2);
+    float con2Y = location.y + (height/2);
+
+   if(mouseX > conX && mouseX < con2X && mouseY > conY && mouseY < con2Y)       
+      return true;     
+   else
+      return false;
+  }
   void show(){
+    if(mouseOver())
+      fill(229,204,255);
     rect(location.x,location.y,width,height,7);
+    noFill();
   }
   void scale(float newScale){
     scale_factor = newScale;
@@ -531,10 +669,29 @@ class Chest{
           width = 25;
           height = 25;
   }
+  boolean mouseOver() {     
+    float lConX = location.x - (width);
+    float lConY = location.y;
+    float lCon2X = location.x;
+    float lCon2Y = location.y + (height);
+    float rConX = location.x;
+    float rConY = location.y;
+    float rCon2X = location.x + (width);
+    float rCon2Y = location.y + (height);
+
+   if(mouseX > lConX && mouseX < lCon2X && mouseY > lConY && mouseY < lCon2Y 
+       || mouseX > rConX && mouseX < rCon2X && mouseY > rConY && mouseY < rCon2Y )       
+      return true;     
+   else
+      return false;
+  }
 
   void show(){
+   if(mouseOver())
+      fill(229,204,255);
     rect(location.x-width, location.y, width,height, 7);
     rect(location.x,location.y,width,height,7);
+    noFill();
   }
 
   void scale(float newScale){
@@ -554,8 +711,25 @@ class Quads{
     right_location = r_loc;
     width = w;
   }
+  boolean mouseOver() {     
+    float lConX = left_location.x - (width/2);
+    float lConY = left_location.y;
+    float lCon2X = left_location.x + (width/2);
+    float lCon2Y = left_location.y+width*1.7;
+    float rConX = right_location.x - (width/2);
+    float rConY = right_location.y;
+    float rCon2X = right_location.x + (width/2);
+    float rCon2Y = right_location.y +width*1.7;
 
+   if(mouseX > lConX && mouseX < lCon2X && mouseY > lConY && mouseY < lCon2Y 
+       || mouseX > rConX && mouseX < rCon2X && mouseY > rConY && mouseY < rCon2Y )       
+      return true;     
+   else
+      return false;
+  }
   void show(){
+    if(mouseOver())
+      fill(229,204,255);
     //Need to apply rotations to ellipses here
     pushMatrix();
     translate(left_location.x,left_location.y+12);
@@ -568,6 +742,7 @@ class Quads{
     rotate(11*PI/12.0);
     ellipse(0,0,width,40);
     popMatrix();
+    noFill();
 
   }
 
@@ -586,10 +761,26 @@ class Calves{
     right_location = r_loc;
     width = w;
   }
- 
+     boolean mouseOver() {     
+    float lConX = left_location.x - (width/2);
+    float lConY = left_location.y-20;
+    float lCon2X = left_location.x + (width/2);
+    float lCon2Y = left_location.y+(width*1.5);
+    float rConX = right_location.x - (width)+4;
+    float rConY = right_location.y+30;
+    float rCon2X = right_location.x;
+    float rCon2Y = right_location.y +(width*2.5)+30;
+
+   if(mouseX > lConX && mouseX < lCon2X && mouseY > lConY && mouseY < lCon2Y 
+       || mouseX > rConX && mouseX < rCon2X && mouseY > rConY && mouseY < rCon2Y )       
+      return true;     
+   else
+      return false;
+  }
   void show(){
    
-    
+    if(mouseOver())
+      fill(229,204,255);
     pushMatrix();
     translate(left_location.x,left_location.y);
     rotate(PI/24.0);
@@ -601,6 +792,7 @@ class Calves{
     rotate(11*PI/12.0);
     ellipse(0,0,width,40);
     popMatrix();
+    noFill();
 
     // ellipse(left_location.x,left_location.y,left_location.x+width,left_location.y+50);
     // ellipse(right_location.x,right_location.y,right_location.x+width,right_location.y+50);
@@ -623,8 +815,27 @@ class Biceps{
     width = w;
     arm_length = a_length;
   }
+  
+   boolean mouseOver() {     
+    float lConX = left_location.x - (arm_length);
+    float lConY = left_location.y;
+    float lCon2X = left_location.x;
+    float lCon2Y = left_location.y + (width);
+    float rConX = right_location.x;
+    float rConY = right_location.y;
+    float rCon2X = right_location.x + (arm_length);
+    float rCon2Y = right_location.y + (width);
+
+   if(mouseX > lConX && mouseX < lCon2X && mouseY > lConY && mouseY < lCon2Y 
+       || mouseX > rConX && mouseX < rCon2X && mouseY > rConY && mouseY < rCon2Y )       
+      return true;     
+   else
+      return false;
+  } 
 
   void show(){
+    if(mouseOver())
+      fill(229,204,255);
     pushMatrix();
     translate(right_location.x,right_location.y);
     ellipseMode(CORNER);
@@ -635,6 +846,7 @@ class Biceps{
     ellipseMode(CORNER);
     ellipse(0,0,arm_length,width);
     popMatrix();
+    noFill();
   }
   
   void scale(float newScale){
@@ -656,8 +868,26 @@ class Forearms{
     width = w;
     length = l;
   }
+   boolean mouseOver() {     
+    float lConX = left_location.x - (length);
+    float lConY = left_location.y;
+    float lCon2X = left_location.x;
+    float lCon2Y = left_location.y + (width);
+    float rConX = right_location.x;
+    float rConY = right_location.y;
+    float rCon2X = right_location.x + (length);
+    float rCon2Y = right_location.y + (width);
 
+   if(mouseX > lConX && mouseX < lCon2X && mouseY > lConY && mouseY < lCon2Y 
+       || mouseX > rConX && mouseX < rCon2X && mouseY > rConY && mouseY < rCon2Y )       
+      return true;     
+   else
+      return false;
+  } 
+  
   void show(){
+   if(mouseOver())
+      fill(229,204,255);
     pushMatrix();
     translate(right_location.x,right_location.y);
     ellipseMode(CORNER);
@@ -668,6 +898,7 @@ class Forearms{
     ellipseMode(CORNER);
     ellipse(0,0,length,width);
     popMatrix();
+    noFill();
   }
 
   void scale(float newScale){
