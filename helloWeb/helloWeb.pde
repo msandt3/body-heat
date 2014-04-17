@@ -1,14 +1,18 @@
 MuscleMan_Front muscleMan_control,muscleMan_data;
 MuscleMan_Back mm_control,mm_data;
+int line1_x = 780;
+int line1_y = 35;
+int fontSize = 12;
+
 void setup(){
 
   //Set up screen size
-  size(800,300,P2D);
+  size(875,225,P2D);
   //Set up default Chernoff Bodies.
-  muscleMan_control = new MuscleMan_Front(new Pt(115,80));
-  muscleMan_data = new MuscleMan_Front(new Pt(350,80)); 
-  mm_control = new MuscleMan_Back(new Pt(550,80));
-  mm_data = new MuscleMan_Back(new Pt(700,80)); 
+  muscleMan_control = new MuscleMan_Front(new Pt(115,50));
+  mm_control = new MuscleMan_Back(new Pt(285,50));
+  muscleMan_data = new MuscleMan_Front(new Pt(475,50)); 
+  mm_data = new MuscleMan_Back(new Pt(670,50)); 
 }
 
 void draw(){
@@ -17,9 +21,9 @@ void draw(){
   fill(0);
   
   //Set text Font
-  textSize(22);
-  text("CONTROL",muscleMan_control.location.x-muscleMan_control.head_radius,muscleMan_control.location.y-30);
-  text("YOU",muscleMan_data.location.x-muscleMan_data.head_radius/2.0,muscleMan_data.location.y-30);
+  textSize(20);
+  text("CONTROL",((muscleMan_control.location.x+ mm_control.location.x)/2)-50,muscleMan_control.location.y-30);
+  text("YOU",((muscleMan_data.location.x+ mm_data.location.x)/2)-30,muscleMan_data.location.y-30);
   stroke(0);
   fill(255);
   
@@ -31,6 +35,18 @@ void draw(){
   mm_data.relocate();
   mm_control.show();
   mm_data.show();
+  
+  rect(820,60, 100, 100, 0);
+ 
+  
+  fill(0);
+  textSize(12);
+  text("FRONT",muscleMan_control.location.x-((muscleMan_control.head_radius/2.0)-4),muscleMan_control.location.y);
+  text("FRONT",muscleMan_data.location.x-((muscleMan_data.head_radius/2.0)-4),muscleMan_data.location.y);
+  text("BACK",mm_control.location.x-((mm_control.head_radius/2.0)-8),mm_control.location.y);
+  text("BACK",mm_data.location.x-((mm_data.head_radius/2.0)-8),mm_data.location.y);
+  stroke(0);
+  fill(255);
 
 }
 
@@ -169,8 +185,14 @@ class Shoulder{
   }
   
   void show(){
-    if(mouseOver())
-      fill(229,204,255);
+    if(mouseOver()) {
+      fill(0);
+      textSize(12);
+      text("line 1", line1_x,line1_y);
+      text("line 2", line1_x,line1_y+fontSize);
+      text("line 3", line1_x,line1_y+(fontSize*2));
+      fill(229,204,255); 
+    }
     pushMatrix();
     translate(left_l.x,left_l.y);
     ellipseMode(CENTER);
@@ -219,8 +241,14 @@ class Triceps{
   } 
 
   void show(){
-    if(mouseOver())
-      fill(229,204,255);
+    if(mouseOver()) {
+      fill(0);
+      textSize(12);
+      text("line 1", line1_x,line1_y);
+      text("line 2", line1_x,line1_y+fontSize);
+      text("line 3", line1_x,line1_y+(fontSize*2));
+      fill(229,204,255); 
+    }
     pushMatrix();
     translate(right.x,right.y);
     ellipseMode(CORNER);
@@ -261,8 +289,14 @@ class UpperBack{
       return false;
   }
   void show(){
-    if(mouseOver())
-      fill(229,204,255);
+    if(mouseOver()) {
+      fill(0);
+      textSize(12);
+      text("line 1", line1_x,line1_y);
+      text("line 2", line1_x,line1_y+fontSize);
+      text("line 3", line1_x,line1_y+(fontSize*2));
+      fill(229,204,255); 
+    }
     rectMode(CENTER);
     rect(location.x, location.y, width,height, 7);
     noFill(); 
@@ -312,8 +346,14 @@ class Glutes{
   }
   
   void show(){
-   if(mouseOver())
-     fill(229,204,255); 
+   if(mouseOver()) {
+      fill(0);
+      textSize(12);
+      text("line 1", line1_x,line1_y);
+      text("line 2", line1_x,line1_y+fontSize);
+      text("line 3", line1_x,line1_y+(fontSize*2));
+      fill(229,204,255); 
+    }
    //Need to apply rotations to ellipses here
     pushMatrix();
     translate(left_l.x,left_l.y+12);
@@ -353,8 +393,14 @@ class LowerBack{
   
   void show(){
     
-    if(mouseOver())
-      fill(229,204,255);
+    if(mouseOver()) {
+      fill(0);
+      textSize(12);
+      text("line 1", line1_x,line1_y);
+      text("line 2", line1_x,line1_y+fontSize);
+      text("line 3", line1_x,line1_y+(fontSize*2));
+      fill(229,204,255); 
+    }
     rect(location.x, location.y, width,height, 7); 
     noFill();
    //location.show();
@@ -395,8 +441,14 @@ class Hamstrings{
   }
   
   void show(){
-    if(mouseOver())
-      fill(229,204,255);
+    if(mouseOver()) {
+      fill(0);
+      textSize(12);
+      text("line 1", line1_x,line1_y);
+      text("line 2", line1_x,line1_y+fontSize);
+      text("line 3", line1_x,line1_y+(fontSize*2));
+      fill(229,204,255); 
+    }
     pushMatrix();
     translate(left_l.x,left_l.y+12);
     //rotate(PI/24.0);
@@ -642,8 +694,14 @@ class Torso{
       return false;
   }
   void show(){
-    if(mouseOver())
-      fill(229,204,255);
+    if(mouseOver()) {
+      fill(0);
+      textSize(12);
+      text("line 1", line1_x,line1_y);
+      text("line 2", line1_x,line1_y+fontSize);
+      text("line 3", line1_x,line1_y+(fontSize*2));
+      fill(229,204,255); 
+    }
     rect(location.x,location.y,width,height,7);
     noFill();
   }
@@ -684,8 +742,14 @@ class Chest{
   }
 
   void show(){
-   if(mouseOver())
-      fill(229,204,255);
+   if(mouseOver()) {
+      fill(0);
+      textSize(12);
+      text("line 1", line1_x,line1_y);
+      text("line 2", line1_x,line1_y+fontSize);
+      text("line 3", line1_x,line1_y+(fontSize*2));
+      fill(229,204,255); 
+    }
     rect(location.x-width, location.y, width,height, 7);
     rect(location.x,location.y,width,height,7);
     noFill();
@@ -725,8 +789,14 @@ class Quads{
       return false;
   }
   void show(){
-    if(mouseOver())
-      fill(229,204,255);
+    if(mouseOver()) {
+      fill(0);
+      textSize(12);
+      text("line 1", line1_x,line1_y);
+      text("line 2", line1_x,line1_y+fontSize);
+      text("line 3", line1_x,line1_y+(fontSize*2));
+      fill(229,204,255); 
+    }
     //Need to apply rotations to ellipses here
     pushMatrix();
     translate(left_location.x,left_location.y+12);
@@ -776,8 +846,14 @@ class Calves{
   }
   void show(){
    
-    if(mouseOver())
-      fill(229,204,255);
+    if(mouseOver()) {
+      fill(0);
+      textSize(12);
+      text("line 1", line1_x,line1_y);
+      text("line 2", line1_x,line1_y+fontSize);
+      text("line 3", line1_x,line1_y+(fontSize*2));
+      fill(229,204,255); 
+    }
     pushMatrix();
     translate(left_location.x,left_location.y);
     rotate(PI/24.0);
@@ -831,8 +907,14 @@ class Biceps{
   } 
 
   void show(){
-    if(mouseOver())
-      fill(229,204,255);
+    if(mouseOver()) {
+      fill(0);
+      textSize(12);
+      text("line 1", line1_x,line1_y);
+      text("line 2", line1_x,line1_y+fontSize);
+      text("line 3", line1_x,line1_y+(fontSize*2));
+      fill(229,204,255); 
+    }
     pushMatrix();
     translate(right_location.x,right_location.y);
     ellipseMode(CORNER);
@@ -883,8 +965,14 @@ class Forearms{
   } 
   
   void show(){
-   if(mouseOver())
-      fill(229,204,255);
+   if(mouseOver()) {
+      fill(0);
+      textSize(12);
+      text("line 1", line1_x,line1_y);
+      text("line 2", line1_x,line1_y+fontSize);
+      text("line 3", line1_x,line1_y+(fontSize*2));
+      fill(229,204,255); 
+    }
     pushMatrix();
     translate(right_location.x,right_location.y);
     ellipseMode(CORNER);
