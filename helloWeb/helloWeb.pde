@@ -188,6 +188,7 @@ class Shoulder{
     if(mouseOver()) {
       fill(0);
       textSize(12);
+      text("SHOULDERS",line1_x+5,line1_y-12);
       text("line 1", line1_x,line1_y);
       text("line 2", line1_x,line1_y+fontSize);
       text("line 3", line1_x,line1_y+(fontSize*2));
@@ -244,6 +245,7 @@ class Triceps{
     if(mouseOver()) {
       fill(0);
       textSize(12);
+      text("TRICEPS",line1_x+15,line1_y-12);
       text("line 1", line1_x,line1_y);
       text("line 2", line1_x,line1_y+fontSize);
       text("line 3", line1_x,line1_y+(fontSize*2));
@@ -292,6 +294,7 @@ class UpperBack{
     if(mouseOver()) {
       fill(0);
       textSize(12);
+      text("UPPER BACK",line1_x,line1_y-12);
       text("line 1", line1_x,line1_y);
       text("line 2", line1_x,line1_y+fontSize);
       text("line 3", line1_x,line1_y+(fontSize*2));
@@ -349,6 +352,7 @@ class Glutes{
    if(mouseOver()) {
       fill(0);
       textSize(12);
+      text("GLUTES",line1_x+20,line1_y-12);
       text("line 1", line1_x,line1_y);
       text("line 2", line1_x,line1_y+fontSize);
       text("line 3", line1_x,line1_y+(fontSize*2));
@@ -396,6 +400,7 @@ class LowerBack{
     if(mouseOver()) {
       fill(0);
       textSize(12);
+      text("LOWER BACK",line1_x,line1_y-12);
       text("line 1", line1_x,line1_y);
       text("line 2", line1_x,line1_y+fontSize);
       text("line 3", line1_x,line1_y+(fontSize*2));
@@ -444,6 +449,7 @@ class Hamstrings{
     if(mouseOver()) {
       fill(0);
       textSize(12);
+      text("HAMSTRINGS",line1_x,line1_y-12);
       text("line 1", line1_x,line1_y);
       text("line 2", line1_x,line1_y+fontSize);
       text("line 3", line1_x,line1_y+(fontSize*2));
@@ -697,6 +703,7 @@ class Torso{
     if(mouseOver()) {
       fill(0);
       textSize(12);
+      text("TORSO",line1_x+20,line1_y-12);
       text("line 1", line1_x,line1_y);
       text("line 2", line1_x,line1_y+fontSize);
       text("line 3", line1_x,line1_y+(fontSize*2));
@@ -745,6 +752,7 @@ class Chest{
    if(mouseOver()) {
       fill(0);
       textSize(12);
+      text("CHEST",line1_x+20,line1_y-12);
       text("line 1", line1_x,line1_y);
       text("line 2", line1_x,line1_y+fontSize);
       text("line 3", line1_x,line1_y+(fontSize*2));
@@ -792,6 +800,7 @@ class Quads{
     if(mouseOver()) {
       fill(0);
       textSize(12);
+      text("QUADS",line1_x+20,line1_y-12);
       text("line 1", line1_x,line1_y);
       text("line 2", line1_x,line1_y+fontSize);
       text("line 3", line1_x,line1_y+(fontSize*2));
@@ -849,6 +858,7 @@ class Calves{
     if(mouseOver()) {
       fill(0);
       textSize(12);
+      text("CALVES",line1_x+15,line1_y-12);
       text("line 1", line1_x,line1_y);
       text("line 2", line1_x,line1_y+fontSize);
       text("line 3", line1_x,line1_y+(fontSize*2));
@@ -910,6 +920,7 @@ class Biceps{
     if(mouseOver()) {
       fill(0);
       textSize(12);
+      text("BICEPS",line1_x+20,line1_y-12);
       text("line 1", line1_x,line1_y);
       text("line 2", line1_x,line1_y+fontSize);
       text("line 3", line1_x,line1_y+(fontSize*2));
@@ -968,6 +979,7 @@ class Forearms{
    if(mouseOver()) {
       fill(0);
       textSize(12);
+      text("FOREARMS",line1_x+10,line1_y-12);
       text("line 1", line1_x,line1_y);
       text("line 2", line1_x,line1_y+fontSize);
       text("line 3", line1_x,line1_y+(fontSize*2));
