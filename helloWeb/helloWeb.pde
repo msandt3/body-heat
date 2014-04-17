@@ -3,15 +3,12 @@ MuscleMan_Back mm_control,mm_data;
 void setup(){
 
   //Set up screen size
-  size(600,600,P2D);
-  
+  size(800,300,P2D);
   //Set up default Chernoff Bodies.
   muscleMan_control = new MuscleMan_Front(new Pt(115,80));
   muscleMan_data = new MuscleMan_Front(new Pt(350,80)); 
-  mm_control = new MuscleMan_Back(new Pt(115,350));
-  mm_data = new MuscleMan_Back(new Pt(350,350));
-
-  
+  mm_control = new MuscleMan_Back(new Pt(550,80));
+  mm_data = new MuscleMan_Back(new Pt(700,80)); 
 }
 
 void draw(){
