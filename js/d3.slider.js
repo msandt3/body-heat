@@ -26,7 +26,9 @@ d3.slider = function module() {
       formatPercent = d3.format(".2%"),
       tickFormat = d3.format(".0"),
       sliderLength;
+  function containerSize(){
 
+  }
   function slider(selection) {
     selection.each(function() {
 
@@ -125,7 +127,6 @@ d3.slider = function module() {
         createAxis(div);
       }
 
-
       function createAxis(dom) {
 
         // Create axis if not defined by user
@@ -192,7 +193,7 @@ d3.slider = function module() {
       // Move slider handle on click/drag
       function moveHandle(pos) {
 
-        var newValue = stepValue(scale.invert(pos / containerSize())),
+        var newValue = stepValue(scale.invert(pos / sliderLength)),
             currentValue = value.length ? value[active - 1]: value;
 
         if (currentValue !== newValue) {

@@ -46,6 +46,8 @@ var text = function(d){
     return d;
 };
 
+
+
 var data;
 var xLabel;
 var yLabel;
@@ -104,12 +106,33 @@ function draw(data){
         })
         .on('mouseover',tip.show)
         .on('mouseout', tip.hide);
+
+    var legend = svg.selectAll(".legend")
+        .data(color.domain())
+      .enter().append("g")
+        .attr("class", "legend")
+        .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+    legend.append("rect")
+        .attr("x", width - 18)
+        .attr("width", 18)
+        .attr("height", 18)
+        .style("fill", color);
+
+    legend.append("text")
+        .attr("x", width - 24)
+        .attr("y", 9)
+        .attr("dy", ".35em")
+        .style("text-anchor", "end")
+        .text(function(d) { return d; });
+
+
 }
 
 function init(xAxis, yAxis){
     xLabel = xAxis;
     yLabel = yAxis;
-    
+    var dates = [];
     d3.json('data/activities_full.json',function(error,data){
         
     	console.log(data);
@@ -121,6 +144,7 @@ function init(xAxis, yAxis){
     		}
 
     		obj.created_on = new Date(obj.created_on);
+    		dates.push(new Date(obj.created_on));
     	}
         
 
@@ -135,6 +159,9 @@ function init(xAxis, yAxis){
         });
         console.log(parsed_data);
 
+
+        // var sliderscale = d3.time.scale().domain(dates);
+        // d3.select('#slider3').call(d3.slider().axis().ticks(6));
         draw(parsed_data);
     });
 }
