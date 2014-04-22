@@ -49,50 +49,50 @@ void draw(){
   fill(255);
 
 }
-void setChestDisplay(int d){
+void setChestDisplay(String d){
   muscleMan_data._chest.display=d;
 }
 
 
-void setDisplayBiceps(int d){
+void setDisplayBiceps(String d){
   muscleMan_data._biceps.display=d;
 
 }
 
-void setDisplayCalves(int d){
+void setDisplayCalves(String d){
   muscleMan_data._calves.display=d;
 }
 
-void setDisplayForearm(int d){
+void setDisplayForearm(String d){
   muscleMan_data._forearms.display=d;
 }
 
-void setDisplayQuads(int d){
+void setDisplayQuads(String d){
   muscleMan_data._quads.display=d;
 }
 
-void setDisplayTriceps(int d){
+void setDisplayTriceps(String d){
   mm_data.tr.display=d;
 
 }
   
-void setDisplayUpperBack(int d){
+void setDisplayUpperBack(String d){
   mm_data.ub.display=d;
 }
 
-void setDisplayLowerBack(int d){
+void setDisplayLowerBack(String d){
   mm_data.lb.sdisplay=d 
 }
 
-void setDisplayGlutes(int d){
+void setDisplayGlutes(String d){
   mm_data.gl.display=d;
 }
   
-void setDisplayHammies(int d){
+void setDisplayHammies(String d){
   mm_data.hammys.display=d;
 }
 
-void setDisplayShoulders(int d){
+void setDisplayShoulders(String d){
   muscleMan_data.shoulder.display=d;
 }
 
