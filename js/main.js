@@ -13,9 +13,9 @@ This function is passed the variables to initially draw on the x and y axes.
 // });
 
 
-var margin = {top: 20, right: 20, bottom: 30, left: 40},
+var margin = {top: 20, right: 100, bottom: 30, left: 40},
     width = 900 - margin.left - margin.right,
-    height = 300 - margin.top - margin.bottom;
+    height = 350 - margin.top - margin.bottom;
 
 var x = d3.time.scale()
     .range([0, width]);
@@ -102,11 +102,26 @@ function draw(data){
         .on('mouseover',tip.show)
         .on('mouseout', tip.hide);
 
+
+    var colortext = svg.selectAll(".colortext")
+        .data([{data:1}])
+        .enter().append("g")
+        .attr("class","colortext")
+        .style("font-weight","bold")
+        .attr("transform", function(d, i) { return "translate(80,0)"; });
+
+    colortext.append("text")
+        .attr("x", width - 24)
+        .attr("y", 0)
+        .attr("dy", ".35em")
+        .style("text-anchor", "end")
+        .text("Muscle Groups");
+
     var legend = svg.selectAll(".legend")
         .data(color.domain())
       .enter().append("g")
         .attr("class", "legend")
-        .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+        .attr("transform", function(d, i) { return "translate(60," + ((i  * 20) + 10) + ")"; });
 
     legend.append("rect")
         .attr("x", width - 18)
@@ -117,6 +132,61 @@ function draw(data){
     legend.append("text")
         .attr("x", width - 24)
         .attr("y", 9)
+        .attr("dy", ".35em")
+        .style("text-anchor", "end")
+        .text(function(d) { return d; });
+
+
+    var circletext = svg.selectAll(".circletext")
+        .data([{data:1}])
+        .enter().append("g")
+        .attr("class","circletext")
+        .style("font-weight","bold")
+        .attr("transform", function(d, i) { return "translate(80,225)"; });
+
+    circletext.append("text")
+        .attr("x", width - 24)
+        .attr("y", 0)
+        .attr("dy", ".35em")
+        .style("text-anchor", "end")
+        .text("Reps");
+
+    var legend2 = svg.selectAll(".legend2")
+        .data([2])
+        .enter().append('g')
+        .attr('class','legend2')
+        .attr("transform", function(d, i) { console.log(d);return "translate(60,245)"; });
+
+    legend2.append("circle")
+        .attr('class','dot')
+        .attr('cx',width - 10)
+        .attr('r',2)
+        .style('fill','#ffffff')
+        .style('stroke',color(1));
+
+    legend2.append("text")
+        .attr("x", width - 24)
+        .attr("y", 0)
+        .attr("dy", ".35em")
+        .style("text-anchor", "end")
+        .text(function(d) { return d; });
+
+    var legend3 = svg.selectAll(".legend3")
+        .data([10])
+        .enter().append('g')
+        .attr('class','legend3')
+        .attr("transform", function(d, i) { console.log(d);return "translate(60,265)"; });
+
+    legend3.append("circle")
+        .attr('class','dot')
+        .attr('cx',width - 10)
+        .attr('r',10)
+        .style('fill','#ffffff')
+        .style('stroke',color(1));
+
+    legend3.append("text")
+        .attr("x", width - 24)
+        .attr("y", 0)
         .attr("dy", ".35em")
         .style("text-anchor", "end")
         .text(function(d) { return d; });
