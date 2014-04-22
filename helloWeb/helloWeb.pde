@@ -481,7 +481,7 @@ class Hamstrings{
     right_l=rr;
     width= 20;
     height=30;
-    display=0;
+    display="0";
   }  
    boolean mouseOver() {     
     float lConX = left_l.x - (width/2);
