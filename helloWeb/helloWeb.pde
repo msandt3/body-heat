@@ -2,7 +2,7 @@ MuscleMan_Front muscleMan_control,muscleMan_data;
 MuscleMan_Back mm_control,mm_data;
 int line1_x = 780;
 int line1_y = 35;
-int fontSize = 12;
+int fontSize = 14;
 
 void setup(){
 
@@ -81,7 +81,7 @@ void setDisplayUpperBack(String d){
 }
 
 void setDisplayLowerBack(String d){
-  mm_data.lb.sdisplay=d 
+  mm_data.lb.display=d;
 }
 
 void setDisplayGlutes(String d){
@@ -237,9 +237,11 @@ class Shoulder{
       fill(0);
       textSize(12);
       text("SHOULDERS",line1_x+5,line1_y-12);
-      text(display, line1_x,line1_y);
-      text("line 2", line1_x,line1_y+fontSize);
-      text("line 3", line1_x,line1_y+(fontSize*2));
+      text("Exercised:", line1_x,line1_y);
+      text(display, line1_x,line1_y+fontSize);
+      text("times", line1_x+15,line1_y+fontSize);
+      text("Range", line1_x,line1_y+fontSize*2);
+      text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
     }
     pushMatrix();
@@ -295,9 +297,11 @@ class Triceps{
       fill(0);
       textSize(12);
       text("TRICEPS",line1_x+15,line1_y-12);
-      text(display, line1_x,line1_y);
-      text("line 2", line1_x,line1_y+fontSize);
-      text("line 3", line1_x,line1_y+(fontSize*2));
+      text("Exercised:", line1_x,line1_y);
+      text(display, line1_x,line1_y+fontSize);
+      text("times", line1_x+15,line1_y+fontSize);
+      text("Range", line1_x,line1_y+fontSize*2);
+      text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
     }
     pushMatrix();
@@ -345,9 +349,11 @@ class UpperBack{
       fill(0);
       textSize(12);
       text("UPPER BACK",line1_x,line1_y-12);
-      text(display, line1_x,line1_y);
-      text("line 2", line1_x,line1_y+fontSize);
-      text("line 3", line1_x,line1_y+(fontSize*2));
+      text("Exercised:", line1_x,line1_y);
+      text(display, line1_x,line1_y+fontSize);
+      text("times", line1_x+15,line1_y+fontSize);
+      text("Range", line1_x,line1_y+fontSize*2);
+      text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
     }
     rectMode(CENTER);
@@ -404,9 +410,11 @@ class Glutes{
       fill(0);
       textSize(12);
       text("GLUTES",line1_x+20,line1_y-12);
-      text(display, line1_x,line1_y);
-      text("line 2", line1_x,line1_y+fontSize);
-      text("line 3", line1_x,line1_y+(fontSize*2));
+      text("Exercised:", line1_x,line1_y);
+      text(display, line1_x,line1_y+fontSize);
+      text("times", line1_x+15,line1_y+fontSize);
+      text("Range", line1_x,line1_y+fontSize*2);
+      text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
     }
    //Need to apply rotations to ellipses here
@@ -454,9 +462,11 @@ class LowerBack{
       fill(0);
       textSize(12);
       text("LOWER BACK",line1_x,line1_y-12);
-      text(display, line1_x,line1_y);
-      text("line 2", line1_x,line1_y+fontSize);
-      text("line 3", line1_x,line1_y+(fontSize*2));
+      text("Exercised:", line1_x,line1_y);
+      text(display, line1_x,line1_y+fontSize);
+      text("times", line1_x+15,line1_y+fontSize);
+      text("Range", line1_x,line1_y+fontSize*2);
+      text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
     }
     rect(location.x, location.y, width,height, 7); 
@@ -505,9 +515,11 @@ class Hamstrings{
       fill(0);
       textSize(12);
       text("HAMSTRINGS",line1_x,line1_y-12);
-      text(display, line1_x,line1_y);
-      text("line 2", line1_x,line1_y+fontSize);
-      text("line 3", line1_x,line1_y+(fontSize*2));
+      text("Exercised:", line1_x,line1_y);
+      text(display, line1_x,line1_y+fontSize);
+      text("times", line1_x+15,line1_y+fontSize);
+      text("Range", line1_x,line1_y+fontSize*2);
+      text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
     }
     pushMatrix();
@@ -763,9 +775,11 @@ class Torso{
       fill(0);
       textSize(12);
       text("TORSO",line1_x+20,line1_y-12);
-      text(display, line1_x,line1_y);
-      text("line 2", line1_x,line1_y+fontSize);
-      text("line 3", line1_x,line1_y+(fontSize*2));
+      text("Exercised:", line1_x,line1_y);
+      text(display, line1_x,line1_y+fontSize);
+      text("times", line1_x+15,line1_y+fontSize);
+      text("Range", line1_x,line1_y+fontSize*2);
+      text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
     }
     rect(location.x,location.y,width,height,7);
@@ -813,9 +827,11 @@ class Chest{
       fill(0);
       textSize(12);
       text("CHEST",line1_x+20,line1_y-12);
-      text(display, line1_x,line1_y);
-      text("line 2", line1_x,line1_y+fontSize);
-      text("line 3", line1_x,line1_y+(fontSize*2));
+      text("Exercised:", line1_x,line1_y);
+      text(display, line1_x,line1_y+fontSize);
+      text("times", line1_x+15,line1_y+fontSize);
+      text("Range", line1_x,line1_y+fontSize*2);
+      text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
     }
     rect(location.x-width, location.y, width,height, 7);
@@ -863,9 +879,11 @@ class Quads{
       fill(0);
       textSize(12);
       text("QUADS",line1_x+20,line1_y-12);
-      text(display, line1_x,line1_y);
-      text("line 2", line1_x,line1_y+fontSize);
-      text("line 3", line1_x,line1_y+(fontSize*2));
+      text("Exercised:", line1_x,line1_y);
+      text(display, line1_x,line1_y+fontSize);
+      text("times", line1_x+15,line1_y+fontSize);
+      text("Range", line1_x,line1_y+fontSize*2);
+      text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
     }
     //Need to apply rotations to ellipses here
@@ -922,9 +940,11 @@ class Calves{
       fill(0);
       textSize(12);
       text("CALVES",line1_x+15,line1_y-12);
-      text(display, line1_x,line1_y);
-      text("line 2", line1_x,line1_y+fontSize);
-      text("line 3", line1_x,line1_y+(fontSize*2));
+      text("Exercised:", line1_x,line1_y);
+      text(display, line1_x,line1_y+fontSize);
+      text("times", line1_x+15,line1_y+fontSize);
+      text("Range", line1_x,line1_y+fontSize*2);
+      text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
     }
     pushMatrix();
@@ -986,9 +1006,11 @@ class Biceps{
       fill(0);
       textSize(12);
       text("BICEPS",line1_x+20,line1_y-12);
-      text(display, line1_x,line1_y);
-      text("line 2", line1_x,line1_y+fontSize);
-      text("line 3", line1_x,line1_y+(fontSize*2));
+      text("Exercised:", line1_x,line1_y);
+      text(display, line1_x,line1_y+fontSize);
+      text("times", line1_x+15,line1_y+fontSize);
+      text("Range", line1_x,line1_y+fontSize*2);
+      text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
     }
     pushMatrix();
@@ -1047,9 +1069,11 @@ class Forearms{
       fill(0);
       textSize(12);
       text("FOREARMS",line1_x+10,line1_y-12);
-      text(display, line1_x,line1_y);
-      text("line 2", line1_x,line1_y+fontSize);
-      text("line 3", line1_x,line1_y+(fontSize*2));
+      text("Exercised:", line1_x,line1_y);
+      text(display, line1_x,line1_y+fontSize);
+      text("times", line1_x+15,line1_y+fontSize);
+      text("Range", line1_x,line1_y+fontSize*2);
+      text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
     }
     pushMatrix();
