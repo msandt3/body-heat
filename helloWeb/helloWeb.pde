@@ -2,7 +2,7 @@ MuscleMan_Front muscleMan_control,muscleMan_data;
 MuscleMan_Back mm_control,mm_data;
 int line1_x = 780;
 int line1_y = 35;
-int fontSize = 12;
+int fontSize = 14;
 
 void setup(){
 
@@ -49,6 +49,55 @@ void draw(){
   fill(255);
 
 }
+void setChestDisplay(String d){
+  muscleMan_data._chest.display=d;
+}
+
+
+void setDisplayBiceps(String d){
+  muscleMan_data._biceps.display=d;
+
+}
+
+void setDisplayCalves(String d){
+  muscleMan_data._calves.display=d;
+}
+
+void setDisplayForearm(String d){
+  muscleMan_data._forearms.display=d;
+}
+
+void setDisplayQuads(String d){
+  muscleMan_data._quads.display=d;
+}
+
+void setDisplayTriceps(String d){
+  mm_data.tr.display=d;
+
+}
+  
+void setDisplayUpperBack(String d){
+  mm_data.ub.display=d;
+}
+
+void setDisplayLowerBack(String d){
+  mm_data.lb.display=d;
+}
+
+void setDisplayGlutes(String d){
+  mm_data.gl.display=d;
+}
+  
+void setDisplayHammies(String d){
+  mm_data.hammys.display=d;
+}
+
+void setDisplayShoulders(String d){
+  muscleMan_data.shoulder.display=d;
+}
+
+
+
 
 void scaleChest(float s){
   muscleMan_data._chest.scale(s);
@@ -117,8 +166,7 @@ class MuscleMan_Back{
     gl = new Glutes(new Pt(location.x-lb.width/4.0,location.y+ub.height+lb.height+head_radius/2.0),
       new Pt(location.x+lb.width/4.0,location.y+ub.height+lb.height+head_radius/2.0));
     hammys = new Hamstrings(new Pt(gl.left_l.x,gl.left_l.y+gl.height),new Pt(gl.right_l.x,gl.right_l.y+gl.height));
-    tr = new Triceps(new Pt(location.x-head_radius/2.0,location.y+head_radius/2.0),new Pt(location.x+head_radius/2.0,location.y+head_radius/2.0));
-    
+    tr = new Triceps(new Pt(location.x-head_radius/2.0,location.y+head_radius/2.0),new Pt(location.x+head_radius/2.0,location.y+head_radius/2.0)); 
   } 
   
   void relocate(){
@@ -151,16 +199,16 @@ class MuscleMan_Back{
     tr.show();
   }
 
-  boolean mouseOver(Pt mouse){
+  boolean mouseOver(float x,float y){
     return true;
   }
 
 }
 
-
 class Shoulder{
   Pt left_l, right_l;
   float width, height;
+  String display;
   public Shoulder(Pt l, Pt r,float w){
     left_l = l;
     right_l = r;
@@ -189,9 +237,11 @@ class Shoulder{
       fill(0);
       textSize(12);
       text("SHOULDERS",line1_x+5,line1_y-12);
-      text("line 1", line1_x,line1_y);
-      text("line 2", line1_x,line1_y+fontSize);
-      text("line 3", line1_x,line1_y+(fontSize*2));
+      text("Exercised:", line1_x,line1_y);
+      text(display, line1_x,line1_y+fontSize);
+      text("times", line1_x+15,line1_y+fontSize);
+      text("Range", line1_x,line1_y+fontSize*2);
+      text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
     }
     pushMatrix();
@@ -217,6 +267,7 @@ class Shoulder{
 class Triceps{
   Pt left; Pt right;
   float width, arm_length,scale_factor;
+  String display;
   Triceps(Pt ll,Pt rr){
     left = ll;
     right = rr;
@@ -246,9 +297,11 @@ class Triceps{
       fill(0);
       textSize(12);
       text("TRICEPS",line1_x+15,line1_y-12);
-      text("line 1", line1_x,line1_y);
-      text("line 2", line1_x,line1_y+fontSize);
-      text("line 3", line1_x,line1_y+(fontSize*2));
+      text("Exercised:", line1_x,line1_y);
+      text(display, line1_x,line1_y+fontSize);
+      text("times", line1_x+15,line1_y+fontSize);
+      text("Range", line1_x,line1_y+fontSize*2);
+      text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
     }
     pushMatrix();
@@ -273,6 +326,7 @@ class Triceps{
 class UpperBack{
   Pt location;
   float width,height,scale_factor;
+  String display;
   UpperBack(Pt l){
     location=l;
     width = 50;
@@ -295,9 +349,11 @@ class UpperBack{
       fill(0);
       textSize(12);
       text("UPPER BACK",line1_x,line1_y-12);
-      text("line 1", line1_x,line1_y);
-      text("line 2", line1_x,line1_y+fontSize);
-      text("line 3", line1_x,line1_y+(fontSize*2));
+      text("Exercised:", line1_x,line1_y);
+      text(display, line1_x,line1_y+fontSize);
+      text("times", line1_x+15,line1_y+fontSize);
+      text("Range", line1_x,line1_y+fontSize*2);
+      text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
     }
     rectMode(CENTER);
@@ -315,6 +371,7 @@ class UpperBack{
 class Glutes{
   Pt left_l,right_l;
   float width,height;
+  String display;
    float lConX;
     float lConY;
     float lCon2X;
@@ -353,9 +410,11 @@ class Glutes{
       fill(0);
       textSize(12);
       text("GLUTES",line1_x+20,line1_y-12);
-      text("line 1", line1_x,line1_y);
-      text("line 2", line1_x,line1_y+fontSize);
-      text("line 3", line1_x,line1_y+(fontSize*2));
+      text("Exercised:", line1_x,line1_y);
+      text(display, line1_x,line1_y+fontSize);
+      text("times", line1_x+15,line1_y+fontSize);
+      text("Range", line1_x,line1_y+fontSize*2);
+      text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
     }
    //Need to apply rotations to ellipses here
@@ -377,10 +436,12 @@ class Glutes{
 class LowerBack{
   Pt location;
   float width,height,scale_factor;
+  String display;
   LowerBack(Pt l){
     location= l;
     width=50;
     height = 50;
+    display="0";
   }
   boolean mouseOver() {
     // Set up the container for each body part   
@@ -401,9 +462,11 @@ class LowerBack{
       fill(0);
       textSize(12);
       text("LOWER BACK",line1_x,line1_y-12);
-      text("line 1", line1_x,line1_y);
-      text("line 2", line1_x,line1_y+fontSize);
-      text("line 3", line1_x,line1_y+(fontSize*2));
+      text("Exercised:", line1_x,line1_y);
+      text(display, line1_x,line1_y+fontSize);
+      text("times", line1_x+15,line1_y+fontSize);
+      text("Range", line1_x,line1_y+fontSize*2);
+      text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
     }
     rect(location.x, location.y, width,height, 7); 
@@ -422,11 +485,13 @@ class LowerBack{
 class Hamstrings{
   Pt left_l,right_l;
   float width,height;
+  String display;
   Hamstrings(Pt ll,Pt rr){
     left_l=ll;
     right_l=rr;
     width= 20;
     height=30;
+    display="0";
   }  
    boolean mouseOver() {     
     float lConX = left_l.x - (width/2);
@@ -450,9 +515,11 @@ class Hamstrings{
       fill(0);
       textSize(12);
       text("HAMSTRINGS",line1_x,line1_y-12);
-      text("line 1", line1_x,line1_y);
-      text("line 2", line1_x,line1_y+fontSize);
-      text("line 3", line1_x,line1_y+(fontSize*2));
+      text("Exercised:", line1_x,line1_y);
+      text(display, line1_x,line1_y+fontSize);
+      text("times", line1_x+15,line1_y+fontSize);
+      text("Range", line1_x,line1_y+fontSize*2);
+      text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
     }
     pushMatrix();
@@ -660,6 +727,7 @@ class MuscleMan_Front{
     _biceps.show();
     _forearms.show();
     shoulder.show();
+    
 //    shoulder.left_l.show();
 //    shoulder.right_l.show();    
 
@@ -682,11 +750,14 @@ class Torso{
   Pt location;
   float height,width;
   float scale_factor;
+  String display;
   public Torso(Pt loc){
     location = loc;
     width = 50;
     height = 50;
+    display="0";
   }
+
   boolean mouseOver() {
     // Set up the container for each body part   
     float conX = location.x - (width/2);
@@ -704,9 +775,11 @@ class Torso{
       fill(0);
       textSize(12);
       text("TORSO",line1_x+20,line1_y-12);
-      text("line 1", line1_x,line1_y);
-      text("line 2", line1_x,line1_y+fontSize);
-      text("line 3", line1_x,line1_y+(fontSize*2));
+      text("Exercised:", line1_x,line1_y);
+      text(display, line1_x,line1_y+fontSize);
+      text("times", line1_x+15,line1_y+fontSize);
+      text("Range", line1_x,line1_y+fontSize*2);
+      text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
     }
     rect(location.x,location.y,width,height,7);
@@ -724,8 +797,9 @@ class Chest{
 
   Pt location; //the center location of the chest object
   float scale_factor,width,height;
-
+  String display;
   Chest(Pt loc){
+    display = "BRIAN";
     location = loc;
     scale_factor = 1;
           width = 25;
@@ -753,9 +827,11 @@ class Chest{
       fill(0);
       textSize(12);
       text("CHEST",line1_x+20,line1_y-12);
-      text("line 1", line1_x,line1_y);
-      text("line 2", line1_x,line1_y+fontSize);
-      text("line 3", line1_x,line1_y+(fontSize*2));
+      text("Exercised:", line1_x,line1_y);
+      text(display, line1_x,line1_y+fontSize);
+      text("times", line1_x+15,line1_y+fontSize);
+      text("Range", line1_x,line1_y+fontSize*2);
+      text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
     }
     rect(location.x-width, location.y, width,height, 7);
@@ -775,10 +851,12 @@ class Quads{
 
   float width,length,scale_factor;
   Pt left_location,right_location;
+  String display;
   Quads(Pt l_loc,Pt r_loc,float w){
     left_location = l_loc;
     right_location = r_loc;
     width = w;
+    display="0";
   }
   boolean mouseOver() {     
     float lConX = left_location.x - (width/2);
@@ -801,9 +879,11 @@ class Quads{
       fill(0);
       textSize(12);
       text("QUADS",line1_x+20,line1_y-12);
-      text("line 1", line1_x,line1_y);
-      text("line 2", line1_x,line1_y+fontSize);
-      text("line 3", line1_x,line1_y+(fontSize*2));
+      text("Exercised:", line1_x,line1_y);
+      text(display, line1_x,line1_y+fontSize);
+      text("times", line1_x+15,line1_y+fontSize);
+      text("Range", line1_x,line1_y+fontSize*2);
+      text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
     }
     //Need to apply rotations to ellipses here
@@ -832,6 +912,7 @@ class Quads{
 class Calves{
   float width,scale_factor;
   Pt left_location,right_location;
+  String display;
   Calves(Pt l_loc,Pt r_loc,float w){
     left_location = l_loc;
     right_location = r_loc;
@@ -859,9 +940,11 @@ class Calves{
       fill(0);
       textSize(12);
       text("CALVES",line1_x+15,line1_y-12);
-      text("line 1", line1_x,line1_y);
-      text("line 2", line1_x,line1_y+fontSize);
-      text("line 3", line1_x,line1_y+(fontSize*2));
+      text("Exercised:", line1_x,line1_y);
+      text(display, line1_x,line1_y+fontSize);
+      text("times", line1_x+15,line1_y+fontSize);
+      text("Range", line1_x,line1_y+fontSize*2);
+      text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
     }
     pushMatrix();
@@ -891,12 +974,14 @@ class Calves{
 class Biceps{
   float width,scale_factor;
   float arm_length;
+  String display;
   Pt left_location,right_location;
   Biceps(Pt l_loc,Pt r_loc,float w,float a_length){
     left_location = l_loc;
     right_location = r_loc;
     width = w;
     arm_length = a_length;
+    display="0";
   }
   
    boolean mouseOver() {     
@@ -921,9 +1006,11 @@ class Biceps{
       fill(0);
       textSize(12);
       text("BICEPS",line1_x+20,line1_y-12);
-      text("line 1", line1_x,line1_y);
-      text("line 2", line1_x,line1_y+fontSize);
-      text("line 3", line1_x,line1_y+(fontSize*2));
+      text("Exercised:", line1_x,line1_y);
+      text(display, line1_x,line1_y+fontSize);
+      text("times", line1_x+15,line1_y+fontSize);
+      text("Range", line1_x,line1_y+fontSize*2);
+      text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
     }
     pushMatrix();
@@ -952,11 +1039,13 @@ class Forearms{
   float width,scale_factor;
   float length;
   Pt left_location, right_location;
+  String display;
   Forearms(Pt l_loc,Pt r_loc,float w, float l){
     left_location = l_loc;
     right_location = r_loc;
     width = w;
     length = l;
+    display="0";
   }
    boolean mouseOver() {     
     float lConX = left_location.x - (length);
@@ -980,9 +1069,11 @@ class Forearms{
       fill(0);
       textSize(12);
       text("FOREARMS",line1_x+10,line1_y-12);
-      text("line 1", line1_x,line1_y);
-      text("line 2", line1_x,line1_y+fontSize);
-      text("line 3", line1_x,line1_y+(fontSize*2));
+      text("Exercised:", line1_x,line1_y);
+      text(display, line1_x,line1_y+fontSize);
+      text("times", line1_x+15,line1_y+fontSize);
+      text("Range", line1_x,line1_y+fontSize*2);
+      text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
     }
     pushMatrix();
