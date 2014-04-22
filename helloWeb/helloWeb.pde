@@ -208,12 +208,14 @@ class MuscleMan_Back{
 class Shoulder{
   Pt left_l, right_l;
   float width, height;
+  color c;
   String display;
   public Shoulder(Pt l, Pt r,float w){
     left_l = l;
     right_l = r;
     width = w;
     height = 20;
+    c = #FFFFFF;
   }
   boolean mouseOver() {     
     float lConX = left_l.x - (width/2);
@@ -233,6 +235,7 @@ class Shoulder{
   }
   
   void show(){
+    c = #FFFFFF;
     if(mouseOver()) {
       fill(0);
       textSize(12);
@@ -242,8 +245,9 @@ class Shoulder{
       text("times", line1_x+15,line1_y+fontSize);
       text("Range", line1_x,line1_y+fontSize*2);
       text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
-      fill(229,204,255); 
+      c= color(229,204,255);;
     }
+    fill(c);
     pushMatrix();
     translate(left_l.x,left_l.y);
     ellipseMode(CENTER);
@@ -268,6 +272,7 @@ class Triceps{
   Pt left; Pt right;
   float width, arm_length,scale_factor;
   String display;
+  color c;
   Triceps(Pt ll,Pt rr){
     left = ll;
     right = rr;
@@ -293,6 +298,7 @@ class Triceps{
   } 
 
   void show(){
+   c = #FFFFFF;
     if(mouseOver()) {
       fill(0);
       textSize(12);
@@ -303,7 +309,9 @@ class Triceps{
       text("Range", line1_x,line1_y+fontSize*2);
       text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
+      c= color(229,204,255);
     }
+    fill(c);
     pushMatrix();
     translate(right.x,right.y);
     ellipseMode(CORNER);
@@ -327,6 +335,7 @@ class UpperBack{
   Pt location;
   float width,height,scale_factor;
   String display;
+  color c;
   UpperBack(Pt l){
     location=l;
     width = 50;
@@ -345,6 +354,7 @@ class UpperBack{
       return false;
   }
   void show(){
+   c = #FFFFFF;
     if(mouseOver()) {
       fill(0);
       textSize(12);
@@ -355,7 +365,9 @@ class UpperBack{
       text("Range", line1_x,line1_y+fontSize*2);
       text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
+      c= color(229,204,255);
     }
+    fill(c);
     rectMode(CENTER);
     rect(location.x, location.y, width,height, 7);
     noFill(); 
@@ -371,6 +383,7 @@ class UpperBack{
 class Glutes{
   Pt left_l,right_l;
   float width,height;
+  color c;
   String display;
    float lConX;
     float lConY;
@@ -406,6 +419,7 @@ class Glutes{
   }
   
   void show(){
+   c = #FFFFFF;
    if(mouseOver()) {
       fill(0);
       textSize(12);
@@ -416,7 +430,9 @@ class Glutes{
       text("Range", line1_x,line1_y+fontSize*2);
       text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
+      c= color(229,204,255)
     }
+   fill(c);
    //Need to apply rotations to ellipses here
     pushMatrix();
     translate(left_l.x,left_l.y+12);
@@ -437,6 +453,7 @@ class LowerBack{
   Pt location;
   float width,height,scale_factor;
   String display;
+  color c;
   LowerBack(Pt l){
     location= l;
     width=50;
@@ -457,7 +474,7 @@ class LowerBack{
   }
   
   void show(){
-    
+     c = #FFFFFF;
     if(mouseOver()) {
       fill(0);
       textSize(12);
@@ -468,7 +485,9 @@ class LowerBack{
       text("Range", line1_x,line1_y+fontSize*2);
       text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
+      c= color(229,204,255)
     }
+    fill(c);
     rect(location.x, location.y, width,height, 7); 
     noFill();
    //location.show();
@@ -486,6 +505,7 @@ class Hamstrings{
   Pt left_l,right_l;
   float width,height;
   String display;
+  color c;
   Hamstrings(Pt ll,Pt rr){
     left_l=ll;
     right_l=rr;
@@ -511,6 +531,7 @@ class Hamstrings{
   }
   
   void show(){
+   c = #FFFFFF;
     if(mouseOver()) {
       fill(0);
       textSize(12);
@@ -521,7 +542,9 @@ class Hamstrings{
       text("Range", line1_x,line1_y+fontSize*2);
       text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
+      c= color(229,204,255)
     }
+    fill(c);
     pushMatrix();
     translate(left_l.x,left_l.y+12);
     //rotate(PI/24.0);
@@ -751,6 +774,7 @@ class Torso{
   float height,width;
   float scale_factor;
   String display;
+  color c;
   public Torso(Pt loc){
     location = loc;
     width = 50;
@@ -771,6 +795,7 @@ class Torso{
       return false;
   }
   void show(){
+   c = #FFFFFF;
     if(mouseOver()) {
       fill(0);
       textSize(12);
@@ -781,7 +806,9 @@ class Torso{
       text("Range", line1_x,line1_y+fontSize*2);
       text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
+      c= color(229,204,255);
     }
+    fill(c);
     rect(location.x,location.y,width,height,7);
     noFill();
   }
@@ -798,6 +825,8 @@ class Chest{
   Pt location; //the center location of the chest object
   float scale_factor,width,height;
   String display;
+  color c;
+
   Chest(Pt loc){
     display = "BRIAN";
     location = loc;
@@ -823,6 +852,7 @@ class Chest{
   }
 
   void show(){
+   c = #FFFFFF;
    if(mouseOver()) {
       fill(0);
       textSize(12);
@@ -833,7 +863,9 @@ class Chest{
       text("Range", line1_x,line1_y+fontSize*2);
       text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
+      c= color(229,204,255);
     }
+    fill(c);
     rect(location.x-width, location.y, width,height, 7);
     rect(location.x,location.y,width,height,7);
     noFill();
@@ -852,6 +884,7 @@ class Quads{
   float width,length,scale_factor;
   Pt left_location,right_location;
   String display;
+  color c;
   Quads(Pt l_loc,Pt r_loc,float w){
     left_location = l_loc;
     right_location = r_loc;
@@ -875,6 +908,7 @@ class Quads{
       return false;
   }
   void show(){
+   c = #FFFFFF;
     if(mouseOver()) {
       fill(0);
       textSize(12);
@@ -885,7 +919,9 @@ class Quads{
       text("Range", line1_x,line1_y+fontSize*2);
       text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
+      c= color(229,204,255);
     }
+    fill(c);
     //Need to apply rotations to ellipses here
     pushMatrix();
     translate(left_location.x,left_location.y+12);
@@ -913,6 +949,7 @@ class Calves{
   float width,scale_factor;
   Pt left_location,right_location;
   String display;
+  color c;
   Calves(Pt l_loc,Pt r_loc,float w){
     left_location = l_loc;
     right_location = r_loc;
@@ -935,7 +972,7 @@ class Calves{
       return false;
   }
   void show(){
-   
+    c = #FFFFFF;
     if(mouseOver()) {
       fill(0);
       textSize(12);
@@ -946,7 +983,9 @@ class Calves{
       text("Range", line1_x,line1_y+fontSize*2);
       text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
+      c= color(229,204,255);
     }
+    fill(c);
     pushMatrix();
     translate(left_location.x,left_location.y);
     rotate(PI/24.0);
@@ -976,6 +1015,7 @@ class Biceps{
   float arm_length;
   String display;
   Pt left_location,right_location;
+  color c;
   Biceps(Pt l_loc,Pt r_loc,float w,float a_length){
     left_location = l_loc;
     right_location = r_loc;
@@ -1002,6 +1042,7 @@ class Biceps{
   } 
 
   void show(){
+   c = #FFFFFF;
     if(mouseOver()) {
       fill(0);
       textSize(12);
@@ -1012,7 +1053,9 @@ class Biceps{
       text("Range", line1_x,line1_y+fontSize*2);
       text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
+      c= color(229,204,255);
     }
+    fill(c);
     pushMatrix();
     translate(right_location.x,right_location.y);
     ellipseMode(CORNER);
@@ -1040,6 +1083,7 @@ class Forearms{
   float length;
   Pt left_location, right_location;
   String display;
+  color c;
   Forearms(Pt l_loc,Pt r_loc,float w, float l){
     left_location = l_loc;
     right_location = r_loc;
@@ -1065,6 +1109,7 @@ class Forearms{
   } 
   
   void show(){
+   c = #FFFFFF;
    if(mouseOver()) {
       fill(0);
       textSize(12);
@@ -1075,7 +1120,9 @@ class Forearms{
       text("Range", line1_x,line1_y+fontSize*2);
       text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
+      c= color(229,204,255);;
     }
+    fill(c);
     pushMatrix();
     translate(right_location.x,right_location.y);
     ellipseMode(CORNER);

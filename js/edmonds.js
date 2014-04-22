@@ -160,6 +160,7 @@ function encodeValues(array,max,min){
     array.push.apply(array,xx);
 
     var pjs = Processing.getInstanceById('myCanvas');
+    
     for(var j=0;j<array.length;j++){
         var muscle_type = array[j].muscle;
         if(muscle_type=="Chest"){
