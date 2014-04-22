@@ -35,10 +35,7 @@ void draw(){
   mm_data.relocate();
   mm_control.show();
   mm_data.show();
-  
   rect(820,60, 100, 100, 0);
- 
-  
   fill(0);
   textSize(12);
   text("FRONT",muscleMan_control.location.x-((muscleMan_control.head_radius/2.0)-4),muscleMan_control.location.y);
@@ -96,16 +93,12 @@ void setDisplayShoulders(String d){
   muscleMan_data.shoulder.display=d;
 }
 
-
-
-
 void scaleChest(float s){
   muscleMan_data._chest.scale(s);
 }
 
 void scaleBiceps(float s){
   muscleMan_data._biceps.scale(s);
-
 }
 
 void scaleCalves(float s){
@@ -145,11 +138,14 @@ void scaleShoulders(float s){
   muscleMan_data.shoulder.scale(s);
 }
 
-
-
-
-
-
+//void colorChest(String x){
+//  muscleMan_data._chest.c = x;
+//  muscleMan_control._chest.c = x;
+//}
+//
+//void fuckYou(){
+//  
+//}
 
 class MuscleMan_Back{
   Pt location;
@@ -169,6 +165,8 @@ class MuscleMan_Back{
     tr = new Triceps(new Pt(location.x-head_radius/2.0,location.y+head_radius/2.0),new Pt(location.x+head_radius/2.0,location.y+head_radius/2.0)); 
   } 
   
+
+
   void relocate(){
     ub.location = new Pt(location.x,location.y+head_radius);
     lb.location = new Pt(location.x,ub.location.y+ub.height);
@@ -197,6 +195,7 @@ class MuscleMan_Back{
     hammys.show();
     //Draw triceps
     tr.show();
+
   }
 
   boolean mouseOver(float x,float y){
@@ -235,7 +234,7 @@ class Shoulder{
   }
   
   void show(){
-    c = #FFFFFF;
+    
     if(mouseOver()) {
       fill(0);
       textSize(12);
@@ -244,10 +243,13 @@ class Shoulder{
       text(display, line1_x,line1_y+fontSize);
       text("times", line1_x+15,line1_y+fontSize);
       text("Range", line1_x,line1_y+fontSize*2);
-      text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
-      c= color(229,204,255);;
+      text("Nov 13 - Mar 14", line1_x,line1_y+fontSize*3);
+      //c= color(229,204,255);;
+      fill(229,204,255);
     }
-    fill(c);
+    else{
+      fill(c);
+    }
     pushMatrix();
     translate(left_l.x,left_l.y);
     ellipseMode(CENTER);
@@ -278,6 +280,7 @@ class Triceps{
     right = rr;
     width = 15;
     arm_length=35;
+     c = #FFFFFF;
   }
   
     boolean mouseOver() {     
@@ -298,7 +301,7 @@ class Triceps{
   } 
 
   void show(){
-   c = #FFFFFF;
+  
     if(mouseOver()) {
       fill(0);
       textSize(12);
@@ -307,11 +310,13 @@ class Triceps{
       text(display, line1_x,line1_y+fontSize);
       text("times", line1_x+15,line1_y+fontSize);
       text("Range", line1_x,line1_y+fontSize*2);
-      text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
+      text("Nov 13 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
-      c= color(229,204,255);
+      //c= color(229,204,255);
     }
-    fill(c);
+    else{
+      fill(c);
+    }
     pushMatrix();
     translate(right.x,right.y);
     ellipseMode(CORNER);
@@ -340,6 +345,7 @@ class UpperBack{
     location=l;
     width = 50;
     height = 50;
+    c = #FFFFFF;
   }
   boolean mouseOver() {
     // Set up the container for each body part   
@@ -354,7 +360,7 @@ class UpperBack{
       return false;
   }
   void show(){
-   c = #FFFFFF;
+   
     if(mouseOver()) {
       fill(0);
       textSize(12);
@@ -363,11 +369,13 @@ class UpperBack{
       text(display, line1_x,line1_y+fontSize);
       text("times", line1_x+15,line1_y+fontSize);
       text("Range", line1_x,line1_y+fontSize*2);
-      text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
+      text("Nov 13 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
-      c= color(229,204,255);
+      //c= color(229,204,255);
     }
-    fill(c);
+    else{
+      fill(c);
+    }
     rectMode(CENTER);
     rect(location.x, location.y, width,height, 7);
     noFill(); 
@@ -394,6 +402,7 @@ class Glutes{
     right_l = r_l;
     width= 25;
     height=25;
+    c = #FFFFFF;
    
   } 
   
@@ -419,7 +428,7 @@ class Glutes{
   }
   
   void show(){
-   c = #FFFFFF;
+   
    if(mouseOver()) {
       fill(0);
       textSize(12);
@@ -428,12 +437,14 @@ class Glutes{
       text(display, line1_x,line1_y+fontSize);
       text("times", line1_x+15,line1_y+fontSize);
       text("Range", line1_x,line1_y+fontSize*2);
-      text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
+      text("Nov 13 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
-      c= color(229,204,255)
+      //c= color(229,204,255);
     }
-   fill(c);
-   //Need to apply rotations to ellipses here
+    else{
+      fill(c);
+    }
+    //Need to apply rotations to ellipses here
     pushMatrix();
     translate(left_l.x,left_l.y+12);
     //rotate(PI/24.0);
@@ -459,6 +470,7 @@ class LowerBack{
     width=50;
     height = 50;
     display="0";
+     c = #FFFFFF;
   }
   boolean mouseOver() {
     // Set up the container for each body part   
@@ -474,7 +486,7 @@ class LowerBack{
   }
   
   void show(){
-     c = #FFFFFF;
+    
     if(mouseOver()) {
       fill(0);
       textSize(12);
@@ -483,11 +495,13 @@ class LowerBack{
       text(display, line1_x,line1_y+fontSize);
       text("times", line1_x+15,line1_y+fontSize);
       text("Range", line1_x,line1_y+fontSize*2);
-      text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
+      text("Nov 13 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
-      c= color(229,204,255)
+      //c= color(229,204,255);
     }
-    fill(c);
+    else{
+      fill(c);
+    }
     rect(location.x, location.y, width,height, 7); 
     noFill();
    //location.show();
@@ -512,6 +526,8 @@ class Hamstrings{
     width= 20;
     height=30;
     display="0";
+ c = #FFFFFF;
+
   }  
    boolean mouseOver() {     
     float lConX = left_l.x - (width/2);
@@ -531,7 +547,7 @@ class Hamstrings{
   }
   
   void show(){
-   c = #FFFFFF;
+  
     if(mouseOver()) {
       fill(0);
       textSize(12);
@@ -540,11 +556,14 @@ class Hamstrings{
       text(display, line1_x,line1_y+fontSize);
       text("times", line1_x+15,line1_y+fontSize);
       text("Range", line1_x,line1_y+fontSize*2);
-      text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
+      text("Nov 13 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
-      c= color(229,204,255)
+      //c= color(229,204,255);
     }
-    fill(c);
+    else{
+      fill(c);
+    }
+    
     pushMatrix();
     translate(left_l.x,left_l.y+12);
     //rotate(PI/24.0);
@@ -740,6 +759,7 @@ class MuscleMan_Front{
     _torso.show();
 
     rectMode(CORNER);
+    
     _chest.show();
     //draw the quads
     
@@ -780,6 +800,7 @@ class Torso{
     width = 50;
     height = 50;
     display="0";
+    c = #FFFFFF;
   }
 
   boolean mouseOver() {
@@ -795,7 +816,7 @@ class Torso{
       return false;
   }
   void show(){
-   c = #FFFFFF;
+   
     if(mouseOver()) {
       fill(0);
       textSize(12);
@@ -804,36 +825,38 @@ class Torso{
       text(display, line1_x,line1_y+fontSize);
       text("times", line1_x+15,line1_y+fontSize);
       text("Range", line1_x,line1_y+fontSize*2);
-      text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
+      text("Nov 13 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
-      c= color(229,204,255);
+      //c= color(229,204,255);
     }
-    fill(c);
+    else{
+      fill(c);
+    }
     rect(location.x,location.y,width,height,7);
     noFill();
   }
+
   void scale(float newScale){
     scale_factor = newScale;
     width *= scale_factor;
     //height *= scale_factor;
   }
-
 }
 
 class Chest{
-
   Pt location; //the center location of the chest object
   float scale_factor,width,height;
   String display;
   color c;
-
   Chest(Pt loc){
     display = "BRIAN";
     location = loc;
     scale_factor = 1;
           width = 25;
           height = 25;
+          c = #ffffff;
   }
+
   boolean mouseOver() {     
     float lConX = location.x - (width);
     float lConY = location.y;
@@ -852,7 +875,7 @@ class Chest{
   }
 
   void show(){
-   c = #FFFFFF;
+   
    if(mouseOver()) {
       fill(0);
       textSize(12);
@@ -861,11 +884,13 @@ class Chest{
       text(display, line1_x,line1_y+fontSize);
       text("times", line1_x+15,line1_y+fontSize);
       text("Range", line1_x,line1_y+fontSize*2);
-      text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
+      text("Nov 13 - Mar 14", line1_x,line1_y+fontSize*3);
+      //text("color: "+c,line1_x,line1_y+fontSize*4);
       fill(229,204,255); 
-      c= color(229,204,255);
     }
-    fill(c);
+    else{
+      fill(c);
+    }
     rect(location.x-width, location.y, width,height, 7);
     rect(location.x,location.y,width,height,7);
     noFill();
@@ -875,7 +900,6 @@ class Chest{
     scale_factor = newScale;
     width *= scale_factor;
     height *= scale_factor;
-
   }
 }
 
@@ -890,6 +914,7 @@ class Quads{
     right_location = r_loc;
     width = w;
     display="0";
+    c = #FFFFFF;
   }
   boolean mouseOver() {     
     float lConX = left_location.x - (width/2);
@@ -908,7 +933,7 @@ class Quads{
       return false;
   }
   void show(){
-   c = #FFFFFF;
+    
     if(mouseOver()) {
       fill(0);
       textSize(12);
@@ -917,11 +942,13 @@ class Quads{
       text(display, line1_x,line1_y+fontSize);
       text("times", line1_x+15,line1_y+fontSize);
       text("Range", line1_x,line1_y+fontSize*2);
-      text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
+      text("Nov 13 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
-      c= color(229,204,255);
+      
     }
-    fill(c);
+    else{
+      fill(c);
+    }
     //Need to apply rotations to ellipses here
     pushMatrix();
     translate(left_location.x,left_location.y+12);
@@ -954,8 +981,9 @@ class Calves{
     left_location = l_loc;
     right_location = r_loc;
     width = w;
+    c= #ffffff;
   }
-     boolean mouseOver() {     
+  boolean mouseOver() {     
     float lConX = left_location.x - (width/2);
     float lConY = left_location.y-20;
     float lCon2X = left_location.x + (width/2);
@@ -972,7 +1000,7 @@ class Calves{
       return false;
   }
   void show(){
-    c = #FFFFFF;
+   
     if(mouseOver()) {
       fill(0);
       textSize(12);
@@ -981,11 +1009,13 @@ class Calves{
       text(display, line1_x,line1_y+fontSize);
       text("times", line1_x+15,line1_y+fontSize);
       text("Range", line1_x,line1_y+fontSize*2);
-      text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
+      text("Nov 13 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
-      c= color(229,204,255);
+      //c= color(229,204,255);
     }
-    fill(c);
+    else{
+      fill(c);
+    }
     pushMatrix();
     translate(left_location.x,left_location.y);
     rotate(PI/24.0);
@@ -1022,6 +1052,7 @@ class Biceps{
     width = w;
     arm_length = a_length;
     display="0";
+    c= #ffffff;
   }
   
    boolean mouseOver() {     
@@ -1042,7 +1073,7 @@ class Biceps{
   } 
 
   void show(){
-   c = #FFFFFF;
+   
     if(mouseOver()) {
       fill(0);
       textSize(12);
@@ -1051,11 +1082,13 @@ class Biceps{
       text(display, line1_x,line1_y+fontSize);
       text("times", line1_x+15,line1_y+fontSize);
       text("Range", line1_x,line1_y+fontSize*2);
-      text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
+      text("Nov 13 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
-      c= color(229,204,255);
+      
     }
-    fill(c);
+    else{
+      fill(c);
+    }
     pushMatrix();
     translate(right_location.x,right_location.y);
     ellipseMode(CORNER);
@@ -1118,11 +1151,13 @@ class Forearms{
       text(display, line1_x,line1_y+fontSize);
       text("times", line1_x+15,line1_y+fontSize);
       text("Range", line1_x,line1_y+fontSize*2);
-      text("Jan 14 - Mar 14", line1_x,line1_y+fontSize*3);
+      text("Nov 13 - Mar 14", line1_x,line1_y+fontSize*3);
       fill(229,204,255); 
-      c= color(229,204,255);;
+      //c= color(229,204,255);;
     }
-    fill(c);
+    else{
+      fill(c);
+    }
     pushMatrix();
     translate(right_location.x,right_location.y);
     ellipseMode(CORNER);

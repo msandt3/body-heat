@@ -5,7 +5,7 @@ window.onload = function(){
     init("Axis1","Axis2", function(data){
         console.log(data);
         frequencies = new Array();
-        getActivitiesJSON("data/activities_full.json",new Date(2014,0,1),new Date(2014,2,30));
+        getActivitiesJSON("data/activities_full.json",new Date(2011,0,1),new Date(2015,2,30));
     });
 
     
