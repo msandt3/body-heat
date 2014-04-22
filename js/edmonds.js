@@ -56,11 +56,56 @@ function getActivitiesJSON(path,start_date,end_date){
             console.log("DATA OBJ: "+obj.muscle+" : "+obj.frequency);
 
         }
+        addDisplayVals(frequencies);
         encodeValues(frequencies,max,min);
     });
     
 }
 
+function addDisplayVals(array){
+    var pjs = Processing.getInstanceById('myCanvas');
+
+    for(var j=0;j<array.length;j++){
+        var muscle_type= array[j].muscle;
+        if(muscle_type=="Chest"){
+            pjs.setChestDisplay(array[j].frequency);
+        }
+        else if(muscle_type=="Calves"){
+            pjs.setDisplayCalves(array[j].frequency);
+        }
+        else if(muscle_type=="Upper Back"){
+            pjs.setDisplayUpperBack(array[j].frequency);
+        }
+        else if(muscle_type=="Lower Back"){
+            pjs.setDisplayLowerBack(array[j].frequency);
+        }
+        else if(muscle_type=="Triceps"){
+            pjs.setDisplayTriceps(array[j].frequency);
+        }
+        else if(muscle_type=="Glutes"){
+            pjs.setDisplayGlutes(array[j].frequency);
+        }
+        else if(muscle_type=="Hamstrings"){
+            pjs.setDisplayHammies(array[j].frequency);
+        }
+        else if(muscle_type=="Forearm"){
+            pjs.setDisplayForearm(array[j].frequency);
+        }
+        else if(muscle_type=="Shoulder"){
+            pjs.setDisplayShoulders(array[j].frequency);
+        }
+        else if(muscle_type=="Abdominals"){
+            //pjs.setDisplayAbdominals
+        }
+        else if(muscle_type=="Biceps"){
+            pjs.setDisplayBiceps(array[j].frequency);
+        }
+        else if(muscle_type=="Thigh"){
+            pjs.setDisplayQuads(array[j].frequency);
+        }
+           
+    }
+}
 function findMaxFrequency(array){
     var maxF = 0;
     for(var i=0; i< array.length;i++){
