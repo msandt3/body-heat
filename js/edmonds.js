@@ -2,8 +2,13 @@ window.onload = function(){
     // var pjs = Processing.getInstanceById('myCanvas');
     //pjs.showCircleTest();
     //GET THE json data for all the activities
-    frequencies = new Array();
-    getActivitiesJSON("data/activities_full.json",new Date(2014,0,1),new Date(2014,2,30));
+    init("Axis1","Axis2", function(data){
+        console.log(data);
+        frequencies = new Array();
+        getActivitiesJSON("data/activities_full.json",new Date(2014,0,1),new Date(2014,2,30));
+    });
+
+    
 };
 
 //Returns the exercises performed, excludes those that fall outside 

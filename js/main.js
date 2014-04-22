@@ -8,15 +8,14 @@ DIV ON THE PAGE.
 This function is passed the variables to initially draw on the x and y axes.
 **/
 
-$(document).ready(function(){
-	console.log("READY");
-	init("Axis1","Axis2");
-});
+// $(document).ready(function(){
+// 	// init("Axis1","Axis2");
+// });
 
 
 var margin = {top: 20, right: 20, bottom: 30, left: 40},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+    width = 900 - margin.left - margin.right,
+    height = 300 - margin.top - margin.bottom;
 
 var x = d3.time.scale()
     .range([0, width]);
@@ -24,9 +23,10 @@ var x = d3.time.scale()
 var y = d3.scale.linear()
     .range([height, 0]);
 
-var color = d3.scale.category10();
+var color = d3.scale.category20();
+
 var size = d3.scale.linear()
-	.range([0,1]);
+	.range([0,1,2,3,4,5,6,7,8,9,10]);
 
 var xAxis = d3.svg.axis()
     .scale(x)
@@ -40,11 +40,6 @@ var tip = d3.tip().attr('class','d3-tip').offset([-10,0])
 	.html(function(d){	
 		return "<ul><li>Weight: "+d.weight+"</li><li>Reps: "+d.reps+"</li><li>Exercise: "+d.exercise_name+"</li><li>Muscle Group: "+d.muscle_name+"</li></ul>";
 	});
-
-var text = function(d){
-    d.compactness = parseFloat(d.compactness);
-    return d;
-};
 
 
 
@@ -126,10 +121,9 @@ function draw(data){
         .style("text-anchor", "end")
         .text(function(d) { return d; });
 
-
 }
 
-function init(xAxis, yAxis){
+function init(xAxis, yAxis, callback){
     xLabel = xAxis;
     yLabel = yAxis;
     var dates = [];
@@ -162,7 +156,18 @@ function init(xAxis, yAxis){
 
         // var sliderscale = d3.time.scale().domain(dates);
         // d3.select('#slider3').call(d3.slider().axis().ticks(6));
+        
         draw(parsed_data);
+
+        //create an array of the color vars to be passed back to chernoff 
+        var arr = [];
+        for(var index in color.domain()){
+            var obj = color.domain()[index];
+            arr.push({'muscle_group':obj,'color':color(obj)});
+            // arr.push(obj);
+        }
+        callback(arr);
+        
     });
 }
 
