@@ -1,22 +1,32 @@
 MuscleMan_Front muscleMan_control,muscleMan_data;
 MuscleMan_Back mm_control,mm_data;
+int line1_x = 780;
+int line1_y = 35;
+int fontSize = 14;
+
 void setup(){
-  size(600,1000,P2D);
-  muscleMan_control = new MuscleMan_Front(new Pt(115,80));
-  muscleMan_data = new MuscleMan_Front(new Pt(350,80)); 
-  mm_control = new MuscleMan_Back(new Pt(115,350));
-  mm_data = new MuscleMan_Back(new Pt(350,350));
-  
+
+  //Set up screen size
+  size(875,225,P2D);
+  //Set up default Chernoff Bodies.
+  muscleMan_control = new MuscleMan_Front(new Pt(115,50));
+  mm_control = new MuscleMan_Back(new Pt(285,50));
+  muscleMan_data = new MuscleMan_Front(new Pt(475,50)); 
+  mm_data = new MuscleMan_Back(new Pt(670,50)); 
 }
 
 void draw(){
+  //draw background color
   background(255);
   fill(0);
-  textSize(22);
-  text("CONTROL",muscleMan_control.location.x-muscleMan_control.head_radius,muscleMan_control.location.y-30);
-  text("YOU",muscleMan_data.location.x-muscleMan_data.head_radius/2.0,muscleMan_data.location.y-30);
+  
+  //Set text Font
+  textSize(20);
+  text("CONTROL",((muscleMan_control.location.x+ mm_control.location.x)/2)-50,muscleMan_control.location.y-30);
+  text("YOU",((muscleMan_data.location.x+ mm_data.location.x)/2)-30,muscleMan_data.location.y-30);
   stroke(0);
   fill(255);
+  
   muscleMan_data.relocate();
   muscleMan_control.relocate();
   muscleMan_control.show();
@@ -25,11 +35,70 @@ void draw(){
   mm_data.relocate();
   mm_control.show();
   mm_data.show();
+  rect(820,60, 100, 100, 0);
+  fill(0);
+  textSize(12);
+  text("FRONT",muscleMan_control.location.x-((muscleMan_control.head_radius/2.0)-4),muscleMan_control.location.y);
+  text("FRONT",muscleMan_data.location.x-((muscleMan_data.head_radius/2.0)-4),muscleMan_data.location.y);
+  text("BACK",mm_control.location.x-((mm_control.head_radius/2.0)-8),mm_control.location.y);
+  text("BACK",mm_data.location.x-((mm_data.head_radius/2.0)-8),mm_data.location.y);
+  stroke(0);
+  fill(255);
 
+}
+void setChestDisplay(String d){
+  muscleMan_data._chest.display=d;
+}
+
+
+void setDisplayBiceps(String d){
+  muscleMan_data._biceps.display=d;
+
+}
+
+void setDisplayCalves(String d){
+  muscleMan_data._calves.display=d;
+}
+
+void setDisplayForearm(String d){
+  muscleMan_data._forearms.display=d;
+}
+
+void setDisplayQuads(String d){
+  muscleMan_data._quads.display=d;
+}
+
+void setDisplayTriceps(String d){
+  mm_data.tr.display=d;
+
+}
+  
+void setDisplayUpperBack(String d){
+  mm_data.ub.display=d;
+}
+
+void setDisplayLowerBack(String d){
+  mm_data.lb.display=d;
+}
+
+void setDisplayGlutes(String d){
+  mm_data.gl.display=d;
+}
+  
+void setDisplayHammies(String d){
+  mm_data.hammys.display=d;
+}
+
+void setDisplayShoulders(String d){
+  muscleMan_data.shoulder.display=d;
 }
 
 void scaleChest(float s){
   muscleMan_data._chest.scale(s);
+}
+
+void scaleBiceps(float s){
+  muscleMan_data._biceps.scale(s);
 }
 
 void scaleCalves(float s){
@@ -65,6 +134,18 @@ void scaleHammies(float s){
   mm_data.hammys.scale(s);
 }
 
+void scaleShoulders(float s){
+  muscleMan_data.shoulder.scale(s);
+}
+
+//void colorChest(String x){
+//  muscleMan_data._chest.c = x;
+//  muscleMan_control._chest.c = x;
+//}
+//
+//void fuckYou(){
+//  
+//}
 
 class MuscleMan_Back{
   Pt location;
@@ -72,7 +153,7 @@ class MuscleMan_Back{
   UpperBack ub; LowerBack lb;
   Glutes gl; Hamstrings hammys;
   Triceps tr;
-  
+ 
   MuscleMan_Back(Pt loc){
     location = loc;
     head_radius = 50;
@@ -81,47 +162,161 @@ class MuscleMan_Back{
     gl = new Glutes(new Pt(location.x-lb.width/4.0,location.y+ub.height+lb.height+head_radius/2.0),
       new Pt(location.x+lb.width/4.0,location.y+ub.height+lb.height+head_radius/2.0));
     hammys = new Hamstrings(new Pt(gl.left_l.x,gl.left_l.y+gl.height),new Pt(gl.right_l.x,gl.right_l.y+gl.height));
-    tr = new Triceps(new Pt(location.x-head_radius/2.0,location.y+head_radius/2.0),new Pt(location.x+head_radius/2.0,location.y+head_radius/2.0));
-   // new Biceps(new Pt(_chest.location.x-_chest.width,_chest.location.y),new Pt(_chest.location.x+_chest.width,_chest.location.y),15,_chest.width*1.5);
+    tr = new Triceps(new Pt(location.x-head_radius/2.0,location.y+head_radius/2.0),new Pt(location.x+head_radius/2.0,location.y+head_radius/2.0)); 
   } 
   
+
+
   void relocate(){
     ub.location = new Pt(location.x,location.y+head_radius);
     lb.location = new Pt(location.x,ub.location.y+ub.height);
     gl.left_l= new Pt(location.x-lb.width/4.0,location.y+ub.height+lb.height+head_radius/2.0);
     gl.right_l= new Pt(location.x+lb.width/4.0,location.y+ub.height+lb.height+head_radius/2.0);
-    hammys.left_l = new Pt(gl.left_l.x,gl.left_l.y+gl.height);
-    hammys.right_l= new Pt(gl.right_l.x,gl.right_l.y+gl.height);
+    hammys.left_l = new Pt(gl.left_l.x,gl.left_l.y+hammys.height-5);
+    hammys.right_l= new Pt(gl.right_l.x,gl.right_l.y+hammys.height-5);
     tr.left = new Pt(location.x-ub.width/2.0,location.y+head_radius/2.0);
     tr.right=new Pt(location.x+ub.width/2.0,location.y+head_radius/2.0);
   }
   
   void show(){
+  	//Draw Head
     ellipseMode(CENTER);
     ellipse(location.x,location.y,head_radius,head_radius);
     rectMode(CORNER);
-    location.show();
+    //location.show();
+    
+    //Drawing Upper Back
     ub.show();
-    ub.location.show();
+    //Draw lower back
     lb.show();
-    lb.location.show();
+    //Draw glutes
     gl.show();
+    //draw hammys
     hammys.show();
+    //Draw triceps
     tr.show();
+
+  }
+
+  boolean mouseOver(float x,float y){
+    return true;
+  }
+
+}
+
+class Shoulder{
+  Pt left_l, right_l;
+  float width, height;
+  color c;
+  String display;
+  public Shoulder(Pt l, Pt r,float w){
+    left_l = l;
+    right_l = r;
+    width = w;
+    height = 20;
+    c = #FFFFFF;
+  }
+  boolean mouseOver() {     
+    float lConX = left_l.x - (width/2);
+    float lConY = left_l.y - (height/2);
+    float lCon2X = left_l.x + (width/2);
+    float lCon2Y = left_l.y + (height/2);
+    float rConX = right_l.x - (width/2);
+    float rConY = right_l.y - (height/2);
+    float rCon2X = right_l.x + (width/2);
+    float rCon2Y = right_l.y + (height/2);
+
+   if(mouseX > lConX && mouseX < lCon2X && mouseY > lConY && mouseY < lCon2Y 
+       || mouseX > rConX && mouseX < rCon2X && mouseY > rConY && mouseY < rCon2Y )       
+      return true;     
+   else
+      return false;
+  }
+  
+  void show(){
+    
+    if(mouseOver()) {
+      fill(0);
+      textSize(12);
+      text("SHOULDERS",line1_x+5,line1_y-12);
+      text("Exercised:", line1_x,line1_y);
+      text(display, line1_x,line1_y+fontSize);
+      text("times", line1_x+15,line1_y+fontSize);
+      text("Range", line1_x,line1_y+fontSize*2);
+      text("Nov 13 - Mar 14", line1_x,line1_y+fontSize*3);
+      //c= color(229,204,255);;
+      fill(229,204,255);
+    }
+    else{
+      fill(c);
+    }
+    pushMatrix();
+    translate(left_l.x,left_l.y);
+    ellipseMode(CENTER);
+    ellipse(0,0,width,height);
+    popMatrix();
+    
+    pushMatrix();
+    translate(right_l.x,right_l.y);
+    ellipseMode(CENTER);
+    ellipse(0,0,width,height);
+    popMatrix();
+    noFill();
+    
+  }
+  
+  void scale(float s){
+   height*=s; 
   }
 }
 
 class Triceps{
   Pt left; Pt right;
   float width, arm_length,scale_factor;
+  String display;
+  color c;
   Triceps(Pt ll,Pt rr){
     left = ll;
     right = rr;
     width = 15;
     arm_length=35;
+     c = #FFFFFF;
+  }
+  
+    boolean mouseOver() {     
+    float lConX = left.x - (arm_length);
+    float lConY = left.y;
+    float lCon2X = left.x;
+    float lCon2Y = left.y + (width);
+    float rConX = right.x;
+    float rConY = right.y;
+    float rCon2X = right.x + (arm_length);
+    float rCon2Y = right.y + (width);
+
+   if(mouseX > lConX && mouseX < lCon2X && mouseY > lConY && mouseY < lCon2Y 
+       || mouseX > rConX && mouseX < rCon2X && mouseY > rConY && mouseY < rCon2Y )       
+      return true;     
+   else
+      return false;
   } 
 
   void show(){
+  
+    if(mouseOver()) {
+      fill(0);
+      textSize(12);
+      text("TRICEPS",line1_x+15,line1_y-12);
+      text("Exercised:", line1_x,line1_y);
+      text(display, line1_x,line1_y+fontSize);
+      text("times", line1_x+15,line1_y+fontSize);
+      text("Range", line1_x,line1_y+fontSize*2);
+      text("Nov 13 - Mar 14", line1_x,line1_y+fontSize*3);
+      fill(229,204,255); 
+      //c= color(229,204,255);
+    }
+    else{
+      fill(c);
+    }
     pushMatrix();
     translate(right.x,right.y);
     ellipseMode(CORNER);
@@ -132,27 +327,58 @@ class Triceps{
     ellipseMode(CORNER);
     ellipse(0,0,arm_length,width);
     popMatrix();
+    noFill();
   }
   
   void scale(float newScale){
     scale_factor = newScale;
     width *= scale_factor;
   } 
-  
 }
 
 class UpperBack{
   Pt location;
   float width,height,scale_factor;
+  String display;
+  color c;
   UpperBack(Pt l){
     location=l;
     width = 50;
     height = 50;
+    c = #FFFFFF;
   }
-  
+  boolean mouseOver() {
+    // Set up the container for each body part   
+    float conX = location.x - (width/2);
+    float conY = location.y - (height/2);
+    float con2X = location.x + (width/2);
+    float con2Y = location.y + (height/2);
+
+   if(mouseX > conX && mouseX < con2X && mouseY > conY && mouseY < con2Y)       
+      return true;     
+   else
+      return false;
+  }
   void show(){
+   
+    if(mouseOver()) {
+      fill(0);
+      textSize(12);
+      text("UPPER BACK",line1_x,line1_y-12);
+      text("Exercised:", line1_x,line1_y);
+      text(display, line1_x,line1_y+fontSize);
+      text("times", line1_x+15,line1_y+fontSize);
+      text("Range", line1_x,line1_y+fontSize*2);
+      text("Nov 13 - Mar 14", line1_x,line1_y+fontSize*3);
+      fill(229,204,255); 
+      //c= color(229,204,255);
+    }
+    else{
+      fill(c);
+    }
     rectMode(CENTER);
-    rect(location.x, location.y, width,height, 7); 
+    rect(location.x, location.y, width,height, 7);
+    noFill(); 
   }
   
   void scale(float sc){
@@ -165,20 +391,60 @@ class UpperBack{
 class Glutes{
   Pt left_l,right_l;
   float width,height;
+  color c;
+  String display;
+   float lConX;
+    float lConY;
+    float lCon2X;
+    float lCon2Y;
   Glutes(Pt l_l,Pt r_l){
     left_l = l_l;
     right_l = r_l;
     width= 25;
     height=25;
+    c = #FFFFFF;
+   
   } 
   
   void scale(float s){
     width*=s;
     height*=s;
   }
+  boolean mouseOver() {     
+    float lConX = left_l.x - (width/2);
+    float lConY = left_l.y;
+    float lCon2X = left_l.x + (width/2);
+    float lCon2Y = left_l.y + (height);
+    float rConX = right_l.x - (width/2);
+    float rConY = right_l.y;
+    float rCon2X = right_l.x + (width/2);
+    float rCon2Y = right_l.y + (height);
+
+   if(mouseX > lConX && mouseX < lCon2X && mouseY > lConY && mouseY < lCon2Y 
+       || mouseX > rConX && mouseX < rCon2X && mouseY > rConY && mouseY < rCon2Y )       
+      return true;     
+   else
+      return false;
+  }
   
   void show(){
-   //Need to apply rotations to ellipses here
+   
+   if(mouseOver()) {
+      fill(0);
+      textSize(12);
+      text("GLUTES",line1_x+20,line1_y-12);
+      text("Exercised:", line1_x,line1_y);
+      text(display, line1_x,line1_y+fontSize);
+      text("times", line1_x+15,line1_y+fontSize);
+      text("Range", line1_x,line1_y+fontSize*2);
+      text("Nov 13 - Mar 14", line1_x,line1_y+fontSize*3);
+      fill(229,204,255); 
+      //c= color(229,204,255);
+    }
+    else{
+      fill(c);
+    }
+    //Need to apply rotations to ellipses here
     pushMatrix();
     translate(left_l.x,left_l.y+12);
     //rotate(PI/24.0);
@@ -190,21 +456,55 @@ class Glutes{
     //rotate(11*PI/12.0);
     ellipse(0,0,width,height);
     popMatrix();
+    noFill();
   }
 }
 
 class LowerBack{
   Pt location;
   float width,height,scale_factor;
+  String display;
+  color c;
   LowerBack(Pt l){
     location= l;
     width=50;
     height = 50;
+    display="0";
+     c = #FFFFFF;
+  }
+  boolean mouseOver() {
+    // Set up the container for each body part   
+    float conX = location.x - (width/2);
+    float conY = location.y - (height/2);
+    float con2X = location.x + (width/2);
+    float con2Y = location.y + (height/2);
+
+   if(mouseX > conX && mouseX < con2X && mouseY > conY && mouseY < con2Y)       
+      return true;     
+   else
+      return false;
   }
   
   void show(){
-    //location.show();
+    
+    if(mouseOver()) {
+      fill(0);
+      textSize(12);
+      text("LOWER BACK",line1_x,line1_y-12);
+      text("Exercised:", line1_x,line1_y);
+      text(display, line1_x,line1_y+fontSize);
+      text("times", line1_x+15,line1_y+fontSize);
+      text("Range", line1_x,line1_y+fontSize*2);
+      text("Nov 13 - Mar 14", line1_x,line1_y+fontSize*3);
+      fill(229,204,255); 
+      //c= color(229,204,255);
+    }
+    else{
+      fill(c);
+    }
     rect(location.x, location.y, width,height, 7); 
+    noFill();
+   //location.show();
   } 
   
   void scale(float s){
@@ -218,14 +518,52 @@ class LowerBack{
 class Hamstrings{
   Pt left_l,right_l;
   float width,height;
+  String display;
+  color c;
   Hamstrings(Pt ll,Pt rr){
     left_l=ll;
     right_l=rr;
     width= 20;
     height=30;
+    display="0";
+ c = #FFFFFF;
+
   }  
+   boolean mouseOver() {     
+    float lConX = left_l.x - (width/2);
+    float lConY = left_l.y;
+    float lCon2X = left_l.x + (width/2);
+    float lCon2Y = left_l.y + (height);
+    float rConX = right_l.x - (width/2);
+    float rConY = right_l.y;
+    float rCon2X = right_l.x + (width/2);
+    float rCon2Y = right_l.y + (height);
+
+   if(mouseX > lConX && mouseX < lCon2X && mouseY > lConY && mouseY < lCon2Y 
+       || mouseX > rConX && mouseX < rCon2X && mouseY > rConY && mouseY < rCon2Y )       
+      return true;     
+   else
+      return false;
+  }
   
   void show(){
+  
+    if(mouseOver()) {
+      fill(0);
+      textSize(12);
+      text("HAMSTRINGS",line1_x,line1_y-12);
+      text("Exercised:", line1_x,line1_y);
+      text(display, line1_x,line1_y+fontSize);
+      text("times", line1_x+15,line1_y+fontSize);
+      text("Range", line1_x,line1_y+fontSize*2);
+      text("Nov 13 - Mar 14", line1_x,line1_y+fontSize*3);
+      fill(229,204,255); 
+      //c= color(229,204,255);
+    }
+    else{
+      fill(c);
+    }
+    
     pushMatrix();
     translate(left_l.x,left_l.y+12);
     //rotate(PI/24.0);
@@ -237,6 +575,7 @@ class Hamstrings{
     //rotate(11*PI/12.0);
     ellipse(0,0,width,height);
     popMatrix();
+    noFill();
   }
   void scale(float s){
     width*=s;
@@ -354,60 +693,63 @@ class Pt {
     vertex(x, y);
   };
 
-  	void vertext(float u, float v) {
-    	vertex(x, y, u, v);
-  	}
+    void vertext(float u, float v) {
+      vertex(x, y, u, v);
+    }
 
-  	boolean isInWindow() {
-    	return(((x<0)||(x>width)||(y<0)||(y>height)));
-  	}
-  	
-  	float disTo(Pt P) {
-    	return sqrt(sq(P.x-x)+sq(P.y-y));
-  	}
+    boolean isInWindow() {
+      return(((x<0)||(x>width)||(y<0)||(y>height)));
+    }
+    
+    float disTo(Pt P) {
+      return sqrt(sq(P.x-x)+sq(P.y-y));
+    }
 
-  	void addPt(Pt P) {
-    	x+=P.x; 
-    	y+=P.y; 
-  	}
+    void addPt(Pt P) {
+      x+=P.x; 
+      y+=P.y; 
+    }
 
-  	void subPt(Pt P) {
-    	x-=P.x; 
-    	y-=P.y; 
-  	}
+    void subPt(Pt P) {
+      x-=P.x; 
+      y-=P.y; 
+    }
 
-  	void mul(float f) {
-		x*=f; 
-    		y*=f; 
-  		}
+    void mul(float f) {
+    x*=f; 
+        y*=f; 
+      }
 
-	void show() {
+  void show() {
     ellipseMode(CENTER);
-  		ellipse(x, y, 6, 6);
-	}
+      ellipse(x, y, 6, 6);
+  }
 }
 
 
 
 class MuscleMan_Front{
-	Chest _chest;
+  Chest _chest;
   Torso _torso;
   Quads _quads;
   Calves _calves;
   Biceps _biceps;
   Forearms _forearms;
+  Shoulder shoulder; 
   Pt location;
   float head_radius;
-	MuscleMan_Front(Pt loc){
+  
+  MuscleMan_Front(Pt loc){
     location = loc;
     head_radius = 50;
-	  _chest = new Chest(new Pt(location.x,location.y+head_radius/2));
+    _chest = new Chest(new Pt(location.x,location.y+head_radius/2));
     _torso = new Torso(new Pt(location.x,_chest.location.y+_chest.height));
     _quads = new Quads(new Pt(_torso.location.x+7,_torso.location.y+_torso.height+7),new Pt(_torso.location.x+_torso.width-7,_torso.location.y+_torso.height+7),20);
     _calves = new Calves(new Pt(_quads.left_location.x-_quads.width/2.0,_quads.left_location.y+50),new Pt(_quads.right_location.x+_quads.width/2.0,_quads.right_location.y),15);
     _biceps = new Biceps(new Pt(_chest.location.x-_chest.width,_chest.location.y),new Pt(_chest.location.x+_chest.width,_chest.location.y),15,_chest.width*1.5);
     _forearms = new Forearms(new Pt(_biceps.left_location.x-_biceps.arm_length,_biceps.left_location.y),
       new Pt(_biceps.right_location.x+_biceps.arm_length,_biceps.right_location.y+_biceps.width*.25),_biceps.width,_biceps.arm_length);
+      shoulder = new Shoulder(new Pt(_chest.location.x-_chest.width,_chest.location.y),new Pt(_chest.location.x+_chest.width,_chest.location.y),20.0);
   } 
 
   void show(){
@@ -417,18 +759,22 @@ class MuscleMan_Front{
     _torso.show();
 
     rectMode(CORNER);
-		_chest.show();
+    
+    _chest.show();
     //draw the quads
     
     _quads.show();
     //draw the calves
     _calves.show();
      //draw the torso
-
     _biceps.show();
     _forearms.show();
+    shoulder.show();
+    
+//    shoulder.left_l.show();
+//    shoulder.right_l.show();    
 
-	}
+  }
 
   void relocate(){
     _biceps.left_location = new Pt(_chest.location.x-_chest.width,_chest.location.y);
@@ -447,44 +793,113 @@ class Torso{
   Pt location;
   float height,width;
   float scale_factor;
+  String display;
+  color c;
   public Torso(Pt loc){
     location = loc;
     width = 50;
     height = 50;
+    display="0";
+    c = #FFFFFF;
+  }
+
+  boolean mouseOver() {
+    // Set up the container for each body part   
+    float conX = location.x - (width/2);
+    float conY = location.y - (height/2);
+    float con2X = location.x + (width/2);
+    float con2Y = location.y + (height/2);
+
+   if(mouseX > conX && mouseX < con2X && mouseY > conY && mouseY < con2Y)       
+      return true;     
+   else
+      return false;
   }
   void show(){
+   
+    if(mouseOver()) {
+      fill(0);
+      textSize(12);
+      text("TORSO",line1_x+20,line1_y-12);
+      text("Exercised:", line1_x,line1_y);
+      text(display, line1_x,line1_y+fontSize);
+      text("times", line1_x+15,line1_y+fontSize);
+      text("Range", line1_x,line1_y+fontSize*2);
+      text("Nov 13 - Mar 14", line1_x,line1_y+fontSize*3);
+      fill(229,204,255); 
+      //c= color(229,204,255);
+    }
+    else{
+      fill(c);
+    }
     rect(location.x,location.y,width,height,7);
+    noFill();
   }
+
   void scale(float newScale){
     scale_factor = newScale;
     width *= scale_factor;
     //height *= scale_factor;
   }
-
 }
 
 class Chest{
-
-	Pt location; //the center location of the chest object
-	float scale_factor,width,height;
-
-	Chest(Pt loc){
-	  location = loc;
-	  scale_factor = 1;
+  Pt location; //the center location of the chest object
+  float scale_factor,width,height;
+  String display;
+  color c;
+  Chest(Pt loc){
+    display = "BRIAN";
+    location = loc;
+    scale_factor = 1;
           width = 25;
           height = 25;
-	}
+          c = #ffffff;
+  }
 
-	void show(){
-		rect(location.x-width, location.y, width,height, 7);
+  boolean mouseOver() {     
+    float lConX = location.x - (width);
+    float lConY = location.y;
+    float lCon2X = location.x;
+    float lCon2Y = location.y + (height);
+    float rConX = location.x;
+    float rConY = location.y;
+    float rCon2X = location.x + (width);
+    float rCon2Y = location.y + (height);
+
+   if(mouseX > lConX && mouseX < lCon2X && mouseY > lConY && mouseY < lCon2Y 
+       || mouseX > rConX && mouseX < rCon2X && mouseY > rConY && mouseY < rCon2Y )       
+      return true;     
+   else
+      return false;
+  }
+
+  void show(){
+   
+   if(mouseOver()) {
+      fill(0);
+      textSize(12);
+      text("CHEST",line1_x+20,line1_y-12);
+      text("Exercised:", line1_x,line1_y);
+      text(display, line1_x,line1_y+fontSize);
+      text("times", line1_x+15,line1_y+fontSize);
+      text("Range", line1_x,line1_y+fontSize*2);
+      text("Nov 13 - Mar 14", line1_x,line1_y+fontSize*3);
+      //text("color: "+c,line1_x,line1_y+fontSize*4);
+      fill(229,204,255); 
+    }
+    else{
+      fill(c);
+    }
+    rect(location.x-width, location.y, width,height, 7);
     rect(location.x,location.y,width,height,7);
-	}
+    noFill();
+  }
 
   void scale(float newScale){
     scale_factor = newScale;
     width *= scale_factor;
     height *= scale_factor;
-
   }
 }
 
@@ -492,13 +907,48 @@ class Quads{
 
   float width,length,scale_factor;
   Pt left_location,right_location;
+  String display;
+  color c;
   Quads(Pt l_loc,Pt r_loc,float w){
     left_location = l_loc;
     right_location = r_loc;
     width = w;
+    display="0";
+    c = #FFFFFF;
   }
+  boolean mouseOver() {     
+    float lConX = left_location.x - (width/2);
+    float lConY = left_location.y;
+    float lCon2X = left_location.x + (width/2);
+    float lCon2Y = left_location.y+width*1.7;
+    float rConX = right_location.x - (width/2);
+    float rConY = right_location.y;
+    float rCon2X = right_location.x + (width/2);
+    float rCon2Y = right_location.y +width*1.7;
 
+   if(mouseX > lConX && mouseX < lCon2X && mouseY > lConY && mouseY < lCon2Y 
+       || mouseX > rConX && mouseX < rCon2X && mouseY > rConY && mouseY < rCon2Y )       
+      return true;     
+   else
+      return false;
+  }
   void show(){
+    
+    if(mouseOver()) {
+      fill(0);
+      textSize(12);
+      text("QUADS",line1_x+20,line1_y-12);
+      text("Exercised:", line1_x,line1_y);
+      text(display, line1_x,line1_y+fontSize);
+      text("times", line1_x+15,line1_y+fontSize);
+      text("Range", line1_x,line1_y+fontSize*2);
+      text("Nov 13 - Mar 14", line1_x,line1_y+fontSize*3);
+      fill(229,204,255); 
+      
+    }
+    else{
+      fill(c);
+    }
     //Need to apply rotations to ellipses here
     pushMatrix();
     translate(left_location.x,left_location.y+12);
@@ -511,6 +961,7 @@ class Quads{
     rotate(11*PI/12.0);
     ellipse(0,0,width,40);
     popMatrix();
+    noFill();
 
   }
 
@@ -524,15 +975,47 @@ class Quads{
 class Calves{
   float width,scale_factor;
   Pt left_location,right_location;
+  String display;
+  color c;
   Calves(Pt l_loc,Pt r_loc,float w){
     left_location = l_loc;
     right_location = r_loc;
     width = w;
+    c= #ffffff;
   }
- 
+  boolean mouseOver() {     
+    float lConX = left_location.x - (width/2);
+    float lConY = left_location.y-20;
+    float lCon2X = left_location.x + (width/2);
+    float lCon2Y = left_location.y+(width*1.5);
+    float rConX = right_location.x - (width)+4;
+    float rConY = right_location.y+30;
+    float rCon2X = right_location.x;
+    float rCon2Y = right_location.y +(width*2.5)+30;
+
+   if(mouseX > lConX && mouseX < lCon2X && mouseY > lConY && mouseY < lCon2Y 
+       || mouseX > rConX && mouseX < rCon2X && mouseY > rConY && mouseY < rCon2Y )       
+      return true;     
+   else
+      return false;
+  }
   void show(){
    
-    
+    if(mouseOver()) {
+      fill(0);
+      textSize(12);
+      text("CALVES",line1_x+15,line1_y-12);
+      text("Exercised:", line1_x,line1_y);
+      text(display, line1_x,line1_y+fontSize);
+      text("times", line1_x+15,line1_y+fontSize);
+      text("Range", line1_x,line1_y+fontSize*2);
+      text("Nov 13 - Mar 14", line1_x,line1_y+fontSize*3);
+      fill(229,204,255); 
+      //c= color(229,204,255);
+    }
+    else{
+      fill(c);
+    }
     pushMatrix();
     translate(left_location.x,left_location.y);
     rotate(PI/24.0);
@@ -544,6 +1027,7 @@ class Calves{
     rotate(11*PI/12.0);
     ellipse(0,0,width,40);
     popMatrix();
+    noFill();
 
     // ellipse(left_location.x,left_location.y,left_location.x+width,left_location.y+50);
     // ellipse(right_location.x,right_location.y,right_location.x+width,right_location.y+50);
@@ -559,15 +1043,52 @@ class Calves{
 class Biceps{
   float width,scale_factor;
   float arm_length;
+  String display;
   Pt left_location,right_location;
+  color c;
   Biceps(Pt l_loc,Pt r_loc,float w,float a_length){
     left_location = l_loc;
     right_location = r_loc;
     width = w;
     arm_length = a_length;
+    display="0";
+    c= #ffffff;
   }
+  
+   boolean mouseOver() {     
+    float lConX = left_location.x - (arm_length);
+    float lConY = left_location.y;
+    float lCon2X = left_location.x;
+    float lCon2Y = left_location.y + (width);
+    float rConX = right_location.x;
+    float rConY = right_location.y;
+    float rCon2X = right_location.x + (arm_length);
+    float rCon2Y = right_location.y + (width);
+
+   if(mouseX > lConX && mouseX < lCon2X && mouseY > lConY && mouseY < lCon2Y 
+       || mouseX > rConX && mouseX < rCon2X && mouseY > rConY && mouseY < rCon2Y )       
+      return true;     
+   else
+      return false;
+  } 
 
   void show(){
+   
+    if(mouseOver()) {
+      fill(0);
+      textSize(12);
+      text("BICEPS",line1_x+20,line1_y-12);
+      text("Exercised:", line1_x,line1_y);
+      text(display, line1_x,line1_y+fontSize);
+      text("times", line1_x+15,line1_y+fontSize);
+      text("Range", line1_x,line1_y+fontSize*2);
+      text("Nov 13 - Mar 14", line1_x,line1_y+fontSize*3);
+      fill(229,204,255); 
+      
+    }
+    else{
+      fill(c);
+    }
     pushMatrix();
     translate(right_location.x,right_location.y);
     ellipseMode(CORNER);
@@ -578,6 +1099,7 @@ class Biceps{
     ellipseMode(CORNER);
     ellipse(0,0,arm_length,width);
     popMatrix();
+    noFill();
   }
   
   void scale(float newScale){
@@ -593,14 +1115,49 @@ class Forearms{
   float width,scale_factor;
   float length;
   Pt left_location, right_location;
+  String display;
+  color c;
   Forearms(Pt l_loc,Pt r_loc,float w, float l){
     left_location = l_loc;
     right_location = r_loc;
     width = w;
     length = l;
+    display="0";
   }
+   boolean mouseOver() {     
+    float lConX = left_location.x - (length);
+    float lConY = left_location.y;
+    float lCon2X = left_location.x;
+    float lCon2Y = left_location.y + (width);
+    float rConX = right_location.x;
+    float rConY = right_location.y;
+    float rCon2X = right_location.x + (length);
+    float rCon2Y = right_location.y + (width);
 
+   if(mouseX > lConX && mouseX < lCon2X && mouseY > lConY && mouseY < lCon2Y 
+       || mouseX > rConX && mouseX < rCon2X && mouseY > rConY && mouseY < rCon2Y )       
+      return true;     
+   else
+      return false;
+  } 
+  
   void show(){
+   c = #FFFFFF;
+   if(mouseOver()) {
+      fill(0);
+      textSize(12);
+      text("FOREARMS",line1_x+10,line1_y-12);
+      text("Exercised:", line1_x,line1_y);
+      text(display, line1_x,line1_y+fontSize);
+      text("times", line1_x+15,line1_y+fontSize);
+      text("Range", line1_x,line1_y+fontSize*2);
+      text("Nov 13 - Mar 14", line1_x,line1_y+fontSize*3);
+      fill(229,204,255); 
+      //c= color(229,204,255);;
+    }
+    else{
+      fill(c);
+    }
     pushMatrix();
     translate(right_location.x,right_location.y);
     ellipseMode(CORNER);
@@ -611,6 +1168,7 @@ class Forearms{
     ellipseMode(CORNER);
     ellipse(0,0,length,width);
     popMatrix();
+    noFill();
   }
 
   void scale(float newScale){
